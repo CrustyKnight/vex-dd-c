@@ -1,4 +1,5 @@
 #include "main.h"
+#include "lemlib/api.hpp" // IWYU pragma: keep
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
