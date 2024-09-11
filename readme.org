@@ -2,4 +2,5 @@
 
 The code for the Donut Dynamics vex team's (Tucson 85711C) robot.
 
-Based on EZ-Template
+Using lemlib
+
