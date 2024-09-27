@@ -65,6 +65,7 @@ void autonomous(void);
 void initialize(void);
 void disabled(void);
 void competition_initialize(void);
+void printStatus(void);
 void opcontrol(void);
 #ifdef __cplusplus
 }
@@ -75,6 +76,10 @@ void opcontrol(void);
  * You can add C++-only headers here
  */
 //#include <iostream>
+void lateral_move(int distance, int timeout = 10000);
+void angular_turn(int degrees, int timeout = 10000);
+void swing_movement(int degrees, int timeout = 10000);
+void setArcadeDrive(pros::Controller master);
 #endif
 
 #endif  // _PROS_MAIN_H_

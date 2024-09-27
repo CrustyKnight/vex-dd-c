@@ -1,28 +1,29 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep
-#include "main.h"
+#include "codeHeaderFiles/auton.hpp"
+#include "codeHeaderFiles/main.h"
+
+//Important Note: This file has all of our drivetrain and remote control-related code. 
 
 // LemLib setup
 // TODO
-//               side_motors({low_1, low_2, -high})
+// Setting up of drivetrain sides: side_motors({low_1, low_2, -high})
 pros::MotorGroup left_motors({1, 2, -3}, pros::MotorGearset::green);
 pros::MotorGroup right_motors({-4, -5, 6}, pros::MotorGearset::green);
 
+// Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality. 
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 13.3, lemlib::Omniwheel::NEW_325, 333.3333, 2);
 pros::Imu imu(10);
-
 lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
-
 
 // kP, kI, kD, anti-windup, small error range, small error range timeout,
 // large error range, large error range timeout, max acceleration (slew)
 lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
-
-
-// kP, kI, kD, anti-windup, small error range, small error range timeout,
-// large error range, large error range timeout, max acceleration (slew)
 lemlib::ControllerSettings angular_controller(2, 0, 10, 3, 1, 100, 3, 500, 0);
 
+// Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain. 
 lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
+// Creating expo drive curve
+lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
 
 /**
  * A callback function for LLEMU's center button.
@@ -61,7 +62,7 @@ void initialize() {
             // delay to save resources
             pros::delay(20);
 		}
-	})
+	});
 
 }
 
@@ -95,65 +96,45 @@ void competition_initialize() {}
  * from where it left off.
  */
 
-void lateral_test_forward() {
-	chassis.setPose(0, 0, 0);
-	chassis.moveToPoint(0, 12, 10000);
-}
-
-void lateral_test_forward_back() {
-	chassis.setPose(0, 0, 0);
-	chassis.moveToPoint(0, 12, 10000);
-	chassis.moveToPoint(0, 0,  10000);
-}
-
-void angular_test_45() {
-	chassis.setPose(0, 0, 0);
-	chassis.turnToHeading(45, 10000);
-}
-
-void angular_test_45_back() {
-	chassis.setPose(0, 0, 0);
-	chassis.turnToHeading(45, 10000);
-	chassis.turnToHeading(0,  10000);
-}
-
-void angular_test_90() {
-	chassis.setPose(0, 0, 0);
-	chassis.turnToHeading(90, 10000);
-}
-
-void angular_test_90_back() {
-	chassis.setPose(0, 0, 0);
-	chassis.turnToHeading(90, 10000);
-	chassis.turnToHeading(0,  10000);
-}
-
-void swing_test_45() {
-	chassis.setPose(0, 0, 0);
-	chassis.swingToHeading(45, DriveSide::LEFT, 10000);
-}
-
-void swing_test_45_back() {
-	chassis.setPose(0, 0, 0);
-	chassis.swingToHeading(45, DriveSide::LEFT, 10000);
-	chassis.turnToHeading(0, DriveSide::RIGHT, 10000);
-}
-
-
-void swing_test_90() {
-	chassis.setPose(0, 0, 0);
-	chassis.swingToHeading(90, DriveSide::LEFT, 10000);
-}
-
-void swing_test_90_back() {
-	chassis.setPose(0, 0, 0);
-	chassis.swingToHeading(90, DriveSide::LEFT, 10000);
-	chassis.turnToHeading(0, DriveSide::RIGHT, 10000);
-}
-
 
 // when testing, put the tests in here
 void autonomous() {}
+
+void lateral_move(int distance, int timeout) {
+	chassis.setPose(0, 0, 0);
+	chassis.moveToPoint(0, distance, timeout);
+	}
+
+//TODO: we need to find out if negative degrees and positive degrees are clockwise our counterclockwise for the purpose of our robot. 
+void angular_turn(int degrees, int timeout) {
+	chassis.setPose(0, 0, 0);
+	chassis.turnToHeading(degrees, timeout);
+}
+
+void swing_movement(int degrees, int timeout){
+	chassis.setPose(0, 0, 0);
+	if(degrees < 0){
+		chassis.swingToHeading(degrees, DriveSide::LEFT, timeout);
+	}
+	else{
+		chassis.swingToHeading(degrees, DriveSide::RIGHT, timeout);
+	}
+}
+
+//Driver/Screen Functions: I, Debangshu Pramanik, think we'd like this to be outside opcontrol for organization purposes. 
+void printStatus(){ // Prints status of the emulated screen LCDs
+	pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
+		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
+		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);  
+} 
+// Set up of driver controls...// Arcade control scheme; has it's own function for enhanced organization...
+void setArcadeDrive(pros::Controller master){ 
+	int dir = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
+	int turn = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
+	left_motors.move(dir - turn);                      // Sets left motor voltage
+	right_motors.move(dir + turn);                     // Sets right motor voltage
+	pros::delay(20);                               // Run for 20 ms then update
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -170,19 +151,10 @@ void autonomous() {}
  */
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::MotorGroup left_mg({1, -2, 3});    // Creates a motor group with forwards ports 1 & 3 and reversed port 2
-	pros::MotorGroup right_mg({-4, 5, -6});  // Creates a motor group with forwards port 5 and reversed ports 4 & 6
-	
 	while (true) {
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);  // Prints status of the emulated screen LCDs
-
+		// Prints status of the emulated LCD. 
+		printStatus();
 		// Arcade control scheme
-		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
-		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
-		left_mg.move(dir - turn);                      // Sets left motor voltage
-		right_mg.move(dir + turn);                     // Sets right motor voltage
-		pros::delay(20);                               // Run for 20 ms then update
+		setArcadeDrive(master);
 	}
 }
