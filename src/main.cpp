@@ -96,9 +96,10 @@ void competition_initialize() {}
  * from where it left off.
  */
 
-
 // when testing, put the tests in here
-void autonomous() {}
+void autonomous() {
+	
+}
 
 void lateral_move(int distance, int timeout) {
 	chassis.setPose(0, 0, 0);
