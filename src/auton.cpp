@@ -1,7 +1,7 @@
-#include "codeHeaderFiles/api.h"
 #include "lemlib/api.hpp"
-#include "codeHeaderFiles/auton.hpp" 
-#include "codeHeaderFiles/main.h"
+#include "auton.hpp"
+#include "main.h"
+#include "api.h"
 #include <string>
 
 //#TODO: create game plan...

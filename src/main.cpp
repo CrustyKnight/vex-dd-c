@@ -1,6 +1,7 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep
-#include "codeHeaderFiles/auton.hpp"
-#include "codeHeaderFiles/main.h"
+#include "auton.hpp"
+#include "main.h"
+#include "display.h"
 
 //Important Note: This file has all of our drivetrain and remote control-related code. 
 
@@ -32,10 +33,11 @@ lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
  * "I was pressed!" and nothing.
  */
 void on_center_button() {
+  pros::lcd::initialize();
 	static bool pressed = false;
 	pressed = !pressed;
 	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
+    pros::lcd::set_text(0, "I was pressed!");
 	} else {
 		pros::lcd::clear_line(2);
 	}
@@ -48,22 +50,8 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
+  display_init();
 	chassis.calibrate();
-	pros::lcd::set_text(1, "Hello PROS User!");
-
-	pros::lcd::register_btn1_cb(on_center_button);
-
-	pros::Task screen_task([&]() {
-		while (true) {
-			pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-            pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-            pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
-            // delay to save resources
-            pros::delay(20);
-		}
-	});
-
 }
 
 /**
@@ -151,11 +139,15 @@ void setArcadeDrive(pros::Controller master){
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+  pros::Motor motor(1);
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	while (true) {
 		// Prints status of the emulated LCD. 
 		printStatus();
 		// Arcade control scheme
 		setArcadeDrive(master);
+    std::cout << "Motor temp: " << motor.get_temperature();
+
+    
 	}
 }
