@@ -19,6 +19,7 @@
 static lv_style_t style_btn;
 static lv_style_t style_button_pressed;
 
+
 static void test_button(lv_event_t * e){
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t * button = lv_event_get_target(e);
@@ -36,6 +37,20 @@ static lv_color_t darken(const lv_color_filter_dsc_t * dsc, lv_color_t color, lv
 {
     LV_UNUSED(dsc);
     return lv_color_darken(color, opa);
+}
+
+LV_IMG_DECLARE(catplush);
+static lv_obj_t * catplush_img;
+
+static lv_obj_t * maint;
+
+lv_obj_t * motortemps;
+
+void draw_catplush(){
+  catplush_img = lv_img_create(maint);
+  lv_img_set_src(catplush_img, &catplush);
+  lv_obj_align(catplush_img, LV_ALIGN_CENTER, 0, -30);
+  lv_img_set_zoom(catplush_img, 512);
 }
 
 static void style_init(void){
@@ -62,34 +77,52 @@ void display_init(void){
 
   style_init();
 
- lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(cat_crust), LV_PART_MAIN);
+  lv_obj_t * tabview;
+  tabview = lv_tabview_create(lv_scr_act(), LV_DIR_TOP, 30);
 
+    lv_obj_t * tab_btns = lv_tabview_get_tab_btns(tabview);
+    lv_obj_set_style_bg_color(tab_btns, lv_palette_darken(LV_PALETTE_GREY, 3), 0);
+    lv_obj_set_style_text_color(tab_btns, lv_palette_lighten(LV_PALETTE_GREY, 5), 0);
+    lv_obj_set_style_border_side(tab_btns, LV_BORDER_SIDE_RIGHT, LV_PART_ITEMS | LV_STATE_CHECKED);
+
+  lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(cat_crust), LV_PART_MAIN);
+
+    maint = lv_tabview_add_tab(tabview, "MAIN");
+    lv_obj_t * diag = lv_tabview_add_tab(tabview, "INFO");
  
-    lv_obj_t * title = lv_label_create(lv_scr_act());
+    lv_obj_t * title = lv_label_create(maint);
     lv_label_set_text(title, "~~DONUT DYNAMICS~~");
-    lv_obj_set_style_text_color(lv_scr_act(), lv_color_hex(TEXTCLR), LV_PART_MAIN);
-    lv_obj_align(title, LV_ALIGN_CENTER, 0, -100);
+    lv_obj_set_style_text_color(maint, lv_color_hex(TEXTCLR), LV_PART_MAIN);
+    lv_obj_align(title, LV_ALIGN_CENTER, 0, -90);
+   
+    /*
+    LV_IMG_DECLARE(img_donut_argb);
+    lv_obj_t * donut = lv_img_create(main);
+    lv_img_set_src(donut, &img_donut_argb);
+    lv_obj_align(donut, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_set_size(donut, 200, 200);
+    */
+    
+    draw_catplush();
 
-
-    lv_obj_t * testbutton = lv_btn_create(lv_scr_act()); //create a button as a child of the main display (screen)
+/*
+    lv_obj_t * testbutton = lv_btn_create(maint); //create a button as a child of the main display (screen)
     lv_obj_remove_style_all(testbutton);
     lv_obj_add_style(testbutton, &style_btn, 0);
     lv_obj_set_pos(testbutton, 175, 50); //0,0 is in the topleft corner
     lv_obj_set_size(testbutton, 120, 50);
-    lv_obj_add_event_cb(testbutton, test_button, LV_EVENT_ALL, NULL);           /*Assign a callback to the button*/
+    lv_obj_add_event_cb(testbutton, test_button, LV_EVENT_ALL, NULL);           //Assign a callback to the button
     lv_obj_add_style(testbutton, &style_button_pressed, LV_STATE_PRESSED);
 
     lv_obj_t * testbtnlabel = lv_label_create(testbutton); //label for the button
     lv_label_set_text(testbtnlabel, "press me?");
     lv_obj_center(testbtnlabel);
+*/
 
-
-    lv_obj_t * motortemps = lv_label_create(lv_scr_act());
+    motortemps = lv_label_create(diag);
     lv_obj_align(motortemps, LV_DIR_LEFT, 0, 0);
-
-
-}
-
-void update_motor_temps(uint32_t motor1){
+    std::vector<double> mtemps = get_motor_temps();
+    lv_label_set_text_fmt(motortemps, "MOTOR 1: %d\nMOTOR 2: %d\nMOTOR 3: %d\nMOTOR 4: %d\nMOTOR 5: %d\nMOTOR 6: %d", &mtemps[0], &mtemps[1], &mtemps[2], &mtemps[3], &mtemps[4], &mtemps[5]);
 
 }
+

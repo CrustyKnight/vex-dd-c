@@ -139,15 +139,39 @@ void setArcadeDrive(pros::Controller master){
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-  pros::Motor motor(1);
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	while (true) {
 		// Prints status of the emulated LCD. 
 		printStatus();
 		// Arcade control scheme
 		setArcadeDrive(master);
-    std::cout << "Motor temp: " << motor.get_temperature();
 
+    std::cout << "left motors:" << get_motor_temps()[0];
     
 	}
+}
+
+std::vector<double> get_motor_temps(){
+
+  std::vector<double> temps; 
+
+    pros::Motor m1 (1); 
+    temps.push_back(m1.get_temperature());
+
+    pros::Motor m2 (2); 
+    temps.push_back(m1.get_temperature());
+
+    pros::Motor m3 (3); 
+    temps.push_back(m1.get_temperature());
+
+    pros::Motor m4 (4); 
+    temps.push_back(m1.get_temperature());
+
+    pros::Motor m5 (5); 
+    temps.push_back(m1.get_temperature());
+
+    pros::Motor m6 (6); 
+    temps.push_back(m1.get_temperature());
+
+  return temps; 
 }

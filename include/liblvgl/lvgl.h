@@ -19,9 +19,9 @@ extern "C" {
 #define LVGL_VERSION_INFO "dev"
 
 /*********************
- *      INCLUDES
+ * INCLUDES
  *********************/
-
+;
 #include "liblvgl/misc/lv_log.h"
 #include "liblvgl/misc/lv_timer.h"
 #include "liblvgl/misc/lv_math.h"
