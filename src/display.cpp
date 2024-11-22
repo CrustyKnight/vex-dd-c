@@ -1,6 +1,8 @@
 #include "main.h"
 #include "pros/apix.h"
 
+#include <string>
+
 #include "liblvgl/lvgl.h"
 
 // catpuccin mocha B)
@@ -41,7 +43,6 @@ static lv_color_t darken(const lv_color_filter_dsc_t * dsc, lv_color_t color, lv
 
 LV_IMG_DECLARE(catplush);
 static lv_obj_t * catplush_img;
-
 static lv_obj_t * maint;
 
 lv_obj_t * motortemps;
@@ -73,6 +74,39 @@ static void style_init(void){
 
 }
 
+void telemetry_table(lv_obj_t * tab){
+
+  lv_obj_t * table = lv_table_create(tab);
+
+  lv_table_set_col_width(table, 0, 90);
+  lv_obj_set_style_pad_ver(table, 10, LV_PART_ITEMS);
+
+  lv_table_set_cell_value(table, 0,0,"motor");
+  lv_table_set_cell_value(table, 0,1,"temp");
+
+
+  //scuffed
+  std::vector<double> mt = get_motor_temps();
+  std::vector<int> mtemps; 
+
+  std::vector<double> tqs = get_motor_torques();
+  std::vector<int> torques;
+  for(int i = 0; i < mt.size(); i++){
+    mtemps.push_back((int) mt[i]);
+    torques.push_back((int) tqs[i]);
+  }
+
+  for(int i = 1; i < 7; i++){
+    lv_table_set_cell_value_fmt(table, i, 0, "%i", i);
+    lv_table_set_cell_value_fmt(table, i, 1, "%f", mtemps[i-1]);
+    lv_table_set_cell_value_fmt(table, i, 2, "%f", torques[i-1]);
+  }
+
+
+  lv_obj_align(table, LV_DIR_LEFT, -25, -25);
+
+}
+
 void display_init(void){
 
   style_init();
@@ -93,15 +127,6 @@ void display_init(void){
     lv_obj_t * title = lv_label_create(maint);
     lv_label_set_text(title, "~~DONUT DYNAMICS~~");
     lv_obj_set_style_text_color(maint, lv_color_hex(TEXTCLR), LV_PART_MAIN);
-    lv_obj_align(title, LV_ALIGN_CENTER, 0, -90);
-   
-    /*
-    LV_IMG_DECLARE(img_donut_argb);
-    lv_obj_t * donut = lv_img_create(main);
-    lv_img_set_src(donut, &img_donut_argb);
-    lv_obj_align(donut, LV_ALIGN_CENTER, 0, 0);
-    lv_obj_set_size(donut, 200, 200);
-    */
     
     draw_catplush();
 
@@ -119,10 +144,21 @@ void display_init(void){
     lv_obj_center(testbtnlabel);
 */
 
+    telemetry_table(diag);
+
+    /*
     motortemps = lv_label_create(diag);
     lv_obj_align(motortemps, LV_DIR_LEFT, 0, 0);
     std::vector<double> mtemps = get_motor_temps();
-    lv_label_set_text_fmt(motortemps, "MOTOR 1: %d\nMOTOR 2: %d\nMOTOR 3: %d\nMOTOR 4: %d\nMOTOR 5: %d\nMOTOR 6: %d", &mtemps[0], &mtemps[1], &mtemps[2], &mtemps[3], &mtemps[4], &mtemps[5]);
+    lv_label_set_text_fmt(motortemps, "MOTOR 1: %d\nMOTOR 2: %d\nMOTOR 3: %d\nMOTOR 4: %d\nMOTOR 5: %d\nMOTOR 6: %d", mtemps[0], mtemps[1], mtemps[2], mtemps[3], mtemps[4], mtemps[5]);
+    */
+
+
+
+}
+
+void display_tick(void){
+  pros::delay(20);
 
 }
 

@@ -147,6 +147,7 @@ void opcontrol() {
 		setArcadeDrive(master);
 
     std::cout << "left motors:" << get_motor_temps()[0];
+    display_tick();
     
 	}
 }
@@ -155,23 +156,21 @@ std::vector<double> get_motor_temps(){
 
   std::vector<double> temps; 
 
-    pros::Motor m1 (1); 
-    temps.push_back(m1.get_temperature());
-
-    pros::Motor m2 (2); 
-    temps.push_back(m1.get_temperature());
-
-    pros::Motor m3 (3); 
-    temps.push_back(m1.get_temperature());
-
-    pros::Motor m4 (4); 
-    temps.push_back(m1.get_temperature());
-
-    pros::Motor m5 (5); 
-    temps.push_back(m1.get_temperature());
-
-    pros::Motor m6 (6); 
-    temps.push_back(m1.get_temperature());
+  for(int i = 1; i < 7; i++){
+    temps.push_back(pros::c::motor_get_temperature(i));
+  }
 
   return temps; 
+}
+
+std::vector<double> get_motor_torques(){
+
+  std::vector<double> torques;
+
+  for(int i = 1; i < 7; i++){
+    torques.push_back(pros::c::motor_get_torque(i));
+  }
+
+  return torques;
+
 }
