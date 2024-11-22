@@ -91,15 +91,20 @@ void telemetry_table(lv_obj_t * tab){
 
   std::vector<double> tqs = get_motor_torques();
   std::vector<int> torques;
+
+  std::vector<double> rs = get_motor_rpms();
+  std::vector<int> rpms;
   for(int i = 0; i < mt.size(); i++){
     mtemps.push_back((int) mt[i]);
     torques.push_back((int) tqs[i]);
+    rpms.push_back((int) rpms[i]);
   }
 
   for(int i = 1; i < 7; i++){
     lv_table_set_cell_value_fmt(table, i, 0, "%i", i);
     lv_table_set_cell_value_fmt(table, i, 1, "%f", mtemps[i-1]);
     lv_table_set_cell_value_fmt(table, i, 2, "%f", torques[i-1]);
+    lv_table_set_cell_value_fmt(table, i, 3, "%f", rpms[i-1]);
   }
 
 
@@ -158,6 +163,7 @@ void display_init(void){
 }
 
 void display_tick(void){
+  telemetry_table(diag);
   pros::delay(20);
 
 }

@@ -146,7 +146,6 @@ void opcontrol() {
 		// Arcade control scheme
 		setArcadeDrive(master);
 
-    std::cout << "left motors:" << get_motor_temps()[0];
     display_tick();
     
 	}
@@ -172,5 +171,17 @@ std::vector<double> get_motor_torques(){
   }
 
   return torques;
+
+}
+
+std::vector<double> get_motor_rpms(){
+
+  std::vector<double> rpms;
+
+  for(int i = 1; i < 7; i++){
+    rpms.push_back(pros::c::motor_get_actual_velocity(i));
+  }
+
+  return rpms;
 
 }

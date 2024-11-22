@@ -69,6 +69,7 @@ void printStatus(void);
 void opcontrol(void);
 std::vector<double> get_motor_temps(void);
 std::vector<double> get_motor_torques(void);
+std::vector<double> get_motor_rpms(void);
 #ifdef __cplusplus
 }
 #endif
