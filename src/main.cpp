@@ -149,16 +149,16 @@ void drive_intake_hold(pros::Controller master){
   }
 }
 
-int previous_R1_state = 0;
+int previous_B_state = 0;
 
 void drive_intake_toggle(pros::Controller master) {
-  int intake_state = master.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
-  if (intake_state != previous_R1_state) { // change
+  int intake_state = master.get_digital(pros::E_CONTROLLER_DIGITAL_B);
+  if (intake_state != previous_B_state) { // change
     if (intake_state == 1) {
       intake_toggle();
     }
   }
-  previous_R1_state = intake_state;
+  previous_B_state = intake_state;
 }
 
 void drive_intake(pros::Controller master) {
