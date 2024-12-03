@@ -11,6 +11,8 @@
 pros::MotorGroup left_motors({1, 2, -3}, pros::MotorGearset::green);
 pros::MotorGroup right_motors({-4, -5, 6}, pros::MotorGearset::green);
 
+pros::Motor intake_motor(7, pros::MotorGearset::red);
+
 // Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality. 
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 13.3, lemlib::Omniwheel::NEW_325, 333.3333, 2);
 pros::Imu imu(10);
@@ -109,8 +111,58 @@ void swing_movement(int degrees, int timeout){
 	}
 }
 
-void drive_intake(){
-  pros::Motor drive_left (7);
+
+int intake_on_power = 50; // basically, how fast should the intake run when its on
+// 50 is a random guess
+bool intake_on_state = false; // true if on, false if off.
+
+// Set the motor power for the intake
+void set_intake_power(int8_t power) {
+  intake_on_power = power;
+}
+
+void intake_toggle() {
+  intake_on_state = !intake_on_state;
+  if (intake_on_state) {
+    intake_motor.move(intake_on_power);
+  } else {
+    intake_motor.move(0);
+  }
+}
+void intake_on() {
+  intake_on_state = true;
+  intake_motor.move(intake_on_power);
+}
+void intake_off() {
+  intake_on_state = false;
+  intake_motor.move(0);
+}
+
+// Intake button R1
+
+void drive_intake_hold(pros::Controller master){
+  int intake_state = master.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
+  if (intake_state == 1) {
+    intake_on();
+  } else {
+    intake_off();
+  }
+}
+
+int previous_R1_state = 0;
+
+void drive_intake_toggle(pros::Controller master) {
+  int intake_state = master.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
+  if (intake_state != previous_R1_state) { // change
+    if (intake_state == 1) {
+      intake_toggle();
+    }
+  }
+  previous_R1_state = intake_state;
+}
+
+void drive_intake(pros::Controller master) {
+  drive_intake_hold(master);
 }
 
 //Driver/Screen Functions: I, Debangshu Pramanik, think we'd like this to be outside opcontrol for organization purposes. 
@@ -149,7 +201,7 @@ void opcontrol() {
 		// Arcade control scheme
 		setArcadeDrive(master);
 
-    drive_intake();
+    drive_intake(master);
 
     display_tick();
     pros::delay(15);
