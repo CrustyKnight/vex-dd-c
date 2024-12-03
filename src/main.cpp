@@ -177,7 +177,6 @@ void setArcadeDrive(pros::Controller master){
 	int turn = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
 	left_motors.move(dir - turn);                      // Sets left motor voltage
 	right_motors.move(dir + turn);                     // Sets right motor voltage
-	pros::delay(10);                               // Run for 20 ms then update
 }
 
 /**
@@ -200,6 +199,7 @@ void opcontrol() {
 		printStatus();
 		// Arcade control scheme
 		setArcadeDrive(master);
+    pros::delay(10);                               // Run for 20 ms then update
 
     drive_intake(master);
 
