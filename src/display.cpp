@@ -21,6 +21,9 @@
 static lv_style_t style_btn;
 static lv_style_t style_button_pressed;
 
+lv_obj_t * diag;
+lv_obj_t * table;
+
 
 static void test_button(lv_event_t * e){
     lv_event_code_t code = lv_event_get_code(e);
@@ -76,7 +79,7 @@ static void style_init(void){
 
 void telemetry_table(lv_obj_t * tab){
 
-  lv_obj_t * table = lv_table_create(tab);
+  table = lv_table_create(tab);
 
   lv_table_set_col_width(table, 0, 90);
   lv_obj_set_style_pad_ver(table, 10, LV_PART_ITEMS);
@@ -94,11 +97,12 @@ void telemetry_table(lv_obj_t * tab){
 
   std::vector<double> rs = get_motor_rpms();
   std::vector<int> rpms;
-  for(int i = 0; i < mt.size(); i++){
-    mtemps.push_back((int) mt[i]);
-    torques.push_back((int) tqs[i]);
-    rpms.push_back((int) rpms[i]);
+  for(int i = 0; i < 6; i++){
+    mtemps.push_back(0);
+    torques.push_back(0);
+    rpms.push_back(0);
   }
+
 
   for(int i = 1; i < 7; i++){
     lv_table_set_cell_value_fmt(table, i, 0, "%i", i);
@@ -111,6 +115,10 @@ void telemetry_table(lv_obj_t * tab){
   lv_obj_align(table, LV_DIR_LEFT, -25, -25);
 
 }
+
+
+
+lv_obj_t * title;
 
 void display_init(void){
 
@@ -127,9 +135,9 @@ void display_init(void){
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(cat_crust), LV_PART_MAIN);
 
     maint = lv_tabview_add_tab(tabview, "MAIN");
-    lv_obj_t * diag = lv_tabview_add_tab(tabview, "INFO");
+    diag = lv_tabview_add_tab(tabview, "INFO");
  
-    lv_obj_t * title = lv_label_create(maint);
+    title = lv_label_create(maint);
     lv_label_set_text(title, "~~DONUT DYNAMICS~~");
     lv_obj_set_style_text_color(maint, lv_color_hex(TEXTCLR), LV_PART_MAIN);
     
@@ -163,8 +171,5 @@ void display_init(void){
 }
 
 void display_tick(void){
-  telemetry_table(diag);
-  pros::delay(20);
-
+  //telemetry_table(diag);
 }
-

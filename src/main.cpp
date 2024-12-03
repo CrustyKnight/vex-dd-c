@@ -60,7 +60,6 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {}
-
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
  * Management System or the VEX Competition Switch. This is intended for
@@ -110,6 +109,10 @@ void swing_movement(int degrees, int timeout){
 	}
 }
 
+void drive_intake(){
+  pros::Motor drive_left (7);
+}
+
 //Driver/Screen Functions: I, Debangshu Pramanik, think we'd like this to be outside opcontrol for organization purposes. 
 void printStatus(){ // Prints status of the emulated screen LCDs
 	pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
@@ -122,7 +125,7 @@ void setArcadeDrive(pros::Controller master){
 	int turn = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
 	left_motors.move(dir - turn);                      // Sets left motor voltage
 	right_motors.move(dir + turn);                     // Sets right motor voltage
-	pros::delay(20);                               // Run for 20 ms then update
+	pros::delay(10);                               // Run for 20 ms then update
 }
 
 /**
@@ -146,7 +149,10 @@ void opcontrol() {
 		// Arcade control scheme
 		setArcadeDrive(master);
 
+    drive_intake();
+
     display_tick();
+    pros::delay(15);
     
 	}
 }

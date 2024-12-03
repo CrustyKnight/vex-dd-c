@@ -67,6 +67,7 @@ void disabled(void);
 void competition_initialize(void);
 void printStatus(void);
 void opcontrol(void);
+void drive_intake(void);
 std::vector<double> get_motor_temps(void);
 std::vector<double> get_motor_torques(void);
 std::vector<double> get_motor_rpms(void);
