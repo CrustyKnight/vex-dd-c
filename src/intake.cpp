@@ -7,8 +7,8 @@
 #define CLAMP_BUTTON DIGITAL_A
 
 pros::Motor intake_motor(7, pros::MotorGearset::blue);
-pros::adi::DigitalOut clamp_piston_a('A');
-pros::adi::DigitalOut clamp_piston_b('B');
+pros::adi::DigitalOut clamp_piston_a('H');
+//pros::adi::DigitalOut clamp_piston_b('B');
 
 
 
@@ -71,7 +71,7 @@ bool clamp_on_state = false;
 
 void clamp_pistons_set(int value) {
     clamp_piston_a.set_value(value);
-    clamp_piston_b.set_value(value);
+    //clamp_piston_b.set_value(value);
 }
 
 void clamp_engage() {
