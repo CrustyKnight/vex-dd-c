@@ -4,7 +4,7 @@
 
 
 #define INTAKE_BUTTON DIGITAL_R1
-#define INTAKE_REVERSE_BUTTON DIGITAL_R2
+#define INTAKE_REVERSE_BUTTON DIGITAL_L1
 #define CLAMP_BUTTON DIGITAL_A
 
 pros::Motor intake_motor(7, pros::MotorGearset::blue);
@@ -13,7 +13,7 @@ pros::adi::DigitalOut clamp_piston_a('H');
 
 
 
-int intake_on_power = -100; // basically, how fast should the intake run when its on
+int intake_on_power = 100; // basically, how fast should the intake run when its on
 // 50 is a random guess
 bool intake_on_state = false; // true if on, false if off.
 
