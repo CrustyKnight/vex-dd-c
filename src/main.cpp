@@ -11,8 +11,8 @@
 // LemLib setup
 // TODO
 // Setting up of drivetrain sides: side_motors({low_1, low_2, -high})
-pros::MotorGroup left_motors({13, 14, 15}, pros::MotorGearset::green);
-pros::MotorGroup right_motors({-18, -19, -20}, pros::MotorGearset::green);
+pros::MotorGroup left_motors({-13, -14, -15}, pros::MotorGearset::green);
+pros::MotorGroup right_motors({18, 19, 20}, pros::MotorGearset::green);
 
 // Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality. 
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 13.3, lemlib::Omniwheel::NEW_325, 333.3333, 2);
@@ -21,8 +21,10 @@ lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 
 // kP, kI, kD, anti-windup, small error range, small error range timeout,
 // large error range, large error range timeout, max acceleration (slew)
+// lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
 lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
-lemlib::ControllerSettings angular_controller(2, 0, 10, 3, 1, 100, 3, 500, 0);
+// lemlib::ControllerSettings angular_controller(2, 0, 10, 3, 1, 100, 3, 500, 0);
+lemlib::ControllerSettings angular_controller(2, 0, 10, 0, 0, 0, 0, 0, 0);
 
 // Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain. 
 lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
@@ -118,7 +120,31 @@ void swing_movement(int degrees, int timeout){
 
 // when testing, put the tests in here
 void autonomous() {
-  lateral_move(5, 4000);
+  intake_on();
+  lemlib::update();
+  // lateral_move(20, 4000);
+  set_intake_power(100);
+  intake_on();
+  chassis.setPose(0, 0, 0);
+  chassis.moveToPoint(0, 15, 4000);
+  pros::delay(1500);
+  intake_off();
+}
+
+void do_autonomous() {
+  set_intake_power(100);
+  intake_on();
+
+}
+
+void pidTestingAngular() {
+  chassis.setPose(0, 0, 0);
+  chassis.turnToHeading(90, 100000);
+}
+
+void pidTestingLateral() {
+  chassis.setPose(0, 0, 0);
+  chassis.moveToPoint(0, 48, 100000);
 }
 
 
@@ -133,7 +159,7 @@ void printStatus(){ // Prints status of the emulated screen LCDs
 // Set up of driver controls...// Arcade control scheme; has it's own function for enhanced organization...
 void setArcadeDrive(pros::Controller master){ 
 	int dir = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
-	int turn = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
+	int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
 	left_motors.move(dir - turn);                      // Sets left motor voltage
 	right_motors.move(dir + turn);                     // Sets right motor voltage
 }
@@ -153,6 +179,7 @@ void setArcadeDrive(pros::Controller master){
  */
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
+  // autonomous();
 	while (true) {
 		// Prints status of the emulated LCD. 
 		printStatus();
