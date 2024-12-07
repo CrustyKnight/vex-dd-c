@@ -11,8 +11,8 @@
 // LemLib setup
 // TODO
 // Setting up of drivetrain sides: side_motors({low_1, low_2, -high})
-pros::MotorGroup left_motors({13, -14, 15}, pros::MotorGearset::green);
-pros::MotorGroup right_motors({-18, 19, -20}, pros::MotorGearset::green);
+pros::MotorGroup left_motors({13, 14, 15}, pros::MotorGearset::green);
+pros::MotorGroup right_motors({-18, -19, -20}, pros::MotorGearset::green);
 
 // Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality. 
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 13.3, lemlib::Omniwheel::NEW_325, 333.3333, 2);
