@@ -1,16 +1,18 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep
+#include "lemlib/chassis/odom.hpp"
 #include "auton.hpp"
 #include "main.h"
 #include "display.h"
 #include "intake.hpp"
+#include <math.h>
 
 //Important Note: This file has all of our drivetrain and remote control-related code. 
 
 // LemLib setup
 // TODO
 // Setting up of drivetrain sides: side_motors({low_1, low_2, -high})
-pros::MotorGroup left_motors({1, 2, -3}, pros::MotorGearset::green);
-pros::MotorGroup right_motors({-4, -5, 6}, pros::MotorGearset::green);
+pros::MotorGroup left_motors({13, -14, 15}, pros::MotorGearset::green);
+pros::MotorGroup right_motors({-18, 19, -20}, pros::MotorGearset::green);
 
 // Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality. 
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 13.3, lemlib::Omniwheel::NEW_325, 333.3333, 2);
@@ -72,6 +74,36 @@ void disabled() {}
  */
 void competition_initialize() {}
 
+
+
+void lateral_move(int distance, int timeout) {
+  //lemlib::update(); // update the pose
+  lemlib::Pose currentPose = chassis.getPose(true);
+  float new_x = (int)(sin(currentPose.theta) * distance);
+  float new_y = (int)(sin(currentPose.theta) * distance);
+	chassis.moveToPoint(new_x, new_y, timeout);
+	}
+
+//TODO: we need to find out if negative degrees and positive degrees are clockwise our counterclockwise for the purpose of our robot.
+void angular_turn(int degrees, int timeout) {
+  //lemlib::update(); // update the pose
+  lemlib::Pose currentPose = chassis.getPose();
+  float new_degrees = currentPose.theta + degrees;
+	chassis.turnToHeading(new_degrees, timeout);
+}
+
+void swing_movement(int degrees, int timeout){
+  //lemlib::update(); // update the pose
+  lemlib::Pose currentPose = chassis.getPose();
+  float new_degrees = currentPose.theta + degrees;
+	if(degrees < 0){
+		chassis.swingToHeading(new_degrees, DriveSide::LEFT, timeout);
+	}
+	else{
+		chassis.swingToHeading(new_degrees, DriveSide::RIGHT, timeout);
+	}
+}
+
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -86,29 +118,9 @@ void competition_initialize() {}
 
 // when testing, put the tests in here
 void autonomous() {
-	
+  lateral_move(5, 4000);
 }
 
-void lateral_move(int distance, int timeout) {
-	chassis.setPose(0, 0, 0);
-	chassis.moveToPoint(0, distance, timeout);
-	}
-
-//TODO: we need to find out if negative degrees and positive degrees are clockwise our counterclockwise for the purpose of our robot. 
-void angular_turn(int degrees, int timeout) {
-	chassis.setPose(0, 0, 0);
-	chassis.turnToHeading(degrees, timeout);
-}
-
-void swing_movement(int degrees, int timeout){
-	chassis.setPose(0, 0, 0);
-	if(degrees < 0){
-		chassis.swingToHeading(degrees, DriveSide::LEFT, timeout);
-	}
-	else{
-		chassis.swingToHeading(degrees, DriveSide::RIGHT, timeout);
-	}
-}
 
 
 

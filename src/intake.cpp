@@ -6,7 +6,7 @@
 #define INTAKE_BUTTON DIGITAL_R1
 #define CLAMP_BUTTON DIGITAL_A
 
-pros::Motor intake_motor(7, pros::MotorGearset::red);
+pros::Motor intake_motor(7, pros::MotorGearset::blue);
 pros::adi::DigitalOut clamp_piston_a('A');
 pros::adi::DigitalOut clamp_piston_b('B');
 
