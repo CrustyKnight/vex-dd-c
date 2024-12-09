@@ -6,6 +6,10 @@
 #define INTAKE_BUTTON DIGITAL_R1
 #define INTAKE_REVERSE_BUTTON DIGITAL_R2
 #define CLAMP_BUTTON DIGITAL_A
+#define CLAMP_UP_BUTTON DIGITAL_UP
+#define CLAMP_DOWN_BUTTON DIGITAL_DOWN
+#define CLAMP_ON 1
+#define CLAMP_OFF 0
 
 pros::Motor intake_motor(7, pros::MotorGearset::blue);
 pros::adi::DigitalOut clamp_piston_a('H');
@@ -82,12 +86,12 @@ void clamp_pistons_set(int value) {
 
 void clamp_engage() {
     clamp_on_state = true;
-    clamp_pistons_set(1);
+    clamp_pistons_set(CLAMP_ON);
 }
 
 void clamp_disengage() {
     clamp_on_state = false;
-    clamp_pistons_set(0);
+    clamp_pistons_set(CLAMP_OFF);
 }
 
 void clamp_toggle () {
@@ -100,7 +104,7 @@ void clamp_toggle () {
 
 int previous_clamp_button_state = 0;
 
-void drive_clamp(pros::Controller master) {
+void drive_clamp_toggle(pros::Controller master) {
     int clamp_state = master.get_digital(CLAMP_BUTTON);
     if (clamp_state != previous_clamp_button_state) {
         if(clamp_state == 1) {
@@ -108,4 +112,22 @@ void drive_clamp(pros::Controller master) {
         }
     }
     previous_clamp_button_state = clamp_state;
+}
+
+int previous_clamp_up_button_state = 0;
+int previous_clamp_down_button_state = 0;
+void drive_clamp_up_down(pros::Controller master) {
+  int clamp_up_state = master.get_digital(CLAMP_UP_BUTTON);
+  int clamp_down_state = master.get_digital(CLAMP_DOWN_BUTTON);
+  if (clamp_up_state != previous_clamp_up_button_state && clamp_up_state == 1) {
+    clamp_disengage();
+  } else if (clamp_down_state != previous_clamp_down_button_state && clamp_down_state == 1) {
+    clamp_engage();
+  }
+  previous_clamp_up_button_state = clamp_up_state;
+  previous_clamp_down_button_state = clamp_down_state;
+}
+
+void drive_clamp(pros::Controller master) {
+  drive_clamp_up_down(master);
 }
