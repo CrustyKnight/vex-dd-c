@@ -98,9 +98,9 @@ void telemetry_table(lv_obj_t * tab){
   std::vector<double> rs = get_motor_rpms();
   std::vector<int> rpms;
   for(int i = 0; i < 6; i++){
-    mtemps.push_back(0);
-    torques.push_back(0);
-    rpms.push_back(0);
+    mtemps.push_back(mt[i]);
+    torques.push_back(tqs[i]);
+    rpms.push_back(rs[i]);
   }
 
 

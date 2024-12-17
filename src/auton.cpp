@@ -12,7 +12,7 @@ void autonSkills(){
 //#TODO: create game plan...
 // void gameAuton(string startLocation){ //startLocation can be "left" or "right"
 //     if(startLocation.length() == 4){
-//         std::cout<<"Yipee";
+//         std::cout<<"Yippee";
 //     }
 //     else if(startLocation.length() == 5){
 //         std::cout<<"Yay!";
