@@ -89,9 +89,21 @@ void drive_extend (pros::Controller master)
 	ext.set_encoder_units(pros::E_MOTOR_ENCODER_ROTATIONS);
 	int reverse = master.get_digital(pros::E_CONTROLLER_DIGITAL_X);
 	int forward = master.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
+	double unit = 17/12;
 
-	if (level == 2 && forward == 1) {
-		return;
+	if ((level == 2 && forward == 1) || (level == 0 && reverse == 1)) {
+		ext.move(0);
+	}
+	else if (forward == 1) {
+		ext.move_relative(unit, 100);
+		level++;
+	}
+	else if (reverse == 1) {
+		ext.move_relative(-unit, 100);
+		level--;
+	}
+	else {
+		ext.move(0);
 	}
 }
 
