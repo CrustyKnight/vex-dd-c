@@ -192,7 +192,7 @@ void opcontrol() {
     drive_extend(master);
 
     display_tick();
-    pros::delay(15);
+    pros::delay(2);
     
 	}
 }

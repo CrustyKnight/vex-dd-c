@@ -84,28 +84,61 @@ void drive_intake(pros::Controller master) {
 
 
 int level = 0;
+int prev_forward = 0;
+int prev_reverse = 0;
+void drive_extend(pros::Controller master)
+{
+	ext.set_encoder_units(pros::E_MOTOR_ENCODER_ROTATIONS);
+	int forward = master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+	int reverse = master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+
+	std::cout << "level: " << level << "\nforward: " << forward << "\nreverse: " << reverse << "\n" << std::endl;
+
+	if (forward == prev_forward || (level == 0 && reverse == 1) || (level == 2 && forward == 1)){
+		return;
+	}
+	double unit = 17/12;
+
+	if (reverse == 1){
+		level--;
+		ext.move_relative(-unit, 100);
+	}
+	if (forward == 1){
+		level++;
+		ext.move_relative(unit, 100);
+	}
+	prev_forward = forward;
+	prev_reverse = reverse;
+
+
+}
+
+
+/*
 void drive_extend (pros::Controller master) 
 {
 	ext.set_encoder_units(pros::E_MOTOR_ENCODER_ROTATIONS);
 	int reverse = master.get_digital(pros::E_CONTROLLER_DIGITAL_X);
 	int forward = master.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
-	double unit = 17/12;
+	double unit = (32 * 17)/12;
 
 	if ((level == 2 && forward == 1) || (level == 0 && reverse == 1)) {
-		ext.move(0);
+		ext.move((32*17)/12);
 	}
 	else if (forward == 1) {
-		ext.move_relative(unit, 100);
+		ext.move_relative((32*17)/12, 100);
 		level++;
 	}
 	else if (reverse == 1) {
-		ext.move_relative(-unit, 100);
+		ext.move_relative(-(32*17)/12, 100);
 		level--;
 	}
 	else {
 		ext.move(0);
 	}
+	std::cout << "level: " << level << "\nforward: " << forward << "\nreverse: " << reverse << "\n" << std::endl;
 }
+*/
 
 
 bool clamp_on_state = false;
