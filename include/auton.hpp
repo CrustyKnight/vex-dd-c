@@ -4,3 +4,4 @@
 
 void autonSkills();
 //void gameAuton(string startLocation);
+void gameAuton();
