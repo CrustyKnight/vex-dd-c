@@ -3,7 +3,7 @@
 #include "auton.hpp"
 #include "main.h"
 #include "display.h"
-#include "intake.hpp"
+#include "control.hpp"
 #include <math.h>
 
 //Important Note: This file has all of our drivetrain and remote control-related code. 
@@ -55,7 +55,7 @@ void on_center_button() {
  */
 void initialize() {
   display_init();
-	chassis.calibrate();
+chassis.calibrate();
 }
 
 /**
@@ -178,7 +178,7 @@ void setArcadeDrive(pros::Controller master){
  */
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-  // autonomous();
+//  autonomous();
 	while (true) {
 		// Prints status of the emulated LCD. 
 		printStatus();
@@ -188,9 +188,10 @@ void opcontrol() {
 
     drive_intake(master);
     drive_clamp(master);
+    drive_extend(master);
 
     display_tick();
-    pros::delay(15);
+    pros::delay(2);
     
 	}
 }
