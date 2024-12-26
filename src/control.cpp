@@ -93,8 +93,14 @@ void drive_extend(pros::Controller master)
 	int forward = master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
 	int reverse = master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
 
-	if ((going = 0) && (forward == prev_forward && reverse == prev_reverse) || ((level == 0 && reverse == 1) || (level == 2 && forward == 1))){
+	if (std::floor(ext.get_actual_velocity()) == 0){
+		going = 0;
+	}
+	else{
 		going = 1;
+	}
+	
+	if ((going == 1) || (forward == prev_forward && reverse == prev_reverse) || (level == 2 && forward == 1) || (level == 0 && reverse == 1)){
 		return;
 	}
 	double unit = 19.0/12.0;
@@ -103,12 +109,13 @@ void drive_extend(pros::Controller master)
 	if (reverse == 1){
 		level--;
 		ext.move_relative(unit, 100);
+		going = 1;
 	}
 	else if (forward == 1){
 		level++;
 		ext.move_relative(-unit, 100);
+		going = 1;
 	}
-	going = 0;
 	prev_forward = forward;
 	prev_reverse = reverse;
 
