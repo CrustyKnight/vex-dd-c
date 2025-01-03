@@ -35,21 +35,29 @@ pros::Motor ext(8, pros::MotorGearset::red);
 class Button {
   public:
     pros::controller_digital_e_t button;
+    Button(pros::controller_digital_e_t);
     int previous_state;
     int current_state;
-    pros::Controller controller;
-    void update();
+    void update(pros::Controller);
     bool just_pressed();
+    bool held() { return current_state == 1;};
 };
-
-void Button::update() {
+Button::Button (pros::controller_digital_e_t b) {
+  button = b;
+  current_state = 0;
+}
+void Button::update(pros::Controller controller) {
   previous_state = current_state;
   current_state = controller.get_digital(button);
 }
-
 bool Button::just_pressed() {
   return (previous_state != current_state) && (current_state == 1);
 }
+
+Button intake_button(INTAKE_BUTTON);
+Button intake_reverse_button(INTAKE_REVERSE_BUTTON);
+Button clamp_up_button(CLAMP_UP_BUTTON);
+Button clamp_down_button(CLAMP_DOWN_BUTTON);
 
 int intake_on_power = -100; // basically, how fast should the intake run when its on
 // 50 is a random guess
