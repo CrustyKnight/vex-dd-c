@@ -21,3 +21,6 @@ void autonSkills(){
 //         pros::lcd::set_text(2, "There is no game skills currently running!");
 //     }
 // }
+void gameAuton(){
+    
+}

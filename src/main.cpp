@@ -10,7 +10,7 @@
 
 // LemLib setup
 // TODO
-// Setting up of drivetrain sides: side_motors({low_1, low_2, -high})
+// Setting up of drivetrain sides: side_motors({low_1, low_2, high})
 pros::MotorGroup left_motors({-13, -14, -15}, pros::MotorGearset::green);
 pros::MotorGroup right_motors({18, 19, 20}, pros::MotorGearset::green);
 
@@ -30,7 +30,6 @@ lemlib::ControllerSettings angular_controller(2, 0, 10, 0, 0, 0, 0, 0, 0);
 lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
 // Creating expo drive curve
 lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
-
 /**
  * A callback function for LLEMU's center button.
  *
@@ -81,7 +80,7 @@ void competition_initialize() {}
 void lateral_move(int distance, int timeout) {
   //lemlib::update(); // update the pose
   lemlib::Pose currentPose = chassis.getPose(true);
-  float new_x = (int)(sin(currentPose.theta) * distance);
+  float new_x = (int)(cos(currentPose.theta) * distance); //Changed sin to cos; x is cos no? (Debangshu)
   float new_y = (int)(sin(currentPose.theta) * distance);
 	chassis.moveToPoint(new_x, new_y, timeout);
 	}
@@ -192,7 +191,7 @@ void opcontrol() {
     drive_extend(master);
 
     display_tick();
-    pros::delay(15);
+    pros::delay(2);
     
 	}
 }

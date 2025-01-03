@@ -10,5 +10,6 @@ void set_intake_power(int8_t);
 extern bool intake_on_state;
 
 void drive_clamp(pros::Controller);
+void drive_extend(pros::Controller);
 
 #endif // INTAKE_H_

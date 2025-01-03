@@ -1,9 +1,0 @@
-#+title: Notes
-
-* TODO When setting up, enter the correct numbers for the motors
-also check everything else (track width, wheel size)
-also change horizontal drift
-also imu
-
-* RPM calc for drivetrain input
-cole says 333.33..

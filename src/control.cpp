@@ -116,15 +116,42 @@ void drive_intake(pros::Controller master) {
 
 
 int level = 0;
-void drive_extend (pros::Controller master) 
+int prev_forward = 0;
+int prev_reverse = 0;
+int going = 0;
+void drive_extend(pros::Controller master)
 {
 	ext.set_encoder_units(pros::E_MOTOR_ENCODER_ROTATIONS);
-	int reverse = master.get_digital(pros::E_CONTROLLER_DIGITAL_X);
-	int forward = master.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
+	int forward = master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+	int reverse = master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
 
-	if (level == 2 && forward == 1) {
+	if (std::floor(ext.get_actual_velocity()) == 0){
+		going = 0;
+	}
+	else{
+		going = 1;
+	}
+	
+	if ((going == 1) || (forward == prev_forward && reverse == prev_reverse) || (level == 2 && forward == 1) || (level == 0 && reverse == 1)){
 		return;
 	}
+	double unit = 19.0/12.0;
+
+
+	if (reverse == 1){
+		level--;
+		ext.move_relative(unit, 100);
+		going = 1;
+	}
+	else if (forward == 1){
+		level++;
+		ext.move_relative(-unit, 100);
+		going = 1;
+	}
+	prev_forward = forward;
+	prev_reverse = reverse;
+
+
 }
 
 
