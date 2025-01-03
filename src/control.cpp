@@ -17,7 +17,39 @@ pros::Motor ext(8, pros::MotorGearset::red);
 
 //pros::adi::DigitalOut clamp_piston_b('B');
 
+/*
+#define DIGITAL_L1 pros::E_CONTROLLER_DIGITAL_L1
+#define DIGITAL_L2 pros::E_CONTROLLER_DIGITAL_L2
+#define DIGITAL_R1 pros::E_CONTROLLER_DIGITAL_R1
+#define DIGITAL_R2 pros::E_CONTROLLER_DIGITAL_R2
+#define DIGITAL_UP pros::E_CONTROLLER_DIGITAL_UP
+#define DIGITAL_DOWN pros::E_CONTROLLER_DIGITAL_DOWN
+#define DIGITAL_LEFT pros::E_CONTROLLER_DIGITAL_LEFT
+#define DIGITAL_RIGHT pros::E_CONTROLLER_DIGITAL_RIGHT
+#define DIGITAL_X pros::E_CONTROLLER_DIGITAL_X
+#define DIGITAL_B pros::E_CONTROLLER_DIGITAL_B
+#define DIGITAL_Y pros::E_CONTROLLER_DIGITAL_Y
+#define DIGITAL_A pros::E_CONTROLLER_DIGITAL_A
+*/
 
+class Button {
+  public:
+    pros::controller_digital_e_t button;
+    int previous_state;
+    int current_state;
+    pros::Controller controller;
+    void update();
+    bool just_pressed();
+};
+
+void Button::update() {
+  previous_state = current_state;
+  current_state = controller.get_digital(button);
+}
+
+bool Button::just_pressed() {
+  return (previous_state != current_state) && (current_state == 1);
+}
 
 int intake_on_power = -100; // basically, how fast should the intake run when its on
 // 50 is a random guess
