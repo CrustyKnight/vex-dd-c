@@ -100,20 +100,20 @@ void drive_extend(pros::Controller master)
 		going = 1;
 	}
 	
-	if ((going == 1) || (forward == prev_forward && reverse == prev_reverse) || (level == 2 && forward == 1) || (level == 0 && reverse == 1)){
+	if ((going == 1) || (forward == prev_forward && reverse == prev_reverse) /*|| (level == 2 && forward == 1) || (level == 0 && reverse == 1)*/){
 		return;
 	}
 	double unit = 19.0/12.0;
 
 
-	if (reverse == 1){
+	if (forward == 1){
 		level--;
-		ext.move_relative(unit, 100);
+		ext.move_relative(7*unit, 100);
 		going = 1;
 	}
-	else if (forward == 1){
+	else if (reverse == 1){
 		level++;
-		ext.move_relative(-unit, 100);
+		ext.move_relative(-7*unit, 100);
 		going = 1;
 	}
 	prev_forward = forward;
