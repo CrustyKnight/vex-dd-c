@@ -1,4 +1,4 @@
-#include "lemlib/api.hpp" // IWYU pragma: keep
+#include "lemlib/api.hpp"  // IWYU pragma: keep
 #include "lemlib/chassis/odom.hpp"
 #include "auton.hpp"
 #include "main.h"
@@ -6,7 +6,7 @@
 #include "control.hpp"
 #include <math.h>
 
-//Important Note: This file has all of our drivetrain and remote control-related code. 
+// Important Note: This file has all of our drivetrain and remote control-related code.
 
 // LemLib setup
 // TODO
@@ -14,7 +14,7 @@
 pros::MotorGroup left_motors({-13, -14, -15}, pros::MotorGearset::green);
 pros::MotorGroup right_motors({18, 19, 20}, pros::MotorGearset::green);
 
-// Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality. 
+// Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality.
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 13.3, lemlib::Omniwheel::NEW_325, 333.3333, 2);
 pros::Imu imu(10);
 lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
@@ -26,7 +26,7 @@ lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
 // lemlib::ControllerSettings angular_controller(2, 0, 10, 3, 1, 100, 3, 500, 0);
 lemlib::ControllerSettings angular_controller(2, 0, 10, 0, 0, 0, 0, 0, 0);
 
-// Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain. 
+// Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain.
 lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
 // Creating expo drive curve
 lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
@@ -38,13 +38,13 @@ lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
  */
 void on_center_button() {
   pros::lcd::initialize();
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
+  static bool pressed = false;
+  pressed = !pressed;
+  if (pressed) {
     pros::lcd::set_text(0, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
+  } else {
+    pros::lcd::clear_line(2);
+  }
 }
 
 /**
@@ -55,7 +55,7 @@ void on_center_button() {
  */
 void initialize() {
   display_init();
-chassis.calibrate();
+  chassis.calibrate();
 }
 
 /**
@@ -75,34 +75,31 @@ void disabled() {}
  */
 void competition_initialize() {}
 
-
-
 void lateral_move(int distance, int timeout) {
-  //lemlib::update(); // update the pose
+  // lemlib::update(); // update the pose
   lemlib::Pose currentPose = chassis.getPose(true);
-  float new_x = (int)(cos(currentPose.theta) * distance); //Changed sin to cos; x is cos no? (Debangshu)
+  float new_x = (int)(cos(currentPose.theta) * distance);  // Changed sin to cos; x is cos no? (Debangshu)
   float new_y = (int)(sin(currentPose.theta) * distance);
-	chassis.moveToPoint(new_x, new_y, timeout);
-	}
-
-//TODO: we need to find out if negative degrees and positive degrees are clockwise our counterclockwise for the purpose of our robot.
-void angular_turn(int degrees, int timeout) {
-  //lemlib::update(); // update the pose
-  lemlib::Pose currentPose = chassis.getPose();
-  float new_degrees = currentPose.theta + degrees;
-	chassis.turnToHeading(new_degrees, timeout);
+  chassis.moveToPoint(new_x, new_y, timeout);
 }
 
-void swing_movement(int degrees, int timeout){
-  //lemlib::update(); // update the pose
+// TODO: we need to find out if negative degrees and positive degrees are clockwise our counterclockwise for the purpose of our robot.
+void angular_turn(int degrees, int timeout) {
+  // lemlib::update(); // update the pose
   lemlib::Pose currentPose = chassis.getPose();
   float new_degrees = currentPose.theta + degrees;
-	if(degrees < 0){
-		chassis.swingToHeading(new_degrees, DriveSide::LEFT, timeout);
-	}
-	else{
-		chassis.swingToHeading(new_degrees, DriveSide::RIGHT, timeout);
-	}
+  chassis.turnToHeading(new_degrees, timeout);
+}
+
+void swing_movement(int degrees, int timeout) {
+  // lemlib::update(); // update the pose
+  lemlib::Pose currentPose = chassis.getPose();
+  float new_degrees = currentPose.theta + degrees;
+  if (degrees < 0) {
+    chassis.swingToHeading(new_degrees, DriveSide::LEFT, timeout);
+  } else {
+    chassis.swingToHeading(new_degrees, DriveSide::RIGHT, timeout);
+  }
 }
 
 /**
@@ -133,7 +130,6 @@ void autonomous() {
 void do_autonomous() {
   set_intake_power(100);
   intake_on();
-
 }
 
 void pidTestingAngular() {
@@ -146,21 +142,18 @@ void pidTestingLateral() {
   chassis.moveToPoint(0, 48, 100000);
 }
 
-
-
-
-//Driver/Screen Functions: I, Debangshu Pramanik, think we'd like this to be outside opcontrol for organization purposes. 
-void printStatus(){ // Prints status of the emulated screen LCDs
-	pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);  
-} 
+// Driver/Screen Functions: I, Debangshu Pramanik, think we'd like this to be outside opcontrol for organization purposes.
+void printStatus() {  // Prints status of the emulated screen LCDs
+  pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
+                   (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
+                   (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
+}
 // Set up of driver controls...// Arcade control scheme; has it's own function for enhanced organization...
-void setArcadeDrive(pros::Controller master){ 
-	int dir = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
-	int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
-	left_motors.move(dir - turn);                      // Sets left motor voltage
-	right_motors.move(dir + turn);                     // Sets right motor voltage
+void setArcadeDrive(pros::Controller master) {
+  int dir = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);     // Gets amount forward/backward from left joystick
+  int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
+  left_motors.move(dir - turn);                                      // Sets left motor voltage
+  right_motors.move(dir + turn);                                     // Sets right motor voltage
 }
 
 /**
@@ -177,14 +170,14 @@ void setArcadeDrive(pros::Controller master){
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-//  autonomous();
-	while (true) {
-		// Prints status of the emulated LCD. 
-		printStatus();
-		// Arcade control scheme
-		setArcadeDrive(master);
-    pros::delay(10);                               // Run for 20 ms then update
+  pros::Controller master(pros::E_CONTROLLER_MASTER);
+  //  autonomous();
+  while (true) {
+    // Prints status of the emulated LCD.
+    printStatus();
+    // Arcade control scheme
+    setArcadeDrive(master);
+    pros::delay(10);  // Run for 20 ms then update
 
     drive_intake(master);
     drive_clamp(master);
@@ -192,41 +185,35 @@ void opcontrol() {
 
     display_tick();
     pros::delay(2);
-    
-	}
+  }
 }
 
-std::vector<double> get_motor_temps(){
+std::vector<double> get_motor_temps() {
+  std::vector<double> temps;
 
-  std::vector<double> temps; 
-
-  for(int i = 1; i < 7; i++){
+  for (int i = 1; i < 7; i++) {
     temps.push_back(pros::c::motor_get_temperature(i));
   }
 
-  return temps; 
+  return temps;
 }
 
-std::vector<double> get_motor_torques(){
-
+std::vector<double> get_motor_torques() {
   std::vector<double> torques;
 
-  for(int i = 1; i < 7; i++){
+  for (int i = 1; i < 7; i++) {
     torques.push_back(pros::c::motor_get_torque(i));
   }
 
   return torques;
-
 }
 
-std::vector<double> get_motor_rpms(){
-
+std::vector<double> get_motor_rpms() {
   std::vector<double> rpms;
 
-  for(int i = 1; i < 7; i++){
+  for (int i = 1; i < 7; i++) {
     rpms.push_back(pros::c::motor_get_actual_velocity(i));
   }
 
   return rpms;
-
 }
