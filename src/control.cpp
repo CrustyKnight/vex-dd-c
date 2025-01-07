@@ -10,12 +10,13 @@
 #define CLAMP_DOWN_BUTTON DIGITAL_DOWN
 #define CLAMP_ON 1
 #define CLAMP_OFF 0
+#define CLAMP_PISTON_A_PORT 'H'
+#define CLAMP_PISTON_B_PORT 'G'
 
 pros::Motor intake_motor(7, pros::MotorGearset::green);
-pros::adi::DigitalOut clamp_piston_a('H');
+pros::adi::DigitalOut clamp_piston_a(CLAMP_PISTON_A_PORT);
+pros::adi::DigitalOut clamp_piston_b(CLAMP_PISTON_B_PORT);
 pros::Motor ext(8, pros::MotorGearset::red);
-
-//pros::adi::DigitalOut clamp_piston_b('B');
 
 /*
 #define DIGITAL_L1 pros::E_CONTROLLER_DIGITAL_L1
@@ -41,6 +42,8 @@ class Button {
     void update(pros::Controller);
     bool just_pressed();
     bool held() { return current_state == 1;};
+  bool held() { return current_state == 1; };
+  bool unheld() { return current_state != 1; };
 };
 Button::Button (pros::controller_digital_e_t b) {
   button = b;
@@ -172,8 +175,8 @@ void drive_extend(pros::Controller master)
 bool clamp_on_state = false;
 
 void clamp_pistons_set(int value) {
-    clamp_piston_a.set_value(value);
-    //clamp_piston_b.set_value(value);
+  clamp_piston_a.set_value(value);
+  clamp_piston_b.set_value(value);
 }
 
 void clamp_engage() {
