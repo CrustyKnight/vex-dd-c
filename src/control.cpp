@@ -92,12 +92,14 @@ void intake_off() {
 // Intake button R1
 
 void drive_intake_hold(pros::Controller master){
-  // intake_button.update(master);
-  // intake_reverse_button.update(master);
-  // int intake_state = intake_button.current_state;
-  // int intake_backward_state = intake_reverse_button.current_state;
-  int intake_state = master.get_digital(INTAKE_BUTTON);
-  int intake_backward_state = master.get_digital(INTAKE_REVERSE_BUTTON);
+   intake_button.update(master);
+   intake_reverse_button.update(master);
+   int intake_state = intake_button.current_state;
+   int intake_backward_state = intake_reverse_button.current_state;
+   /*
+	int intake_state = master.get_digital(INTAKE_BUTTON);
+  	int intake_backward_state = master.get_digital(INTAKE_REVERSE_BUTTON);
+	*/ 
   if (intake_state == 1) {
     set_intake_power(100);
     intake_on();
@@ -207,19 +209,10 @@ void drive_clamp_toggle(pros::Controller master) {
 int previous_clamp_up_button_state = 0;
 int previous_clamp_down_button_state = 0;
 void drive_clamp_up_down(pros::Controller master) {
-  // clamp_up_button.update(master);
-  // clamp_down_button.update(master);
-  // if (clamp_up_button.just_pressed()) clamp_disengage();
-  // else if (clamp_down_button.just_pressed()) clamp_engage();
-  int clamp_up_state = master.get_digital(CLAMP_UP_BUTTON);
-  int clamp_down_state = master.get_digital(CLAMP_DOWN_BUTTON);
-  if (clamp_up_state != previous_clamp_up_button_state && clamp_up_state == 1) {
-    clamp_disengage();
-  } else if (clamp_down_state != previous_clamp_down_button_state && clamp_down_state == 1) {
-    clamp_engage();
-  }
-  previous_clamp_up_button_state = clamp_up_state;
-  previous_clamp_down_button_state = clamp_down_state;
+   clamp_up_button.update(master);
+   clamp_down_button.update(master);
+   if (clamp_up_button.just_pressed()) clamp_disengage();
+   else if (clamp_down_button.just_pressed()) clamp_engage();
 }
 
 void drive_clamp(pros::Controller master) {
