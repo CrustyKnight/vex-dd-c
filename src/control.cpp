@@ -1,6 +1,8 @@
 #include "main.h"
 #include "lemlib/api.hpp"
 #include "api.h"
+#include "control.hpp"
+#include "clamp.hpp"
 
 #define INTAKE_BUTTON DIGITAL_R1
 #define INTAKE_REVERSE_BUTTON DIGITAL_R2
@@ -13,8 +15,6 @@
 #define CLAMP_PISTON_B_PORT 'G'
 
 pros::Motor intake_motor(7, pros::MotorGearset::green);
-pros::adi::DigitalOut clamp_piston_a(CLAMP_PISTON_A_PORT);
-pros::adi::DigitalOut clamp_piston_b(CLAMP_PISTON_B_PORT);
 pros::Motor ext(8, pros::MotorGearset::red);
 
 /*
@@ -157,28 +157,6 @@ void drive_extend(pros::Controller master) {
   }
   prev_forward = forward;
   prev_reverse = reverse;
-}
-
-bool clamp_on_state = false;
-
-void clamp_pistons_set(int value) {
-  clamp_piston_a.set_value(value);
-  clamp_piston_b.set_value(value);
-}
-void clamp_engage() {
-  clamp_on_state = true;
-  clamp_pistons_set(CLAMP_ON);
-}
-void clamp_disengage() {
-  clamp_on_state = false;
-  clamp_pistons_set(CLAMP_OFF);
-}
-void clamp_toggle() {
-  if (clamp_on_state) {
-    clamp_disengage();
-  } else {
-    clamp_engage();
-  }
 }
 
 int previous_clamp_button_state = 0;
