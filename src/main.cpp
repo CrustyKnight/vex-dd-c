@@ -3,8 +3,8 @@
 #include "auton.hpp"
 #include "main.h"
 #include "display.h"
-#include "control.hpp"
 #include <math.h>
+#include "control.hpp"
 
 // Important Note: This file has all of our drivetrain and remote control-related code.
 

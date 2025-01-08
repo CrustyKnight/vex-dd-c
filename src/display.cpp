@@ -1,9 +1,8 @@
-#include "main.h"
-#include "pros/apix.h"
-
 #include <string>
 
 #include "liblvgl/lvgl.h"
+#include "main.h"
+#include "pros/apix.h"
 
 // catpuccin mocha B)
 #define cat_blue 0x89b4fa
