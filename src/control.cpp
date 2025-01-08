@@ -171,8 +171,6 @@ void drive_clamp_toggle(pros::Controller master) {
   previous_clamp_button_state = clamp_state;
 }
 
-int previous_clamp_up_button_state = 0;
-int previous_clamp_down_button_state = 0;
 void drive_clamp_up_down(pros::Controller master) {
   clamp_up_button.update(master);
   clamp_down_button.update(master);
