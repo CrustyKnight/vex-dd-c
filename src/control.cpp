@@ -1,6 +1,5 @@
 #include "main.h"
 #include "lemlib/api.hpp"
-#include "api.h"
 #include "control.hpp"
 #include "clamp.hpp"
 
@@ -93,16 +92,10 @@ void intake_off() {
 void drive_intake_hold(pros::Controller master) {
   intake_button.update(master);
   intake_reverse_button.update(master);
-  int intake_state = intake_button.current_state;
-  int intake_backward_state = intake_reverse_button.current_state;
-  /*
- int intake_state = master.get_digital(INTAKE_BUTTON);
-   int intake_backward_state = master.get_digital(INTAKE_REVERSE_BUTTON);
- */
-  if (intake_state == 1) {
+  if (intake_button.held()) {
     set_intake_power(100);
     intake_on();
-  } else if (intake_backward_state == 1) {
+  } else if (intake_reverse_button.held()) {
     set_intake_power(-100);
     intake_on();
   } else {
