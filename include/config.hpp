@@ -15,6 +15,9 @@
 #define EXT_MOTOR_PORT 8
 
 #define INTAKE_ON_DIRECTION -1
-#define INTAKE_INIT_POWER = 100
+#define INTAKE_INIT_POWER 100
+
+#define EXT_ON_DIRECTION -1
+#define EXT_ON_POWER 100
 
 #endif

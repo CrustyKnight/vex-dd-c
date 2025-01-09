@@ -2,7 +2,11 @@
 #include "lemlib/api.hpp"
 #include "control.hpp"
 #include "clamp.hpp"
-#include "config.h"
+#include "config.hpp"
+#include "intake.hpp"
+
+pros::Motor intake_motor(INTAKE_MOTOR_PORT, pros::MotorGearset::green);
+pros::Motor ext(EXT_MOTOR_PORT, pros::MotorGearset::red);
 
 /*
 #define DIGITAL_L1 pros::E_CONTROLLER_DIGITAL_L1
@@ -47,33 +51,11 @@ Button intake_reverse_button(INTAKE_REVERSE_BUTTON);
 Button clamp_up_button(CLAMP_UP_BUTTON);
 Button clamp_down_button(CLAMP_DOWN_BUTTON);
 
-int intake_on_power = INTAKE_ON_DIRECTION * INTAKE_ON_POWER;  // basically, how fast should the intake run when its on
+int intake_on_power = INTAKE_ON_DIRECTION * INTAKE_INIT_POWER;  // basically, how fast should the intake run when its on
 // 50 is a random guess
 bool intake_on_state = false;  // true if on, false if off.
 
-int ext_on = -100;
-
-// Set the motor power for the intake
-void set_intake_power(int8_t power) {
-  intake_on_power = power;
-}
-
-void intake_toggle() {
-  intake_on_state = !intake_on_state;
-  if (intake_on_state) {
-    intake_motor.move(intake_on_power);
-  } else {
-    intake_motor.move(0);
-  }
-}
-void intake_on() {
-  intake_on_state = true;
-  intake_motor.move(intake_on_power);
-}
-void intake_off() {
-  intake_on_state = false;
-  intake_motor.move(0);
-}
+int ext_on = EXT_ON_DIRECTION * EXT_ON_POWER;
 
 // Intake button R1
 
@@ -81,26 +63,12 @@ void drive_intake_hold(pros::Controller master) {
   intake_button.update(master);
   intake_reverse_button.update(master);
   if (intake_button.held()) {
-    set_intake_power(100);
-    intake_on();
+    run_intake_forward(100);
   } else if (intake_reverse_button.held()) {
-    set_intake_power(-100);
-    intake_on();
+    run_intake_backward(100);
   } else {
     intake_off();
   }
-}
-
-int previous_B_state = 0;
-
-void drive_intake_toggle(pros::Controller master) {
-  int intake_state = master.get_digital(pros::E_CONTROLLER_DIGITAL_B);
-  if (intake_state != previous_B_state) {  // change
-    if (intake_state == 1) {
-      intake_toggle();
-    }
-  }
-  previous_B_state = intake_state;
 }
 
 void drive_intake(pros::Controller master) {
