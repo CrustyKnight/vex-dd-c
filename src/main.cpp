@@ -5,6 +5,7 @@
 #include "display.h"
 #include <math.h>
 #include "control.hpp"
+#include "intake.hpp"
 
 // Important Note: This file has all of our drivetrain and remote control-related code.
 
