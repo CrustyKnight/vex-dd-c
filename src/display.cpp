@@ -129,6 +129,14 @@ void display_init(void) {
 
   draw_catplush();
 
+  lv_obj_t * autonbutton = lv_btn_create(maint);
+  lv_obj_remove_style_all(autonbutton);
+  lv_obj_add_style(autonbutton, &style_btn, 0);
+  lv_obj_set_pos(autonbutton, 175, 50);
+  lv_obj_set_size(autonbutton, 120, 50);
+  lv_obj_add_event_cb(autonbutton, auton, LV_EVENT_ALL, NULL);
+  lv_obj_add_style(autonbutton, &style_button_pressed, LV_STATE_PRESSED);
+
   /*
       lv_obj_t * testbutton = lv_btn_create(maint); //create a button as a child of the main display (screen)
       lv_obj_remove_style_all(testbutton);
@@ -144,15 +152,8 @@ void display_init(void) {
   */
 
   telemetry_table(diag);
-
-  /*
-  motortemps = lv_label_create(diag);
-  lv_obj_align(motortemps, LV_DIR_LEFT, 0, 0);
-  std::vector<double> mtemps = get_motor_temps();
-  lv_label_set_text_fmt(motortemps, "MOTOR 1: %d\nMOTOR 2: %d\nMOTOR 3: %d\nMOTOR 4: %d\nMOTOR 5: %d\nMOTOR 6: %d", mtemps[0], mtemps[1], mtemps[2], mtemps[3], mtemps[4], mtemps[5]);
-  */
 }
 
 void display_tick(void) {
-  // telemetry_table(diag);
+  telemetry_table(diag);
 }

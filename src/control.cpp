@@ -2,19 +2,7 @@
 #include "lemlib/api.hpp"
 #include "control.hpp"
 #include "clamp.hpp"
-
-#define INTAKE_BUTTON DIGITAL_R1
-#define INTAKE_REVERSE_BUTTON DIGITAL_R2
-#define CLAMP_BUTTON DIGITAL_A
-#define CLAMP_UP_BUTTON DIGITAL_UP
-#define CLAMP_DOWN_BUTTON DIGITAL_DOWN
-#define CLAMP_ON 1
-#define CLAMP_OFF 0
-#define CLAMP_PISTON_A_PORT 'H'
-#define CLAMP_PISTON_B_PORT 'G'
-
-pros::Motor intake_motor(7, pros::MotorGearset::green);
-pros::Motor ext(8, pros::MotorGearset::red);
+#include "config.h"
 
 /*
 #define DIGITAL_L1 pros::E_CONTROLLER_DIGITAL_L1
@@ -59,7 +47,7 @@ Button intake_reverse_button(INTAKE_REVERSE_BUTTON);
 Button clamp_up_button(CLAMP_UP_BUTTON);
 Button clamp_down_button(CLAMP_DOWN_BUTTON);
 
-int intake_on_power = -100;  // basically, how fast should the intake run when its on
+int intake_on_power = INTAKE_ON_DIRECTION * INTAKE_ON_POWER;  // basically, how fast should the intake run when its on
 // 50 is a random guess
 bool intake_on_state = false;  // true if on, false if off.
 
