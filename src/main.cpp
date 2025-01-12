@@ -12,7 +12,7 @@
 // LemLib setup
 // TODO
 // Setting up of drivetrain sides: side_motors({low_1, high, low 2})
-// Technically, order of motors on one side doesn't matter, as they spin in the same direction. 
+// Technically, order of motors on one side doesn't matter, as they spin in the same direction.
 pros::MotorGroup left_motors({-13, -14, -15}, pros::MotorGearset::green);
 pros::MotorGroup right_motors({18, 19, 20}, pros::MotorGearset::green);
 
@@ -184,9 +184,9 @@ void opcontrol() {
 
     drive_intake(master);
     drive_clamp(master);
-    drive_extend(master);
+    drive_extend_test(master);
 
-    display_tick();
+    // display_tick();
     pros::delay(2);
   }
 }

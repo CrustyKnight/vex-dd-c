@@ -4,9 +4,10 @@
 #include "clamp.hpp"
 #include "config.hpp"
 #include "intake.hpp"
+#include "pros/misc.h"
 
-pros::Motor intake_motor(INTAKE_MOTOR_PORT, pros::MotorGearset::green);
-pros::Motor ext(EXT_MOTOR_PORT, pros::MotorGearset::red);
+pros::Motor ext(8, pros::MotorGearset::red);
+pros::Controller ic(pros::E_CONTROLLER_MASTER);
 
 /*
 #define DIGITAL_L1 pros::E_CONTROLLER_DIGITAL_L1
@@ -30,6 +31,7 @@ class Button {
   int previous_state;
   int current_state;
   void update(pros::Controller);
+  void update();
   bool just_pressed();
   bool held() { return current_state == 1; };
   bool unheld() { return current_state != 1; };
@@ -42,6 +44,10 @@ void Button::update(pros::Controller controller) {
   previous_state = current_state;
   current_state = controller.get_digital(button);
 }
+void Button::update() {
+  pros::Controller ic(pros::E_CONTROLLER_MASTER);
+  this->update(ic);
+}
 bool Button::just_pressed() {
   return (previous_state != current_state) && (current_state == 1);
 }
@@ -51,11 +57,7 @@ Button intake_reverse_button(INTAKE_REVERSE_BUTTON);
 Button clamp_up_button(CLAMP_UP_BUTTON);
 Button clamp_down_button(CLAMP_DOWN_BUTTON);
 
-int intake_on_power = INTAKE_ON_DIRECTION * INTAKE_INIT_POWER;  // basically, how fast should the intake run when its on
-// 50 is a random guess
-bool intake_on_state = false;  // true if on, false if off.
-
-int ext_on = EXT_ON_DIRECTION * EXT_ON_POWER;
+int ext_on = PEAK_ON_DIRECTION * PEAK_ON_POWER;
 
 // Intake button R1
 
@@ -79,7 +81,7 @@ int level = 0;
 int prev_forward = 0;
 int prev_reverse = 0;
 int going = 0;
-void drive_extend(pros::Controller master) {
+void drive_extend_levels(pros::Controller master) {
   ext.set_encoder_units(pros::E_MOTOR_ENCODER_ROTATIONS);
   int forward = master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
   int reverse = master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
@@ -93,7 +95,7 @@ void drive_extend(pros::Controller master) {
   if ((going == 1) || (forward == prev_forward && reverse == prev_reverse) /*|| (level == 2 && forward == 1) || (level == 0 && reverse == 1)*/) {
     return;
   }
-  double unit = 19.0 / 12.0;
+  double unit = LINEAR_SLIDE_SECTION_TEETH / PEAK_GEAR_TEETH;
 
   if (forward == 1) {
     level--;
@@ -108,25 +110,27 @@ void drive_extend(pros::Controller master) {
   prev_reverse = reverse;
 }
 
-int previous_clamp_button_state = 0;
-
-void drive_clamp_toggle(pros::Controller master) {
-  int clamp_state = master.get_digital(CLAMP_BUTTON);
-  if (clamp_state != previous_clamp_button_state) {
-    if (clamp_state == 1) {
-      clamp_toggle();
-    }
+Button extend_button(DIGITAL_X);
+Button extend_back_button(DIGITAL_B);
+void drive_extend_test(pros::Controller master) {
+  extend_button.update(master);
+  extend_back_button.update(master);
+  if (extend_button.held()) {
+    ext.move(100);
+  } else if (extend_back_button.held()) {
+    ext.move(-100);
+  } else {
+    ext.move(0);
   }
-  previous_clamp_button_state = clamp_state;
 }
 
 void drive_clamp_up_down(pros::Controller master) {
   clamp_up_button.update(master);
   clamp_down_button.update(master);
   if (clamp_up_button.just_pressed())
-    clamp_disengage();
+    clamp::disengage();
   else if (clamp_down_button.just_pressed())
-    clamp_engage();
+    clamp::engage();
 }
 
 void drive_clamp(pros::Controller master) {
