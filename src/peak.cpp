@@ -31,4 +31,30 @@ void adjust_intake_level(int height, int power){
     while(PEAK_LENGTH * sin((double)(peak_motor.get_position())) != height){
         peak_motor.move(peak_dir * peak_power);
     }
+}namespace peak {
+int level = 0;
+int height = 0;        // inches
+int teeth_height = 0;  // teeth
+
+pros::Motor motor(PEAK_MOTOR_PORT, pros::MotorGearset::red);
+bool moving() { return (std::floor(motor.get_actual_velocity()) != 0); }
+bool still() { return (std::floor(motor.get_actual_velocity()) == 0); }
+void extend(double inches) {
+  double teeth = inches * LINEAR_SLIDE_TEETH_PER_INCH;
+  double revs = teeth / PEAK_GEAR_TEETH;
+  motor.move_relative(revs, 100);
 }
+void level_up() {
+  // motor.move_relative(7 * (LINEAR_SLIDE_SECTION_TEETH / PEAK_GEAR_TEETH), 100);
+  extend(17.5);
+  level++;
+}
+void level_down() {
+  // motor.move_relative(-7 * (LINEAR_SLIDE_SECTION_TEETH / PEAK_GEAR_TEETH), 100);
+  extend(-17.5);
+  level--;
+}
+
+void raise_vertical(double inches) { extend(inches * PEAK_COSECANT); }
+
+}  // namespace peak

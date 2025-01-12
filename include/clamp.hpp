@@ -6,9 +6,10 @@
 #define CLAMP_PISTON_A_PORT 'H'
 #define CLAMP_PISTON_B_PORT 'G'
 
-void clamp_pistons_set(int);
-void clamp_engage();
-void clamp_disengage();
-void clamp_toggle();
+namespace clamp {
+void set_pistons(int);
+void engage();
+void disengage();
+}  // namespace clamp
 
 #endif  // CLAMP_H_

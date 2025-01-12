@@ -63,11 +63,11 @@ void drive_intake_hold(pros::Controller master) {
   intake_button.update(master);
   intake_reverse_button.update(master);
   if (intake_button.held()) {
-    run_intake_forward(100);
+    intake::run_forward(100);
   } else if (intake_reverse_button.held()) {
-    run_intake_backward(100);
+    intake::run_backward(100);
   } else {
-    intake_off();
+    intake::off();
   }
 }
 
