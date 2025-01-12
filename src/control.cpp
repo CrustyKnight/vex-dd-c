@@ -2,7 +2,7 @@
 #include "lemlib/api.hpp"
 #include "api.h"
 
-
+//Defining all the controller buttons for extensive use throughout program. 
 #define INTAKE_BUTTON DIGITAL_R1
 #define INTAKE_REVERSE_BUTTON DIGITAL_R2
 #define CLAMP_BUTTON DIGITAL_A

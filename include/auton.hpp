@@ -4,4 +4,5 @@
 
 void autonSkills();
 //void gameAuton(string startLocation);
-void gameAuton();
+void defensiveAuton();
+void offensiveAuton();
