@@ -33,5 +33,15 @@ void run_intake_backward(int power) {
   intake_on();
 }
 
+//In theory, this should only require pulling a donut for 1.2 seconds.
+void pull_up_donut(int power){ 
+    int time = 0
+    while(time < 1200){
+        intake_m.move(power);
+        pros::delay(200);
+        time += 200;
+    }
+}
+
 // TODO make intake_init to set motor encoder units, and intake_eat_ring to eat
 // a ring (turn the motor a specific amount of times)

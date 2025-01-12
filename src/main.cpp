@@ -11,7 +11,8 @@
 
 // LemLib setup
 // TODO
-// Setting up of drivetrain sides: side_motors({low_1, low_2, high})
+// Setting up of drivetrain sides: side_motors({low_1, high, low 2})
+// Technically, order of motors on one side doesn't matter, as they spin in the same direction. 
 pros::MotorGroup left_motors({-13, -14, -15}, pros::MotorGearset::green);
 pros::MotorGroup right_motors({18, 19, 20}, pros::MotorGearset::green);
 

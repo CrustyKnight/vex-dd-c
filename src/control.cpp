@@ -5,16 +5,6 @@
 #include "config.hpp"
 #include "intake.hpp"
 
-<<<<<<< HEAD
-//Defining all the controller buttons for extensive use throughout program. 
-#define INTAKE_BUTTON DIGITAL_R1
-#define INTAKE_REVERSE_BUTTON DIGITAL_R2
-#define CLAMP_BUTTON DIGITAL_A
-#define CLAMP_UP_BUTTON DIGITAL_UP
-#define CLAMP_DOWN_BUTTON DIGITAL_DOWN
-#define CLAMP_ON 1
-#define CLAMP_OFF 0
-=======
 pros::Motor intake_motor(INTAKE_MOTOR_PORT, pros::MotorGearset::green);
 pros::Motor ext(EXT_MOTOR_PORT, pros::MotorGearset::red);
 
@@ -32,7 +22,6 @@ pros::Motor ext(EXT_MOTOR_PORT, pros::MotorGearset::red);
 #define DIGITAL_Y pros::E_CONTROLLER_DIGITAL_Y
 #define DIGITAL_A pros::E_CONTROLLER_DIGITAL_A
 */
->>>>>>> 39ed5646fcf2c2a333543bf46aec83f4b7f7eba3
 
 class Button {
  public:
