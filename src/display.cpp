@@ -129,7 +129,6 @@ void display_init(void) {
 
   draw_catplush();
 
-  /*
   lv_obj_t * autonbutton = lv_btn_create(maint);
   lv_obj_remove_style_all(autonbutton);
   lv_obj_add_style(autonbutton, &style_btn, 0);
@@ -137,7 +136,6 @@ void display_init(void) {
   lv_obj_set_size(autonbutton, 120, 50);
   lv_obj_add_event_cb(autonbutton, auton, LV_EVENT_ALL, NULL);
   lv_obj_add_style(autonbutton, &style_button_pressed, LV_STATE_PRESSED);
-  */
 
   /*
       lv_obj_t * testbutton = lv_btn_create(maint); //create a button as a child of the main display (screen)
