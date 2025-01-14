@@ -2,6 +2,7 @@
 #include "config.hpp"
 #include "lemlib/api.hpp"  // IWYU pragma: keep
 #include <math.h>
+#include <stdexcept>
 
 /// All functions for now will be written based off the fact that our intake has a angle to the horizontal of ~55*
 // For now all these constants ARE ESTIMATES, THEY MUST BE REPLACED WITH REAL NUMBERS NEXT.
@@ -62,6 +63,28 @@ bool still() { return (std::floor(motor.get_actual_velocity()) == 0); }
 void extend(double inches) {
   double teeth = inches * LINEAR_SLIDE_TEETH_PER_INCH;
   double revs = teeth / PEAK_GEAR_TEETH;
+  int possible_teeth_height = teeth_height + teeth;
+  if (possible_teeth_height > LINEAR_SLIDE_MAX_TEETH_HEIGHT) {
+    throw std::invalid_argument("Attempt to extend too high");
+  } else if (possible_teeth_height < 0) {
+    throw std::invalid_argument("Attempt to extend too low");
+  }
+  teeth_height = possible_teeth_height;
+  motor.move_relative(revs, 100);
+}
+
+void extend_to(double inches) {
+  int teeth_target = inches * LINEAR_SLIDE_TEETH_PER_INCH;
+  int teeth_difference = teeth_target - teeth_height;
+  int teeth = teeth_difference;
+  double revs = teeth / PEAK_GEAR_TEETH;
+  int possible_teeth_height = teeth_height + teeth;
+  if (possible_teeth_height > LINEAR_SLIDE_MAX_TEETH_HEIGHT) {
+    throw std::invalid_argument("Attempt to extend too high");
+  } else if (possible_teeth_height < 0) {
+    throw std::invalid_argument("Attempt to extend too low");
+  }
+  teeth_height = possible_teeth_height;
   motor.move_relative(revs, 100);
 }
 void level_up() {
@@ -76,5 +99,9 @@ void level_down() {
 }
 
 void raise_vertical(double inches) { extend(inches * PEAK_COSECANT); }
+
+void raise_to(double inches) {
+  extend_to(inches * PEAK_COSECANT);
+}
 
 }  // namespace peak

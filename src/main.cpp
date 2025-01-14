@@ -119,20 +119,20 @@ void swing_movement(int degrees, int timeout) {
 
 // when testing, put the tests in here
 void autonomous() {
-  intake_on();
+  intake::on();
   lemlib::update();
   // lateral_move(20, 4000);
-  set_intake_power(100);
-  intake_on();
+  intake::set_power(100);
+  intake::on();
   chassis.setPose(0, 0, 0);
   chassis.moveToPoint(0, 15, 4000);
   pros::delay(1500);
-  intake_off();
+  intake::off();
 }
 
 void do_autonomous() {
-  set_intake_power(100);
-  intake_on();
+  intake::set_power(100);
+  intake::on();
 }
 
 void pidTestingAngular() {
