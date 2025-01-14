@@ -35,7 +35,7 @@ void eat_donut() {
   motor.move_relative(50, 50);
 }
 void digest_donut() {
-  double revs = INTAKE_RATIO / 2;
+  double revs = 0.6 * INTAKE_RATIO;
   motor.move_relative(revs, 200);
 }
 

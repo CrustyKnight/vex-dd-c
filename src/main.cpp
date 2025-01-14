@@ -126,6 +126,7 @@ void autonomous() {
   intake::on();
   chassis.setPose(0, 0, 0);
   chassis.moveToPoint(0, 15, 4000);
+  autonSkills(&chassis);
   pros::delay(1500);
   intake::off();
 }
