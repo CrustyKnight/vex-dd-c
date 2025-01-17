@@ -39,6 +39,10 @@ static void get_mogo(lemlib::Chassis* chassis, double x, double y) {
 static void drop_mogo(){
   clamp::disengage();
 }
+static void get_mogo(lemlib::Chassis* chassis, double x, double y) {
+  chassis->moveToPoint(x, y, 5000, {.forwards = false}, false);
+  clamp::engage();
+}
 
 //#TODO: create efficient skills plan...
 void autonSkills(lemlib::Chassis* chassis) {
