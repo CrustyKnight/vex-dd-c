@@ -30,11 +30,6 @@
 
 #define D6X -47
 #define D6Y 60
-
-static void get_mogo(lemlib::Chassis* chassis, double x, double y) {
-  chassis->moveToPoint(x, y, 5000, {.forwards = false}, false);
-  clamp::engage();
-}
 //cursed :)
 static void drop_mogo(){
   clamp::disengage();
