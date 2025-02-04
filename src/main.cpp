@@ -142,16 +142,6 @@ void do_autonomous() {
   intake::on();
 }
 
-void pidTestingAngular() {
-  chassis.setPose(0, 0, 0);
-  chassis.turnToHeading(90, 100000);
-}
-
-void pidTestingLateral() {
-  chassis.setPose(0, 0, 0);
-  chassis.moveToPoint(0, 48, 100000);
-}
-
 // Set up of driver controls...// Arcade control scheme; has it's own function for enhanced organization...
 void setArcadeDrive(pros::Controller master) {
   int dir = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);     // Gets amount forward/backward from left joystick
@@ -175,7 +165,12 @@ void setArcadeDrive(pros::Controller master) {
  */
 void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
-  //autonomous();
+#ifdef _DEBUG_AUTON_
+  autonomous();
+#endif
+#ifdef _DEBUG_
+  master.set_text(1, 4, "DEBUG");
+#endif
   while (true) {
     // Arcade control scheme
     setArcadeDrive(master);
@@ -184,6 +179,9 @@ void opcontrol() {
     drive_intake(master);
     drive_clamp(master);
     drive_extend_test(master);
+#ifdef _DEBUG_
+    drivePIDTest(master);
+#endif
 
     // display_tick();
     pros::delay(2);

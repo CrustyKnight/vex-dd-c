@@ -3,7 +3,7 @@
 #include "clamp.hpp"
 #include "intake.hpp"
 #include "peak.hpp"
-//hi
+// hi
 #include <string>
 
 #define SKILLS_X_START -58
@@ -30,10 +30,27 @@
 
 #define D6X -47
 #define D6Y 60
-//cursed :)
-static void drop_mogo(){
+
+#define D7X -59
+#define D7Y -47
+
+#define D8X -47
+#define D8Y -47
+
+#define D9X -47
+#define D9Y -59
+
+#define D10X -24
+#define D10Y -47
+
+#define D11X 0
+#define D11Y -59
+
+// cursed :)
+static void drop_mogo() {
   clamp::disengage();
 }
+// Blocking
 static void get_mogo(lemlib::Chassis* chassis, double x, double y) {
   chassis->moveToPoint(x, y, 5000, {.forwards = false}, false);
   clamp::engage();
@@ -50,14 +67,22 @@ void autonSkills(lemlib::Chassis* chassis) {
   chassis->moveToPoint(D4X, D4Y, 5000);
   chassis->moveToPoint(D5X, D5Y, 5000);
 
-  chassis->turnToHeading(45,5000);
+  chassis->turnToHeading(45, 5000);
   chassis->moveToPoint(D6X, D6Y, 5000);
 
   chassis->moveToPose(-64, -65, -45, 5000);
   drop_mogo();
 
   chassis->turnToHeading(-45, 5000);
-  get_mogo(chassis, -47, -17);
+  get_mogo(chassis, -47, -16);
+
+  chassis->moveToPose(D7X,D7Y, 235, 5000);
+  chassis->moveToPose(D8X,D8Y, -90, 5000);
+  chassis->moveToPose(D9X,D9Y, 30, 5000);
+  chassis->moveToPose(D10X,D10Y, -30, 5000);
+
+  chassis->moveToPose(D11X,D11Y, 30, 5000);
+
 }
 
 //#TODO: create game plan...

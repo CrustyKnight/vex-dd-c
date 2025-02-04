@@ -3,7 +3,6 @@
 
 #define INTAKE_BUTTON DIGITAL_R1
 #define INTAKE_REVERSE_BUTTON DIGITAL_R2
-#define CLAMP_BUTTON DIGITAL_A
 #define CLAMP_UP_BUTTON DIGITAL_UP
 #define CLAMP_DOWN_BUTTON DIGITAL_DOWN
 #define CLAMP_ON 1
@@ -49,4 +48,16 @@
 // Ladder height
 #define ENDGAME_HEIGHT 7.5
 
-#endif
+#define _DEBUG_
+#ifdef _DEBUG_
+
+#define _DEBUG_AUTON_
+#define DEBUG_LATERAL_TEST_BUTTON DIGITAL_A
+#define DEBUG_ANGULAR_TEST_BUTTON DIGITAL_B
+
+#endif  // _DEBUG_
+
+#include "lemlib/api.hpp"
+extern lemlib::Chassis chassis;
+
+#endif  // CONFIG_H
