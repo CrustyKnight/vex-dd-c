@@ -5,6 +5,7 @@
 #include "config.hpp"
 #include "intake.hpp"
 #include "pros/misc.h"
+#include "pros/misc.hpp"
 
 pros::Motor ext(8, pros::MotorGearset::red);
 pros::Controller ic(pros::E_CONTROLLER_MASTER);
@@ -56,6 +57,30 @@ Button intake_button(INTAKE_BUTTON);
 Button intake_reverse_button(INTAKE_REVERSE_BUTTON);
 Button clamp_up_button(CLAMP_UP_BUTTON);
 Button clamp_down_button(CLAMP_DOWN_BUTTON);
+
+#ifdef _DEBUG_
+Button pid_run_lateral_test_button(DEBUG_LATERAL_TEST_BUTTON);
+Button pid_run_angular_test_button(DEBUG_ANGULAR_TEST_BUTTON);
+
+void pidTestingAngular() {
+  chassis.setPose(0, 0, 0);
+  chassis.turnToHeading(90, 100000);
+}
+
+void pidTestingLateral() {
+  chassis.setPose(0, 0, 0);
+  chassis.moveToPoint(0, 48, 100000);
+}
+
+void drivePIDTest(pros::Controller master) {
+  pid_run_lateral_test_button.update(master);
+  pid_run_angular_test_button.update(master);
+  if (pid_run_lateral_test_button.just_pressed())
+    pidTestingLateral();
+  if (pid_run_angular_test_button.just_pressed())
+    pidTestingLateral();
+}
+#endif
 
 int ext_on = PEAK_ON_DIRECTION * PEAK_ON_POWER;
 
