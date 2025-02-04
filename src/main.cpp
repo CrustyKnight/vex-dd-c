@@ -175,7 +175,12 @@ void setArcadeDrive(pros::Controller master) {
  */
 void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
-  //autonomous();
+#ifdef _DEBUG_AUTON_
+  autonomous();
+#endif
+#ifdef _DEBUG_
+  master.set_text(1, 4, "DEBUG");
+#endif
   while (true) {
     // Arcade control scheme
     setArcadeDrive(master);
@@ -184,6 +189,9 @@ void opcontrol() {
     drive_intake(master);
     drive_clamp(master);
     drive_extend_test(master);
+#ifdef _DEBUG_
+    drivePIDTest(master);
+#endif
 
     // display_tick();
     pros::delay(2);
