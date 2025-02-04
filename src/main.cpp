@@ -13,8 +13,8 @@
 // TODO
 // Setting up of drivetrain sides: side_motors({low_1, high, low 2})
 // Technically, order of motors on one side doesn't matter, as they spin in the same direction.
-pros::MotorGroup left_motors({-13, -14, -15}, pros::MotorGearset::green);
-pros::MotorGroup right_motors({18, 19, 20}, pros::MotorGearset::green);
+pros::MotorGroup left_motors({-4, -5, -6}, pros::MotorGearset::green);
+pros::MotorGroup right_motors({13, 14, 15}, pros::MotorGearset::green);
 
 // Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality.
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 13.3, lemlib::Omniwheel::NEW_325, 333.3333, 2);
@@ -119,16 +119,22 @@ void swing_movement(int degrees, int timeout) {
 
 // when testing, put the tests in here
 void autonomous() {
+  /*
   intake::on();
   lemlib::update();
   // lateral_move(20, 4000);
   intake::set_power(100);
   intake::on();
-  chassis.setPose(0, 0, 0);
-  chassis.moveToPoint(0, 15, 4000);
-  autonSkills(&chassis);
-  pros::delay(1500);
+  // chassis.setPose(0, 0, 0);
+  // chassis.moveToPoint(0, 15, 4000);
+  left_motors.move(100);
+  right_motors.move(100);
+  pros::delay(500);
   intake::off();
+  left_motors.move(00);
+  right_motors.move(00);
+  */
+  lateral_move(12);
 }
 
 void do_autonomous() {
@@ -146,12 +152,6 @@ void pidTestingLateral() {
   chassis.moveToPoint(0, 48, 100000);
 }
 
-// Driver/Screen Functions: I, Debangshu Pramanik, think we'd like this to be outside opcontrol for organization purposes.
-void printStatus() {  // Prints status of the emulated screen LCDs
-  pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-                   (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-                   (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
-}
 // Set up of driver controls...// Arcade control scheme; has it's own function for enhanced organization...
 void setArcadeDrive(pros::Controller master) {
   int dir = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);     // Gets amount forward/backward from left joystick
@@ -175,10 +175,8 @@ void setArcadeDrive(pros::Controller master) {
  */
 void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
-  //  autonomous();
+  //autonomous();
   while (true) {
-    // Prints status of the emulated LCD.
-    printStatus();
     // Arcade control scheme
     setArcadeDrive(master);
     pros::delay(10);  // Run for 20 ms then update
