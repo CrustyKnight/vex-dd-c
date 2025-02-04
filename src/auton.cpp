@@ -3,7 +3,7 @@
 #include "clamp.hpp"
 #include "intake.hpp"
 #include "peak.hpp"
-//hi
+// hi
 #include <string>
 
 #define SKILLS_X_START -58
@@ -30,10 +30,11 @@
 
 #define D6X -47
 #define D6Y 60
-//cursed :)
-static void drop_mogo(){
+// cursed :)
+static void drop_mogo() {
   clamp::disengage();
 }
+// Blocking
 static void get_mogo(lemlib::Chassis* chassis, double x, double y) {
   chassis->moveToPoint(x, y, 5000, {.forwards = false}, false);
   clamp::engage();
@@ -50,7 +51,7 @@ void autonSkills(lemlib::Chassis* chassis) {
   chassis->moveToPoint(D4X, D4Y, 5000);
   chassis->moveToPoint(D5X, D5Y, 5000);
 
-  chassis->turnToHeading(45,5000);
+  chassis->turnToHeading(45, 5000);
   chassis->moveToPoint(D6X, D6Y, 5000);
 
   chassis->moveToPose(-64, -65, -45, 5000);
