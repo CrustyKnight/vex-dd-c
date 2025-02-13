@@ -1,4 +1,5 @@
 #include "main.h"
+#include "peak.hpp"
 #include "lemlib/api.hpp"
 #include "control.hpp"
 #include "clamp.hpp"
@@ -102,50 +103,34 @@ void drive_intake(pros::Controller master) {
   drive_intake_hold(master);
 }
 
+
+Button peak_button(DIGITAL_X);
+Button peak_back_button(DIGITAL_B);
+void drive_extend_test(pros::Controller master) {
+  peak_button.update(master);
+  peak_back_button.update(master);
+  if (peak_button.held()) {
+    ext.move(100);
+  } else if (peak_back_button.held()) {
+    ext.move(-100);
+  } else {
+    ext.move(0);
+  }
+}
+
 int level = 0;
 int prev_forward = 0;
 int prev_reverse = 0;
 int going = 0;
-void drive_extend_levels(pros::Controller master) {
-  ext.set_encoder_units(pros::E_MOTOR_ENCODER_ROTATIONS);
-  int forward = master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
-  int reverse = master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+void drive_peak_levels(pros::Controller master){
+  peak_button.update(master);
+  peak_back_button.update(master);
 
-  if (std::floor(ext.get_actual_velocity()) == 0) {
-    going = 0;
-  } else {
-    going = 1;
+  if(peak_button.just_pressed()){
+    level = peak::inc_level(level);
   }
-
-  if ((going == 1) || (forward == prev_forward && reverse == prev_reverse) /*|| (level == 2 && forward == 1) || (level == 0 && reverse == 1)*/) {
-    return;
-  }
-  double unit = LINEAR_SLIDE_SECTION_TEETH / PEAK_GEAR_TEETH;
-
-  if (forward == 1) {
-    level--;
-    ext.move_relative(7 * unit, 100);
-    going = 1;
-  } else if (reverse == 1) {
-    level++;
-    ext.move_relative(-7 * unit, 100);
-    going = 1;
-  }
-  prev_forward = forward;
-  prev_reverse = reverse;
-}
-
-Button extend_button(DIGITAL_X);
-Button extend_back_button(DIGITAL_B);
-void drive_extend_test(pros::Controller master) {
-  extend_button.update(master);
-  extend_back_button.update(master);
-  if (extend_button.held()) {
-    ext.move(100);
-  } else if (extend_back_button.held()) {
-    ext.move(-100);
-  } else {
-    ext.move(0);
+  else if (peak_back_button.just_pressed()){
+    level = peak::dec_level(level);
   }
 }
 

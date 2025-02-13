@@ -53,7 +53,6 @@ void peak_down_level() {
 }
 
 namespace peak {
-int level = 0;
 int height = 0;        // inches
 int teeth_height = 0;  // teeth
 
@@ -87,21 +86,41 @@ void extend_to(double inches) {
   teeth_height = possible_teeth_height;
   motor.move_relative(revs, 100);
 }
-void level_up() {
-  // motor.move_relative(7 * (LINEAR_SLIDE_SECTION_TEETH / PEAK_GEAR_TEETH), 100);
-  extend(17.5);
-  level++;
-}
-void level_down() {
-  // motor.move_relative(-7 * (LINEAR_SLIDE_SECTION_TEETH / PEAK_GEAR_TEETH), 100);
-  extend(-17.5);
-  level--;
-}
-
 void raise_vertical(double inches) { extend(inches * PEAK_COSECANT); }
 
 void raise_to(double inches) {
   extend_to(inches * PEAK_COSECANT);
+}
+
+void raise_to_level(int level) {
+  switch(level) {
+    case 0:
+      raise_vertical(PEAK_LEVEL_0);
+      break;
+    case 1:
+      raise_vertical(PEAK_LEVEL_1);
+      break;
+    case 2:
+      raise_vertical(PEAK_LEVEL_2);
+      break;
+    case 3:
+      raise_vertical(PEAK_LEVEL_3);
+      break;
+    }
+  }
+int inc_level(int level) {
+  if(level == 3){
+    throw std::invalid_argument("Level already at max!");
+  }
+  raise_to_level(level+1);
+  return level+1;
+}
+int dec_level(int level) {
+  if(level == 0){
+    throw std::invalid_argument("Level already at min!");
+  }
+  raise_to_level(level-1);
+  return level-1;
 }
 
 }  // namespace peak

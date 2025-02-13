@@ -178,7 +178,7 @@ void opcontrol() {
 
     drive_intake(master);
     drive_clamp(master);
-    drive_extend_test(master);
+    drive_peak_levels(master);
 #ifdef _DEBUG_
     drivePIDTest(master);
 #endif
