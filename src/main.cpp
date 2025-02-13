@@ -24,7 +24,7 @@ lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 // kP, kI, kD, anti-windup, small error range, small error range timeout,
 // large error range, large error range timeout, max acceleration (slew)
 // lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
-lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
+lemlib::ControllerSettings lateral_controller(10, 0, 3, 0, 0, 0, 0, 0, 0);
 // lemlib::ControllerSettings angular_controller(2, 0, 10, 3, 1, 100, 3, 500, 0);
 lemlib::ControllerSettings angular_controller(2, 0, 10, 0, 0, 0, 0, 0, 0);
 

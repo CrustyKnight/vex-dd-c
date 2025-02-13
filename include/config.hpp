@@ -20,10 +20,10 @@
 #define PEAK_ON_POWER 100
 
 // peak level (in)
-#define PEAK_LEVEL_0 0
-#define PEAK_LEVEL_1 7
-#define PEAK_LEVEL_2 14
-#define PEAK_LEVEL_3 20
+#define PEAK_LEVEL_REST 0
+#define PEAK_LEVEL_MOGO 7
+#define PEAK_LEVEL_ALLIANCE 14
+#define PEAK_LEVEL_WALL 20
 
 #define INTAKE_SPROCKET_TEETH 20.0
 #define INTAKE_CHAIN_LINKS 81.0

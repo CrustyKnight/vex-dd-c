@@ -95,16 +95,16 @@ void raise_to(double inches) {
 void raise_to_level(int level) {
   switch(level) {
     case 0:
-      raise_vertical(PEAK_LEVEL_0);
+      raise_vertical(PEAK_LEVEL_REST);
       break;
     case 1:
-      raise_vertical(PEAK_LEVEL_1);
+      raise_vertical(PEAK_LEVEL_MOGO);
       break;
     case 2:
-      raise_vertical(PEAK_LEVEL_2);
+      raise_vertical(PEAK_LEVEL_ALLIANCE);
       break;
     case 3:
-      raise_vertical(PEAK_LEVEL_3);
+      raise_vertical(PEAK_LEVEL_WALL_STAKE);
       break;
     }
   }
