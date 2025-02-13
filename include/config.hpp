@@ -19,7 +19,7 @@
 #define PEAK_ON_DIRECTION -1
 #define PEAK_ON_POWER 100
 
-//peak level (in)
+// peak level (in)
 #define PEAK_LEVEL_0 0
 #define PEAK_LEVEL_1 7
 #define PEAK_LEVEL_2 14
@@ -57,7 +57,7 @@
 #define _DEBUG_
 #ifdef _DEBUG_
 
-#define _DEBUG_AUTON_
+// #define _DEBUG_AUTON_
 #define DEBUG_LATERAL_TEST_BUTTON DIGITAL_A
 #define DEBUG_ANGULAR_TEST_BUTTON DIGITAL_B
 

@@ -103,7 +103,6 @@ void drive_intake(pros::Controller master) {
   drive_intake_hold(master);
 }
 
-
 Button peak_button(DIGITAL_X);
 Button peak_back_button(DIGITAL_B);
 void drive_extend_test(pros::Controller master) {
@@ -122,15 +121,18 @@ int level = 0;
 int prev_forward = 0;
 int prev_reverse = 0;
 int going = 0;
-void drive_peak_levels(pros::Controller master){
-  peak_button.update(master);
-  peak_back_button.update(master);
+void drive_peak_levels(pros::Controller master) {
+  try {
+    peak_button.update(master);
+    peak_back_button.update(master);
 
-  if(peak_button.just_pressed()){
-    level = peak::inc_level(level);
-  }
-  else if (peak_back_button.just_pressed()){
-    level = peak::dec_level(level);
+    if (peak_button.just_pressed()) {
+      level = peak::inc_level(level);
+    } else if (peak_back_button.just_pressed()) {
+      level = peak::dec_level(level);
+    }
+  } catch (const std::invalid_argument &e) {
+    // do nothing;
   }
 }
 
