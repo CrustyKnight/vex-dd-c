@@ -103,33 +103,43 @@ void drive_intake(pros::Controller master) {
   drive_intake_hold(master);
 }
 
-Button peak_button(DIGITAL_X);
-Button peak_back_button(DIGITAL_B);
-void drive_extend_test(pros::Controller master) {
-  peak_button.update(master);
-  peak_back_button.update(master);
-  if (peak_button.held()) {
-    ext.move(100);
-  } else if (peak_back_button.held()) {
-    ext.move(-100);
-  } else {
-    ext.move(0);
-  }
-}
+// Button peak_button(DIGITAL_X);
+// Button peak_back_button(DIGITAL_B);
+// void drive_extend_test(pros::Controller master) {
+//   peak_button.update(master);
+//   peak_back_button.update(master);
+//   if (peak_button.held()) {
+//     ext.move(100);
+//   } else if (peak_back_button.held()) {
+//     ext.move(-100);
+//   } else {
+//     ext.move(0);
+//   }
+// }
 
 int level = 0;
 int prev_forward = 0;
 int prev_reverse = 0;
 int going = 0;
+Button peak_rest_button(PEAK_REST_BUTTON);
+Button peak_mogo_button(PEAK_MOGO_BUTTON);
+Button peak_alliance_button(PEAK_ALLIANCE_WALL_STAKE_BUTTON);
+Button peak_wall_button(PEAK_HIGH_WALL_BUTTON);
 void drive_peak_levels(pros::Controller master) {
   try {
-    peak_button.update(master);
-    peak_back_button.update(master);
+    peak_rest_button.update(master);
+    peak_mogo_button.update(master);
+    peak_alliance_button.update(master);
+    peak_wall_button.update(master);
 
-    if (peak_button.just_pressed()) {
-      level = peak::inc_level(level);
-    } else if (peak_back_button.just_pressed()) {
-      level = peak::dec_level(level);
+    if (peak_rest_button.just_pressed()) {
+      peak::raise_to_level(0);
+    } else if (peak_mogo_button.just_pressed()) {
+      peak::raise_to_level(1);
+    } else if (peak_alliance_button.just_pressed()) {
+      peak::raise_to_level(2);
+    } else if (peak_wall_button.just_pressed()) {
+      peak::raise_to_level(3);
     }
   } catch (const std::invalid_argument &e) {
     // do nothing;

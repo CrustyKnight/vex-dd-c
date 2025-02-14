@@ -93,7 +93,7 @@ void raise_to(double inches) {
 }
 
 void raise_to_level(int level) {
-  switch(level) {
+  switch (level) {
     case 0:
       extend_to(PEAK_LEVEL_REST);
       break;
@@ -106,8 +106,8 @@ void raise_to_level(int level) {
     case 3:
       extend_to(PEAK_LEVEL_WALL);
       break;
-    }
   }
+}
 int inc_level(int level) {
   if(level == 3){
     throw std::invalid_argument("Level already at max!");
