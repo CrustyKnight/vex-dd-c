@@ -1,3 +1,4 @@
+#include "config.hpp"
 #include "lemlib/api.hpp"  // IWYU pragma: keep
 #include "lemlib/chassis/odom.hpp"
 #include "auton.hpp"
@@ -7,6 +8,7 @@
 #include <math.h>
 #include "control.hpp"
 #include "intake.hpp"
+#include "pros/motors.h"
 
 // Important Note: This file has all of our drivetrain and remote control-related code.
 
@@ -59,6 +61,7 @@ void on_center_button() {
 void initialize() {
   intake::init();
   display_init();
+  peak::init();
   chassis.calibrate();
 }
 
@@ -135,7 +138,17 @@ void autonomous() {
   left_motors.move(00);
   right_motors.move(00);
   */
-  lateral_move(12);
+  // lateral_move(12);
+  peak::raise_to_level(1);
+  pros::delay(5000);
+  peak::raise_to_level(2);
+  pros::delay(1000);
+  peak::raise_to_level(3);
+  pros::delay(7000);
+  peak::raise_to_level(1);
+  pros::delay(7000);
+  peak::raise_to_level(0);
+  throw std::invalid_argument("I am at the end");
 }
 
 void do_autonomous() {
@@ -145,8 +158,8 @@ void do_autonomous() {
 
 // Set up of driver controls...// Arcade control scheme; has it's own function for enhanced organization...
 void setArcadeDrive(pros::Controller master) {
-  int drive = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);   // Gets amount forward/backward from left joystick
-  int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);  // Gets the turn left/right from right joystick
+  int drive = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);  // Gets amount forward/backward from left joystick
+  int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);   // Gets the turn left/right from right joystick
   left_motors.move(drive - turn);                                    // Sets left motor voltage
   right_motors.move(drive + turn);                                   // Sets right motor voltage
 }
