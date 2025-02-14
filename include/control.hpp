@@ -13,5 +13,6 @@ void drive_intake(pros::Controller);
 void drive_clamp(pros::Controller);
 void drive_extend(pros::Controller);
 void drive_extend_test(pros::Controller);
+void drive_peak_levels(pros::Controller);
 
 #endif  // CONTROL_H_

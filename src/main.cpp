@@ -2,6 +2,7 @@
 #include "lemlib/chassis/odom.hpp"
 #include "auton.hpp"
 #include "main.h"
+#include "peak.hpp"
 #include "display.h"
 #include <math.h>
 #include "control.hpp"

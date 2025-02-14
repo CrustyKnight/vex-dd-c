@@ -28,8 +28,8 @@
 
 // peak level (in)
 #define PEAK_LEVEL_REST 0
-#define PEAK_LEVEL_MOGO 7
-#define PEAK_LEVEL_ALLIANCE 14
+#define PEAK_LEVEL_MOGO 3.125
+#define PEAK_LEVEL_ALLIANCE 3.125
 #define PEAK_LEVEL_WALL 20
 
 #define INTAKE_SPROCKET_TEETH 20.0
