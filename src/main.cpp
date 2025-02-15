@@ -135,12 +135,21 @@ void swing_movement(int degrees, int timeout) {
 
 // when testing, put the tests in here
 void autonomous() {
+
+  /* TEST
   chassis.setPose(0, 0, 0);
 
   // get
   chassis.moveToPoint(0, -13, 10000, {.forwards = false, .minSpeed = 20}, false);
   clamp::engage();
   chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
+  */
+
+  //DEFENSIVE
+  peak::raise_to_level(1);
+  chassis.setPose(0,0,180);
+  chassis.moveToPose(16.64, 0, 10000, {.forwards = false, .minSpeed = 20}, false);
+ 
 
   // chassis.moveToPoint(0, 24, 100000);
   // chassis.moveToPoint(0, -24, 100000, {.forwards = false});
