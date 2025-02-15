@@ -40,17 +40,17 @@ static lv_color_t darken(const lv_color_filter_dsc_t* dsc, lv_color_t color, lv_
   return lv_color_darken(color, opa);
 }
 
-LV_IMG_DECLARE(catplush);
-static lv_obj_t* catplush_img;
+LV_IMG_DECLARE(strawb);
+static lv_obj_t* strawb_img;
 static lv_obj_t* maint;
 
 lv_obj_t* motortemps;
 
-void draw_catplush() {
-  catplush_img = lv_img_create(maint);
-  lv_img_set_src(catplush_img, &catplush);
-  lv_obj_align(catplush_img, LV_ALIGN_CENTER, 0, -30);
-  lv_img_set_zoom(catplush_img, 512);
+void draw_strawb() {
+  strawb_img = lv_img_create(maint);
+  lv_img_set_src(strawb_img, &strawb);
+  lv_obj_align(strawb_img, LV_ALIGN_CENTER, 0, -30);
+  lv_img_set_zoom(strawb_img, 512);
 }
 
 static void style_init(void) {
@@ -127,7 +127,7 @@ void display_init(void) {
   lv_label_set_text(title, "~~DONUT DYNAMICS~~");
   lv_obj_set_style_text_color(maint, lv_color_hex(TEXTCLR), LV_PART_MAIN);
 
-  draw_catplush();
+  draw_strawb();
 
   // lv_obj_t * autonbutton = lv_btn_create(maint);
   // lv_obj_remove_style_all(autonbutton);
