@@ -82,5 +82,20 @@ extern lemlib::Chassis chassis;
 
 #define _ALLIANCE_AUTON_
 // #define _MOGO_AUTON_
+//
+#ifdef _ALLIANCE_AUTON_
+#ifdef _MOGO_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Alliance & Mogo are enabled)"
+#endif
+#ifdef _ALLIANCE_MOGO_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Alliance & Alliance+Mogo are enabled)"
+#endif
+#endif
+
+#ifdef _MOGO_AUTON_
+#ifdef _ALLIANCE_MOGO_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Mogo & Alliance+Mogo are enabled)"
+#endif
+#endif
 
 #endif  // CONFIG_H
