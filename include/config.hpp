@@ -68,11 +68,7 @@
 // Ladder height
 #define ENDGAME_HEIGHT 7.5
 
-<<<<<<< HEAD
-#define _DEBUG_
-=======
 // #define _DEBUG_
->>>>>>> 9c206247ed0129eca0a239f3dc84b5894f19a77b
 #ifdef _DEBUG_
 
 #define _DEBUG_AUTON_
