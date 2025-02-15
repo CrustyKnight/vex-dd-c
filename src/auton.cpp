@@ -56,11 +56,26 @@ void get_mogo(lemlib::Chassis* chassis, double x, double y) {
   clamp::engage();
 }
 
+/* TEST
+chassis.moveToPoint(0, -13, 10000, {.forwards = false, .minSpeed = 20}, false);
+clamp::engage();
+chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
+*/
+
+void grab_mogo(float x, float y, lemlib::Chassis* chassis) {
+  chassis.moveToPoint(x, y, 10000, {.forwards = false, .minSpeed = 20,}, false);
+  clamp::engage();
+  chassis.moveToPoint(x+ 2, y, 10000, {.forwards = false, .minSpeed = 20}, false);
+}
 // #TODO: create efficient skills plan...
 void autonSkills(lemlib::Chassis* chassis) {
-  intake::on();
+  peak::raise_to_level(1);
   chassis->setPose(SKILLS_X_START, SKILLS_Y_START, SKILLS_THETA_START);
-  get_mogo(chassis, -54, 23.5);
+
+  grab_mogo(-55, 23.5, chassis);
+
+  intake::on();
+
   chassis->moveToPose(D1X, D1Y, 0, 5000);
   chassis->moveToPoint(D2X, D2Y, 5000);
   chassis->moveToPose(D3X, D3Y, 180, 5000);
@@ -73,6 +88,7 @@ void autonSkills(lemlib::Chassis* chassis) {
   chassis->moveToPose(-64, -65, -45, 5000);
   drop_mogo();
 
+  /*
   chassis->turnToHeading(-45, 5000);
   get_mogo(chassis, -47, -16);
 
@@ -82,6 +98,7 @@ void autonSkills(lemlib::Chassis* chassis) {
   chassis->moveToPose(D10X, D10Y, -30, 5000);
 
   chassis->moveToPose(D11X, D11Y, 30, 5000);
+  */
 }
 
 // #TODO: create game plan...
