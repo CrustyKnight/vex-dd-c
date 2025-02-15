@@ -28,9 +28,9 @@
 
 // peak level (in)
 #define PEAK_LEVEL_REST 0
-#define PEAK_LEVEL_MOGO 3.355
-#define PEAK_LEVEL_ALLIANCE 3.355
-#define PEAK_LEVEL_WALL 14.20
+#define PEAK_LEVEL_MOGO 3.575
+#define PEAK_LEVEL_ALLIANCE 3.575
+#define PEAK_LEVEL_WALL 15.50
 
 #define INTAKE_SPROCKET_TEETH 20.0
 #define INTAKE_CHAIN_LINKS 81.0
@@ -39,7 +39,7 @@
 
 #define LINEAR_SLIDE_ALL_TEETH 133
 #define LINEAR_SLIDE_SECTION_TEETH 19.0
-#define LINEAR_SLIDE_MAX_TEETH_HEIGHT 114
+#define LINEAR_SLIDE_MAX_TEETH_HEIGHT 118
 // TODO check this V
 // inches
 #define LINEAR_SLIDE_SECTION_HEIGHT 2.5
@@ -61,7 +61,7 @@
 // Ladder height
 #define ENDGAME_HEIGHT 7.5
 
-#define _DEBUG_
+// #define _DEBUG_
 #ifdef _DEBUG_
 
 #define _DEBUG_AUTON_

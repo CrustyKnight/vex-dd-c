@@ -181,8 +181,8 @@ void do_autonomous() {
 
 // Set up of driver controls...// Arcade control scheme; has it's own function for enhanced organization...
 void setArcadeDrive(pros::Controller master) {
-  int drive = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);  // Gets amount forward/backward from left joystick
-  int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);   // Gets the turn left/right from right joystick
+  int drive = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);  // Gets amount forward/backward from left joystick
+  int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);   // Gets the turn left/right from right joystick
   left_motors.move(drive - turn);                                    // Sets left motor voltage
   right_motors.move(drive + turn);                                   // Sets right motor voltage
 }
