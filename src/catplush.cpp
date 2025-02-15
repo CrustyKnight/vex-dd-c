@@ -20,7 +20,6 @@
 #define LV_ATTRIBUTE_IMG_CATPLUSH
 #endif
 
-// From Celeste Discord
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CATPLUSH uint8_t catplush_map[] = {
 #if LV_COLOR_DEPTH == 1 || LV_COLOR_DEPTH == 8
     /*Pixel format: Alpha 8 bit, Red: 3 bit, Green: 3 bit, Blue: 2 bit*/
