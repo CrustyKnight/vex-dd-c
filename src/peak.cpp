@@ -126,6 +126,17 @@ void raise_to_level(int level) {
     case 3:
       extend_to(PEAK_LEVEL_WALL);
       break;
+    case -1:  // go down
+      motor.move(-100);
+      // teeth_height = 0;
+      break;
+    case -2:
+      motor.move(100);
+      // teeth_height = 0;
+      break;
+    case -3:
+      motor.move(0);
+      break;
   }
 }
 int inc_level(int level) {

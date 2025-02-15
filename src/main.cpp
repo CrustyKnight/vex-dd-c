@@ -135,24 +135,35 @@ void swing_movement(int degrees, int timeout) {
 
 // when testing, put the tests in here
 void autonomous() {
+/* TEST
+chassis.setPose(0, 0, 0);
 
-  /* TEST
-  chassis.setPose(0, 0, 0);
+// get
+chassis.moveToPoint(0, -13, 10000, {.forwards = false, .minSpeed = 20}, false);
+clamp::engage();
+chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
+*/
 
-  // get
-  chassis.moveToPoint(0, -13, 10000, {.forwards = false, .minSpeed = 20}, false);
-  clamp::engage();
-  chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
-  */
-
-  //DEFENSIVE
-  peak::raise_to_level(1);
-  chassis.setPose(0,0,180);
+// DEFENSIVE
+#ifdef _ALLIANCE_AUTON_
+  peak::raise_to_level(__PEAK_ARG_MOGO);
+  intake::run_forward(INTAKE_INIT_POWER);
+  pros::delay(1000);
+  chassis.moveToPoint(0, 57, 10000);  // go forward & run into the ladder.
+  // ^ this is a guess. refine this.
+#endif
+#ifdef _MOGO_AUTON_
+  peak::raise_to_level(__PEAK_ARG_MOGO);
+  chassis.setPose(0, 0, 180);
   chassis.moveToPoint(12, 0, 10000, {.forwards = false, .minSpeed = 20}, false);
   clamp::engage();
   chassis.moveToPoint(14, 0, 10000, {.forwards = false, .maxSpeed = 20}, false);
   intake::on();
   chassis.moveToPose(57, 24, -45, 10000);
+#endif
+#ifdef _ALLIANCE_MOGO_AUTON_
+  // If we do alliance & get mogo, put that code here.
+#endif
 
   // chassis.moveToPoint(0, 24, 100000);
   // chassis.moveToPoint(0, -24, 100000, {.forwards = false});
@@ -193,8 +204,8 @@ void do_autonomous() {
 
 // Set up of driver controls...// Arcade control scheme; has it's own function for enhanced organization...
 void setArcadeDrive(pros::Controller master) {
-  int drive = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);  // Gets amount forward/backward from left joystick
-  int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);   // Gets the turn left/right from right joystick
+  int drive = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);   // Gets amount forward/backward from left joystick
+  int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
   left_motors.move(drive - turn);                                    // Sets left motor voltage
   right_motors.move(drive + turn);                                   // Sets right motor voltage
 }

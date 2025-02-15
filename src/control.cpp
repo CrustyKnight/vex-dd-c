@@ -91,9 +91,9 @@ void drive_intake_hold(pros::Controller master) {
   intake_button.update(master);
   intake_reverse_button.update(master);
   if (intake_button.held()) {
-    intake::run_forward(100);
+    intake::run_forward(INTAKE_INIT_POWER);
   } else if (intake_reverse_button.held()) {
-    intake::run_backward(100);
+    intake::run_backward(INTAKE_INIT_POWER);
   } else {
     intake::off();
   }
@@ -125,12 +125,16 @@ Button peak_rest_button(PEAK_REST_BUTTON);
 Button peak_mogo_button(PEAK_MOGO_BUTTON);
 Button peak_alliance_button(PEAK_ALLIANCE_WALL_STAKE_BUTTON);
 Button peak_wall_button(PEAK_HIGH_WALL_BUTTON);
+Button peak_manual_up_button(PEAK_MANUAL_UP_BUTTON);
+Button peak_manual_down_button(PEAK_MANUAL_DOWN_BUTTON);
 void drive_peak_levels(pros::Controller master) {
   try {
     peak_rest_button.update(master);
     peak_mogo_button.update(master);
     peak_alliance_button.update(master);
     peak_wall_button.update(master);
+    peak_manual_up_button.update(master);
+    peak_manual_down_button.update(master);
 
     if (peak_rest_button.just_pressed()) {
       peak::raise_to_level(0);
@@ -140,6 +144,12 @@ void drive_peak_levels(pros::Controller master) {
       peak::raise_to_level(2);
     } else if (peak_wall_button.just_pressed()) {
       peak::raise_to_level(3);
+    } else if (peak_manual_up_button.held() && peak_manual_down_button.held()) {
+      peak::raise_to_level(-3);
+    } else if (peak_manual_down_button.held()) {
+      peak::raise_to_level(-1);
+    } else if (peak_manual_up_button.held()) {
+      peak::raise_to_level(-2);
     }
   } catch (const std::invalid_argument &e) {
     // do nothing;

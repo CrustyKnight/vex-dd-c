@@ -11,6 +11,8 @@
 #define PEAK_ALLIANCE_WALL_STAKE_BUTTON DIGITAL_LEFT
 #define PEAK_MOGO_BUTTON DIGITAL_DOWN
 #define PEAK_REST_BUTTON DIGITAL_RIGHT
+#define PEAK_MANUAL_UP_BUTTON DIGITAL_L1
+#define PEAK_MANUAL_DOWN_BUTTON DIGITAL_L2
 
 #define CLAMP_ON 1
 #define CLAMP_OFF 0
@@ -21,16 +23,21 @@
 #define PEAK_MOTOR_PORT 8
 
 #define INTAKE_ON_DIRECTION -1
-#define INTAKE_INIT_POWER 100
+#define INTAKE_INIT_POWER 127
 
 #define PEAK_ON_DIRECTION -1
 #define PEAK_ON_POWER 100
 
 // peak level (in)
 #define PEAK_LEVEL_REST 0
-#define PEAK_LEVEL_MOGO 3.575
-#define PEAK_LEVEL_ALLIANCE 3.575
-#define PEAK_LEVEL_WALL 15.50
+#define PEAK_LEVEL_MOGO 3.525
+#define PEAK_LEVEL_ALLIANCE PEAK_LEVEL_MOGO
+// 3.575
+#define PEAK_LEVEL_WALL 14.55
+
+#define __PEAK_ARG_MOGO 1
+#define __PEAK_ARG_WALL 3
+#define __PEAK_ARG_REST 0
 
 #define INTAKE_SPROCKET_TEETH 20.0
 #define INTAKE_CHAIN_LINKS 81.0
@@ -72,5 +79,8 @@
 
 #include "lemlib/api.hpp"
 extern lemlib::Chassis chassis;
+
+#define _ALLIANCE_AUTON_
+// #define _MOGO_AUTON_
 
 #endif  // CONFIG_H

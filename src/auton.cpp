@@ -63,9 +63,9 @@ chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
 */
 
 void grab_mogo(float x, float y, lemlib::Chassis* chassis) {
-  chassis.moveToPoint(x, y, 10000, {.forwards = false, .minSpeed = 20,}, false);
+  chassis->moveToPoint(x, y, 10000, {.forwards = false, .minSpeed = 20,}, false);
   clamp::engage();
-  chassis.moveToPoint(x+ 2, y, 10000, {.forwards = false, .minSpeed = 20}, false);
+  chassis->moveToPoint(x+ 2, y, 10000, {.forwards = false, .minSpeed = 20}, false);
 }
 // #TODO: create efficient skills plan...
 void autonSkills(lemlib::Chassis* chassis) {
