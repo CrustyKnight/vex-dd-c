@@ -77,9 +77,13 @@ void autonSkills(lemlib::Chassis* chassis) {
   intake::on();
 
   chassis->moveToPose(D1X, D1Y, 0, 5000);
+  pros::delay(300);
   chassis->moveToPoint(D2X, D2Y, 5000);
+  pros::delay(300);
   chassis->moveToPose(D3X, D3Y, 180, 5000);
+  pros::delay(300);
   chassis->moveToPoint(D4X, D4Y, 5000);
+  pros::delay(300);
   chassis->moveToPoint(D5X, D5Y, 5000);
 
   chassis->turnToHeading(45, 5000);

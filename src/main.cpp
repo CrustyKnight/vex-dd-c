@@ -165,6 +165,10 @@ chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
   // If we do alliance & get mogo, put that code here.
 #endif
 
+#ifdef _SKILLS_AUTON_
+ autonSkills(&chassis);
+#endif
+
   // chassis.moveToPoint(0, 24, 100000);
   // chassis.moveToPoint(0, -24, 100000, {.forwards = false});
   // chassis.turnToHeading(-90, 100000);
