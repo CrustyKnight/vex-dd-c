@@ -14,16 +14,6 @@
 
 // Important Note: This file has all of our drivetrain and remote control-related code.
 
-// Cooked ahh hack (does not work)
-// class RightMotorGroup : public virtual pros::MotorGroup {
-//  public:
-//   virtual std::int32_t move(std::int32_t voltage) const {
-//     std::printf("I was moved!\n");
-//     return MotorGroup::move(0);
-//   }
-// };
-// RightMotorGroup::MotorGroup cooked_r_motors({13, 14, 15}, pros::MotorGearset::green);
-
 // LemLib setup
 // TODO
 // Setting up of drivetrain sides: side_motors({low_1, high, low 2})
@@ -47,6 +37,7 @@ lemlib::ControllerSettings angular_controller(17, 0.5, 20, 1, 0.5, 100, 0, 0, 0)
 lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
 // Creating expo drive curve
 lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -83,6 +74,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {}
+
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
  * Management System or the VEX Competition Switch. This is intended for
@@ -93,33 +85,6 @@ void disabled() {}
  * starts.
  */
 void competition_initialize() {}
-
-void lateral_move(int distance, int timeout) {
-  // lemlib::update(); // update the pose
-  lemlib::Pose currentPose = chassis.getPose(true);
-  float new_x = (int)(cos(currentPose.theta) * distance);  // Changed sin to cos; x is cos no? (Debangshu)
-  float new_y = (int)(sin(currentPose.theta) * distance);
-  chassis.moveToPoint(new_x, new_y, timeout);
-}
-
-// TODO: we need to find out if negative degrees and positive degrees are clockwise our counterclockwise for the purpose of our robot.
-void angular_turn(int degrees, int timeout) {
-  // lemlib::update(); // update the pose
-  lemlib::Pose currentPose = chassis.getPose();
-  float new_degrees = currentPose.theta + degrees;
-  chassis.turnToHeading(new_degrees, timeout);
-}
-
-void swing_movement(int degrees, int timeout) {
-  // lemlib::update(); // update the pose
-  lemlib::Pose currentPose = chassis.getPose();
-  float new_degrees = currentPose.theta + degrees;
-  if (degrees < 0) {
-    chassis.swingToHeading(new_degrees, DriveSide::LEFT, timeout);
-  } else {
-    chassis.swingToHeading(new_degrees, DriveSide::RIGHT, timeout);
-  }
-}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -133,85 +98,31 @@ void swing_movement(int degrees, int timeout) {
  * from where it left off.
  */
 
-// when testing, put the tests in here
 void autonomous() {
-/* TEST
-chassis.setPose(0, 0, 0);
-
-// get
-chassis.moveToPoint(0, -13, 10000, {.forwards = false, .minSpeed = 20}, false);
-clamp::engage();
-chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
-*/
-
 // DEFENSIVE
 #ifdef _ALLIANCE_AUTON_
   peak::raise_to_level(__PEAK_ARG_MOGO);
+  pros::delay(1000);
   intake::run_forward(INTAKE_INIT_POWER);
   pros::delay(1000);
   chassis.moveToPoint(0, 57, 10000);  // go forward & run into the ladder.
   // ^ this is a guess. refine this.
 #endif
 #ifdef _MOGO_AUTON_
-  peak::raise_to_level(__PEAK_ARG_MOGO);
   chassis.setPose(0, 0, 180);
-  chassis.moveToPoint(12, 0, 10000, {.forwards = false, .minSpeed = 20}, false);
+  peak::raise_to_level(__PEAK_ARG_MOGO);
+  chassis.moveToPoint(0, 24, 30000, {.forwards = false, .maxSpeed = 40, .minSpeed = 20}, false);
   clamp::engage();
-  chassis.moveToPoint(14, 0, 10000, {.forwards = false, .maxSpeed = 20}, false);
-  intake::on();
-  chassis.moveToPose(57, 24, -45, 10000);
+  chassis.moveToPoint(0, 27, 5000, {.forwards = false, .maxSpeed = 20}, false);
+  pros::delay(100);
+  intake::run_forward(120);
+  pros::delay(2000);
+  intake::off();
+  // chassis.moveToPose(57, 24, -45, 10000);
 #endif
 #ifdef _ALLIANCE_MOGO_AUTON_
   // If we do alliance & get mogo, put that code here.
 #endif
-
-#ifdef _SKILLS_AUTON_
- autonSkills(&chassis);
-#endif
-
-  // chassis.moveToPoint(0, 24, 100000);
-  // chassis.moveToPoint(0, -24, 100000, {.forwards = false});
-  // chassis.turnToHeading(-90, 100000);
-  // 1.46
-  // 1.38 (was longer)
-  // peak::raise_to_level(1);
-  // pros::delay(1500);
-  // intake::run_forward(100);
-  // pros::delay(100);
-  // chassis.moveToPoint(0, -12, 1000, {.forwards = false});
-  // chassis.moveToPoint(0, 6, 1000);
-  // pros::delay(2000);
-  // intake::off();
-  // pros::delay(5000);
-  // peak::raise_to_level(0);
-
-  /*
-  intake::on();
-  lemlib::update();
-  // lateral_move(20, 4000);
-  intake::set_power(100);
-  intake::on();
-  // chassis.moveToPoint(0, 15, 4000);
-  left_motors.move(100);
-  right_motors.move(100);
-  pros::delay(500);
-  intake::off();
-  left_motors.move(00);
-  right_motors.move(00);
-  */
-}
-
-void do_autonomous() {
-  intake::set_power(100);
-  intake::on();
-}
-
-// Set up of driver controls...// Arcade control scheme; has it's own function for enhanced organization...
-void setArcadeDrive(pros::Controller master) {
-  int drive = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);   // Gets amount forward/backward from left joystick
-  int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
-  left_motors.move(drive - turn);                                    // Sets left motor voltage
-  right_motors.move(drive + turn);                                   // Sets right motor voltage
 }
 
 /**
@@ -237,47 +148,11 @@ void opcontrol() {
 #endif
   while (true) {
     // Arcade control scheme
-    setArcadeDrive(master);
-    pros::delay(10);  // Run for 20 ms then update
-
+    drive_arcade(master, &left_motors, &right_motors);
+    // pros::delay(10);  // Run for 20 ms then update
     drive_intake(master);
     drive_clamp(master);
     drive_peak_levels(master);
-#ifdef _DEBUG_
-    drivePIDTest(master);
-#endif
-
-    // display_tick();
-    pros::delay(2);
+    pros::delay(10);
   }
-}
-
-std::vector<double> get_motor_temps() {
-  std::vector<double> temps;
-
-  for (int i = 1; i < 7; i++) {
-    temps.push_back(pros::c::motor_get_temperature(i));
-  }
-
-  return temps;
-}
-
-std::vector<double> get_motor_torques() {
-  std::vector<double> torques;
-
-  for (int i = 1; i < 7; i++) {
-    torques.push_back(pros::c::motor_get_torque(i));
-  }
-
-  return torques;
-}
-
-std::vector<double> get_motor_rpms() {
-  std::vector<double> rpms;
-
-  for (int i = 1; i < 7; i++) {
-    rpms.push_back(pros::c::motor_get_actual_velocity(i));
-  }
-
-  return rpms;
 }

@@ -39,7 +39,7 @@
 /**
  * You should add more #includes here
  */
-//#include "okapi/api.hpp"
+// #include "okapi/api.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
@@ -68,9 +68,6 @@ void competition_initialize(void);
 void printStatus(void);
 void opcontrol(void);
 void drive_intake(void);
-std::vector<double> get_motor_temps(void);
-std::vector<double> get_motor_torques(void);
-std::vector<double> get_motor_rpms(void);
 #ifdef __cplusplus
 }
 #endif
@@ -79,7 +76,7 @@ std::vector<double> get_motor_rpms(void);
 /**
  * You can add C++-only headers here
  */
-//#include <iostream>
+// #include <iostream>
 void lateral_move(int distance, int timeout = 10000);
 void angular_turn(int degrees, int timeout = 10000);
 void swing_movement(int degrees, int timeout = 10000);

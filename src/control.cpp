@@ -7,6 +7,7 @@
 #include "intake.hpp"
 #include "pros/misc.h"
 #include "pros/misc.hpp"
+#include "pros/motor_group.hpp"
 
 pros::Motor ext(8, pros::MotorGearset::red);
 pros::Controller ic(pros::E_CONTROLLER_MASTER);
@@ -127,6 +128,7 @@ Button peak_alliance_button(PEAK_ALLIANCE_WALL_STAKE_BUTTON);
 Button peak_wall_button(PEAK_HIGH_WALL_BUTTON);
 Button peak_manual_up_button(PEAK_MANUAL_UP_BUTTON);
 Button peak_manual_down_button(PEAK_MANUAL_DOWN_BUTTON);
+Button peak_stop_it_button(DIGITAL_Y);
 void drive_peak_levels(pros::Controller master) {
   try {
     peak_rest_button.update(master);
@@ -135,6 +137,7 @@ void drive_peak_levels(pros::Controller master) {
     peak_wall_button.update(master);
     peak_manual_up_button.update(master);
     peak_manual_down_button.update(master);
+    peak_stop_it_button.update(master);
 
     if (peak_rest_button.just_pressed()) {
       peak::raise_to_level(0);
@@ -150,8 +153,10 @@ void drive_peak_levels(pros::Controller master) {
       peak::raise_to_level(-1);
     } else if (peak_manual_up_button.held()) {
       peak::raise_to_level(-2);
+    } else if (peak_stop_it_button.just_pressed()) {
+      peak::raise_to_level(-3);
     }
-  } catch (const std::invalid_argument &e) {
+  } catch (const std::invalid_argument& e) {
     // do nothing;
   }
 }
@@ -167,4 +172,12 @@ void drive_clamp_up_down(pros::Controller master) {
 
 void drive_clamp(pros::Controller master) {
   drive_clamp_up_down(master);
+}
+
+void drive_arcade(pros::Controller master,
+                  pros::MotorGroup* lm, pros::MotorGroup* rm) {
+  int drive = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);   // Gets amount forward/backward from left joystick
+  int turn = -master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
+  lm->move(drive - turn);                                            // Sets left motor voltage
+  rm->move(drive + turn);                                            // Sets right motor voltage
 }

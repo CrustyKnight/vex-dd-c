@@ -4,6 +4,47 @@
 #include "main.h"
 #include "pros/apix.h"
 
+
+
+
+std::vector<double> get_motor_temps() {
+  std::vector<double> temps;
+
+  for (int i = 1; i < 7; i++) {
+    temps.push_back(pros::c::motor_get_temperature(i));
+  }
+
+  return temps;
+}
+
+std::vector<double> get_motor_torques() {
+  std::vector<double> torques;
+
+  for (int i = 1; i < 7; i++) {
+    torques.push_back(pros::c::motor_get_torque(i));
+  }
+
+  return torques;
+}
+
+std::vector<double> get_motor_rpms() {
+  std::vector<double> rpms;
+
+  for (int i = 1; i < 7; i++) {
+    rpms.push_back(pros::c::motor_get_actual_velocity(i));
+  }
+
+  return rpms;
+}
+
+
+
+
+
+
+
+
+
 // catpuccin mocha B)
 #define cat_blue 0x89b4fa
 #define cat_red 0xf38ba8

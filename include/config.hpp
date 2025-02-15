@@ -30,7 +30,9 @@
 
 // peak level (in)
 #define PEAK_LEVEL_REST 0
-#define PEAK_LEVEL_MOGO 3.525
+// #define PEAK_LEVEL_MOGO 3.075
+#define PEAK_LEVEL_MOGO 2.755
+// #define PEAK_LEVEL_MOGO 3.505
 #define PEAK_LEVEL_ALLIANCE PEAK_LEVEL_MOGO
 // 3.575
 #define PEAK_LEVEL_WALL 14.55
@@ -68,11 +70,7 @@
 // Ladder height
 #define ENDGAME_HEIGHT 7.5
 
-<<<<<<< HEAD
-#define _DEBUG_
-=======
 // #define _DEBUG_
->>>>>>> 9c206247ed0129eca0a239f3dc84b5894f19a77b
 #ifdef _DEBUG_
 
 #define _DEBUG_AUTON_
@@ -84,7 +82,22 @@
 #include "lemlib/api.hpp"
 extern lemlib::Chassis chassis;
 
-#define _ALLIANCE_AUTON_
-// #define _MOGO_AUTON_
+// #define _ALLIANCE_AUTON_
+#define _MOGO_AUTON_
+//
+#ifdef _ALLIANCE_AUTON_
+#ifdef _MOGO_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Alliance & Mogo are enabled)"
+#endif
+#ifdef _ALLIANCE_MOGO_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Alliance & Alliance+Mogo are enabled)"
+#endif
+#endif
+
+#ifdef _MOGO_AUTON_
+#ifdef _ALLIANCE_MOGO_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Mogo & Alliance+Mogo are enabled)"
+#endif
+#endif
 
 #endif  // CONFIG_H
