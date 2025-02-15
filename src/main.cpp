@@ -9,8 +9,20 @@
 #include "control.hpp"
 #include "intake.hpp"
 #include "pros/motors.h"
+#include "auton.hpp"
+#include "clamp.hpp"
 
 // Important Note: This file has all of our drivetrain and remote control-related code.
+
+// Cooked ahh hack (does not work)
+// class RightMotorGroup : public virtual pros::MotorGroup {
+//  public:
+//   virtual std::int32_t move(std::int32_t voltage) const {
+//     std::printf("I was moved!\n");
+//     return MotorGroup::move(0);
+//   }
+// };
+// RightMotorGroup::MotorGroup cooked_r_motors({13, 14, 15}, pros::MotorGearset::green);
 
 // LemLib setup
 // TODO
@@ -20,16 +32,16 @@ pros::MotorGroup left_motors({-4, -5, -6}, pros::MotorGearset::green);
 pros::MotorGroup right_motors({13, 14, 15}, pros::MotorGearset::green);
 
 // Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality.
-lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 13.3, lemlib::Omniwheel::NEW_325, 333.3333, 2);
+lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 12.625, lemlib::Omniwheel::NEW_325, 355.55555, 3);
 pros::Imu imu(10);
 lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 
 // kP, kI, kD, anti-windup, small error range, small error range timeout,
 // large error range, large error range timeout, max acceleration (slew)
 // lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
-lemlib::ControllerSettings lateral_controller(10, 0, 3, 0, 0, 0, 0, 0, 0);
-// lemlib::ControllerSettings angular_controller(2, 0, 10, 3, 1, 100, 3, 500, 0);
-lemlib::ControllerSettings angular_controller(2, 0, 10, 0, 0, 0, 0, 0, 0);
+lemlib::ControllerSettings lateral_controller(14, 0.5, 20, 0, 0, 0, 0, 0, 0);
+// lemlib::ControllerSettings angr_controller(2,  0,  10, 3, 1, 100, 3, 500, 0);
+lemlib::ControllerSettings angular_controller(17, 0.5, 20, 1, 0.5, 100, 0, 0, 0);
 
 // Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain.
 lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
@@ -123,13 +135,35 @@ void swing_movement(int degrees, int timeout) {
 
 // when testing, put the tests in here
 void autonomous() {
+  chassis.setPose(0, 0, 0);
+
+  // get
+  chassis.moveToPoint(0, -13, 10000, {.forwards = false, .minSpeed = 20}, false);
+  clamp::engage();
+  chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
+
+  // chassis.moveToPoint(0, 24, 100000);
+  // chassis.moveToPoint(0, -24, 100000, {.forwards = false});
+  // chassis.turnToHeading(-90, 100000);
+  // 1.46
+  // 1.38 (was longer)
+  // peak::raise_to_level(1);
+  // pros::delay(1500);
+  // intake::run_forward(100);
+  // pros::delay(100);
+  // chassis.moveToPoint(0, -12, 1000, {.forwards = false});
+  // chassis.moveToPoint(0, 6, 1000);
+  // pros::delay(2000);
+  // intake::off();
+  // pros::delay(5000);
+  // peak::raise_to_level(0);
+
   /*
   intake::on();
   lemlib::update();
   // lateral_move(20, 4000);
   intake::set_power(100);
   intake::on();
-  // chassis.setPose(0, 0, 0);
   // chassis.moveToPoint(0, 15, 4000);
   left_motors.move(100);
   right_motors.move(100);
@@ -138,17 +172,6 @@ void autonomous() {
   left_motors.move(00);
   right_motors.move(00);
   */
-  // lateral_move(12);
-  peak::raise_to_level(1);
-  pros::delay(5000);
-  peak::raise_to_level(2);
-  pros::delay(1000);
-  peak::raise_to_level(3);
-  pros::delay(7000);
-  peak::raise_to_level(1);
-  pros::delay(7000);
-  peak::raise_to_level(0);
-  throw std::invalid_argument("I am at the end");
 }
 
 void do_autonomous() {

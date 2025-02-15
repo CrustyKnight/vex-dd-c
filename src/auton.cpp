@@ -47,16 +47,16 @@
 #define D11Y -59
 
 // cursed :)
-static void drop_mogo() {
+void drop_mogo() {
   clamp::disengage();
 }
 // Blocking
-static void get_mogo(lemlib::Chassis* chassis, double x, double y) {
-  chassis->moveToPoint(x, y, 5000, {.forwards = false}, false);
+void get_mogo(lemlib::Chassis* chassis, double x, double y) {
+  chassis->moveToPoint(x, y, 10000, {.forwards = false}, false);
   clamp::engage();
 }
 
-//#TODO: create efficient skills plan...
+// #TODO: create efficient skills plan...
 void autonSkills(lemlib::Chassis* chassis) {
   intake::on();
   chassis->setPose(SKILLS_X_START, SKILLS_Y_START, SKILLS_THETA_START);
@@ -76,19 +76,17 @@ void autonSkills(lemlib::Chassis* chassis) {
   chassis->turnToHeading(-45, 5000);
   get_mogo(chassis, -47, -16);
 
-  chassis->moveToPose(D7X,D7Y, 235, 5000);
-  chassis->moveToPose(D8X,D8Y, -90, 5000);
-  chassis->moveToPose(D9X,D9Y, 30, 5000);
-  chassis->moveToPose(D10X,D10Y, -30, 5000);
+  chassis->moveToPose(D7X, D7Y, 235, 5000);
+  chassis->moveToPose(D8X, D8Y, -90, 5000);
+  chassis->moveToPose(D9X, D9Y, 30, 5000);
+  chassis->moveToPose(D10X, D10Y, -30, 5000);
 
-  chassis->moveToPose(D11X,D11Y, 30, 5000);
-
+  chassis->moveToPose(D11X, D11Y, 30, 5000);
 }
 
-//#TODO: create game plan...
+// #TODO: create game plan...
 void defensiveAuton() {
 }
 
 void offensiveAuton() {
-
 }
