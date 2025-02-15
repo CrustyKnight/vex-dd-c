@@ -123,6 +123,9 @@ void autonomous() {
 #ifdef _ALLIANCE_MOGO_AUTON_
   // If we do alliance & get mogo, put that code here.
 #endif
+#ifdef _SKILLS_AUTON_
+  autonSkills(&chassis);
+#endif
 }
 
 /**

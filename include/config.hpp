@@ -30,9 +30,7 @@
 
 // peak level (in)
 #define PEAK_LEVEL_REST 0
-// #define PEAK_LEVEL_MOGO 3.075
-#define PEAK_LEVEL_MOGO 2.755
-// #define PEAK_LEVEL_MOGO 3.505
+#define PEAK_LEVEL_MOGO 3.525
 #define PEAK_LEVEL_ALLIANCE PEAK_LEVEL_MOGO
 // 3.575
 #define PEAK_LEVEL_WALL 14.55
@@ -84,7 +82,7 @@ extern lemlib::Chassis chassis;
 
 // #define _ALLIANCE_AUTON_
 #define _MOGO_AUTON_
-//
+// #define _SKILLS_AUTON_
 #ifdef _ALLIANCE_AUTON_
 #ifdef _MOGO_AUTON_
 #error "ONLY ONE AUTON AT A TIME (Alliance & Mogo are enabled)"
@@ -92,12 +90,26 @@ extern lemlib::Chassis chassis;
 #ifdef _ALLIANCE_MOGO_AUTON_
 #error "ONLY ONE AUTON AT A TIME (Alliance & Alliance+Mogo are enabled)"
 #endif
+#ifdef _SKILLS_AUTON_
+#error "ONLY ONE AUTON AT A TIME (alliance & skills are enabled)"
+#endif
 #endif
 
 #ifdef _MOGO_AUTON_
 #ifdef _ALLIANCE_MOGO_AUTON_
 #error "ONLY ONE AUTON AT A TIME (Mogo & Alliance+Mogo are enabled)"
 #endif
+#ifdef _SKILLS_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Mogo & skills are enabled)"
 #endif
+#endif
+
+#ifdef _SKILLS_AUTON_
+#ifdef _ALLIANCE_MOGO_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Skills & Alliance+Mogo are enabled)"
+#endif
+#endif
+
+
 
 #endif  // CONFIG_H
