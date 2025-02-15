@@ -147,19 +147,23 @@ chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
 // DEFENSIVE
 #ifdef _ALLIANCE_AUTON_
   peak::raise_to_level(__PEAK_ARG_MOGO);
+  pros::delay(1000);
   intake::run_forward(INTAKE_INIT_POWER);
   pros::delay(1000);
   chassis.moveToPoint(0, 57, 10000);  // go forward & run into the ladder.
   // ^ this is a guess. refine this.
 #endif
 #ifdef _MOGO_AUTON_
-  peak::raise_to_level(__PEAK_ARG_MOGO);
   chassis.setPose(0, 0, 180);
-  chassis.moveToPoint(12, 0, 10000, {.forwards = false, .minSpeed = 20}, false);
+  peak::raise_to_level(__PEAK_ARG_MOGO);
+  chassis.moveToPoint(0, 24, 30000, {.forwards = false, .maxSpeed = 40, .minSpeed = 20}, false);
   clamp::engage();
-  chassis.moveToPoint(14, 0, 10000, {.forwards = false, .maxSpeed = 20}, false);
-  intake::on();
-  chassis.moveToPose(57, 24, -45, 10000);
+  chassis.moveToPoint(0, 27, 5000, {.forwards = false, .maxSpeed = 20}, false);
+  pros::delay(100);
+  intake::run_forward(120);
+  pros::delay(2000);
+  intake::off();
+  // chassis.moveToPose(57, 24, -45, 10000);
 #endif
 #ifdef _ALLIANCE_MOGO_AUTON_
   // If we do alliance & get mogo, put that code here.

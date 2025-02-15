@@ -80,8 +80,8 @@
 #include "lemlib/api.hpp"
 extern lemlib::Chassis chassis;
 
-#define _ALLIANCE_AUTON_
-// #define _MOGO_AUTON_
+// #define _ALLIANCE_AUTON_
+#define _MOGO_AUTON_
 //
 #ifdef _ALLIANCE_AUTON_
 #ifdef _MOGO_AUTON_
