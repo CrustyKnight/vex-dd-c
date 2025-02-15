@@ -30,7 +30,9 @@
 
 // peak level (in)
 #define PEAK_LEVEL_REST 0
-#define PEAK_LEVEL_MOGO 3.525
+// #define PEAK_LEVEL_MOGO 3.075
+#define PEAK_LEVEL_MOGO 2.755
+// #define PEAK_LEVEL_MOGO 3.505
 #define PEAK_LEVEL_ALLIANCE PEAK_LEVEL_MOGO
 // 3.575
 #define PEAK_LEVEL_WALL 14.55
