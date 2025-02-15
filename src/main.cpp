@@ -148,8 +148,11 @@ void autonomous() {
   //DEFENSIVE
   peak::raise_to_level(1);
   chassis.setPose(0,0,180);
-  chassis.moveToPose(16.64, 0, 10000, {.forwards = false, .minSpeed = 20}, false);
- 
+  chassis.moveToPoint(12, 0, 10000, {.forwards = false, .minSpeed = 20}, false);
+  clamp::engage();
+  chassis.moveToPoint(14, 0, 10000, {.forwards = false, .maxSpeed = 20}, false);
+  intake::on();
+  chassis.moveToPose(57, 24, -45, 10000);
 
   // chassis.moveToPoint(0, 24, 100000);
   // chassis.moveToPoint(0, -24, 100000, {.forwards = false});
