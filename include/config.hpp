@@ -31,7 +31,7 @@
 // peak level (in)
 #define PEAK_LEVEL_REST 0
 // #define PEAK_LEVEL_MOGO 3.075
-#define PEAK_LEVEL_MOGO 2.755
+#define PEAK_LEVEL_MOGO 2.780
 // #define PEAK_LEVEL_MOGO 3.505
 #define PEAK_LEVEL_ALLIANCE PEAK_LEVEL_MOGO
 // 3.575
@@ -83,7 +83,7 @@
 extern lemlib::Chassis chassis;
 
 // #define _ALLIANCE_AUTON_
-#define _MOGO_AUTON_
+// #define _MOGO_AUTON_
 //
 #ifdef _ALLIANCE_AUTON_
 #ifdef _MOGO_AUTON_
@@ -99,5 +99,7 @@ extern lemlib::Chassis chassis;
 #error "ONLY ONE AUTON AT A TIME (Mogo & Alliance+Mogo are enabled)"
 #endif
 #endif
+
+#define _SKILLS_AUTON_
 
 #endif  // CONFIG_H

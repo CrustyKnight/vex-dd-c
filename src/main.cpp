@@ -123,6 +123,38 @@ void autonomous() {
 #ifdef _ALLIANCE_MOGO_AUTON_
   // If we do alliance & get mogo, put that code here.
 #endif
+#ifdef _SKILLS_AUTON_
+  peak::raise_to_level(__PEAK_ARG_MOGO);
+  pros::delay(1500);
+  intake::run_forward(120);
+  pros::delay(2000);
+  intake::off();
+  chassis.setPose(0, 0, 0);
+  chassis.moveToPoint(0, 15.5, 2000);
+  // chassis.turnToHeading(90, 5000);
+  pros::delay(3000);
+  chassis.cancelAllMotions();
+  right_motors.move(50);
+  left_motors.move(-50);
+  pros::delay(595);
+  left_motors.move(0);
+  right_motors.move(0);
+  right_motors.move(-50);
+  left_motors.move(-50);
+  pros::delay(3300);
+  clamp::engage();
+  pros::delay(500);
+  left_motors.move(0);
+  right_motors.move(0);
+  right_motors.move(-50);
+  left_motors.move(50);
+  pros::delay(300);
+  left_motors.move(-50);
+  right_motors.move(-50);
+  pros::delay(4000);
+  left_motors.move(0);
+  right_motors.move(0);
+#endif
 }
 
 /**
