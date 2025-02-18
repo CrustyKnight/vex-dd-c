@@ -53,8 +53,10 @@ lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
 // hack: set PID by adjusting the pointer value
 void set_PID(int level) {
   lemlib::Chassis *c = &chassis;
-  (*c).lateralPID = lemlib::PID(3, 2, 1, 5, true);  // levels[level][0];
-  // c->angularPID = // levels[level][1];
+  // this might work.
+  // magic from: https://a.opnxng.com/exchange/stackoverflow.com/questions/75840140/why-assignment-operator-implicitly-deleted-for-const-members-in-c
+  chassis.lateralPID.~PID();
+  new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
 }
 
 /**
