@@ -56,7 +56,23 @@ void set_PID(int level) {
   // this might work.
   // magic from: https://a.opnxng.com/exchange/stackoverflow.com/questions/75840140/why-assignment-operator-implicitly-deleted-for-const-members-in-c
   chassis.lateralPID.~PID();
-  new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
+  //new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
+
+  //TODO tune these PID constants
+  switch(level){
+    case 0:
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+    break;
+    case 1:
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+    break;
+    case 2:
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+    break;
+    case 3:
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+    break;
+  }
 }
 
 /**
