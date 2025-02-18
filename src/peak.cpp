@@ -1,6 +1,7 @@
 #include "peak.hpp"
 #include "config.hpp"
 #include "lemlib/api.hpp"  // IWYU pragma: keep
+#include "main.h"
 #include <math.h>
 #include <cstdio>
 #include <stdexcept>
@@ -114,17 +115,21 @@ void raise_to_level(int level) {
   switch (level) {
     case 0:
       extend_to(PEAK_LEVEL_REST);
+      set_PID(0);
       break;
     case 1:
       // 2.169 revolutions to mogo.
       extend_to(PEAK_LEVEL_MOGO);
       // extend_to_revs(2.169);
+      set_PID(1);
       break;
     case 2:
       extend_to(PEAK_LEVEL_ALLIANCE);
+      set_PID(1);
       break;
     case 3:
       extend_to(PEAK_LEVEL_WALL);
+      set_PID(2);
       break;
     case -1:  // go down
       motor.move(-100);

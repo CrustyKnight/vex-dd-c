@@ -82,9 +82,9 @@
 #include "lemlib/api.hpp"
 extern lemlib::Chassis chassis;
 
-// #define _ALLIANCE_AUTON_
+#define _ALLIANCE_AUTON_
 // #define _MOGO_AUTON_
-//
+//  #define _SKILLS_AUTON_
 #ifdef _ALLIANCE_AUTON_
 #ifdef _MOGO_AUTON_
 #error "ONLY ONE AUTON AT A TIME (Alliance & Mogo are enabled)"
@@ -92,14 +92,24 @@ extern lemlib::Chassis chassis;
 #ifdef _ALLIANCE_MOGO_AUTON_
 #error "ONLY ONE AUTON AT A TIME (Alliance & Alliance+Mogo are enabled)"
 #endif
+#ifdef _SKILLS_AUTON_
+#error "ONLY ONE AUTON AT A TIME (alliance & skills are enabled)"
+#endif
 #endif
 
 #ifdef _MOGO_AUTON_
 #ifdef _ALLIANCE_MOGO_AUTON_
 #error "ONLY ONE AUTON AT A TIME (Mogo & Alliance+Mogo are enabled)"
 #endif
+#ifdef _SKILLS_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Mogo & skills are enabled)"
+#endif
 #endif
 
-#define _SKILLS_AUTON_
+#ifdef _SKILLS_AUTON_
+#ifdef _ALLIANCE_MOGO_AUTON_
+#error "ONLY ONE AUTON AT A TIME (Skills & Alliance+Mogo are enabled)"
+#endif
+#endif
 
 #endif  // CONFIG_H

@@ -1,5 +1,6 @@
 #include "config.hpp"
 #include "lemlib/api.hpp"  // IWYU pragma: keep
+#include "lemlib/chassis/chassis.hpp"
 #include "lemlib/chassis/odom.hpp"
 #include "auton.hpp"
 #include "main.h"
@@ -29,14 +30,32 @@ lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 // kP, kI, kD, anti-windup, small error range, small error range timeout,
 // large error range, large error range timeout, max acceleration (slew)
 // lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
-lemlib::ControllerSettings lateral_controller(14, 0.5, 20, 0, 0, 0, 0, 0, 0);
 // lemlib::ControllerSettings angr_controller(2,  0,  10, 3, 1, 100, 3, 500, 0);
-lemlib::ControllerSettings angular_controller(17, 0.5, 20, 1, 0.5, 100, 0, 0, 0);
+lemlib::ControllerSettings lateral_controller_lvl0(14, 0.5, 20, 0, 0, 0, 0, 0, 0);
+lemlib::ControllerSettings angular_controller_lvl0(17, 0.5, 20, 1, 0.5, 100, 0, 0, 0);
+
+// TODO: tune PID for each peak level :skull:
+
+lemlib::PID lvl0L(15, 0.5, 20, 0, false);
+lemlib::PID lvl0A(15, 0.5, 20, 0, false);
+lemlib::PID lvl1L(15, 0.5, 20, 0, false);
+lemlib::PID lvl1A(15, 0.5, 20, 0, false);
+lemlib::PID lvl2L(15, 0.5, 20, 0, false);
+lemlib::PID lvl2A(15, 0.5, 20, 0, false);
+
+lemlib::PID levels[3][2] = {{lvl0L, lvl0A}, {lvl1L, lvl1A}, {lvl2L, lvl2A}};
 
 // Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain.
-lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
+lemlib::Chassis chassis(drivetrain, lateral_controller_lvl0, angular_controller_lvl0, sensors);
 // Creating expo drive curve
 lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
+
+// hack: set PID by adjusting the pointer value
+void set_PID(int level) {
+  lemlib::Chassis *c = &chassis;
+  (*c).lateralPID = lemlib::PID(3, 2, 1, 5, true);  // levels[level][0];
+  // c->angularPID = // levels[level][1];
+}
 
 /**
  * A callback function for LLEMU's center button.
@@ -154,6 +173,7 @@ void autonomous() {
   pros::delay(4000);
   left_motors.move(0);
   right_motors.move(0);
+  // autonSkills(&chassis);
 #endif
 }
 
