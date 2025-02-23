@@ -24,15 +24,15 @@ pros::MotorGroup right_motors({13, 14, 15}, pros::MotorGearset::green);
 
 // Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality.
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 12.625, lemlib::Omniwheel::NEW_325, 355.55555, 3);
-pros::Imu imu(10);
+pros::Imu imu(11);
 lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 
 // kP, kI, kD, anti-windup, small error range, small error range timeout,
 // large error range, large error range timeout, max acceleration (slew)
 // lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
 // lemlib::ControllerSettings angr_controller(2,  0,  10, 3, 1, 100, 3, 500, 0);
-lemlib::ControllerSettings lateral_controller_lvl0(14, 0.5, 20, 0, 0, 0, 0, 0, 0);
-lemlib::ControllerSettings angular_controller_lvl0(17, 0.5, 20, 1, 0.5, 100, 0, 0, 0);
+lemlib::ControllerSettings lateral_controller_lvl1(14, 0.2, 20, 2, 0.5, 0, 0, 0, 0);
+lemlib::ControllerSettings angular_controller_lvl1(10, 0.5, 27, 2, 0.5, 100, 0, 0, 0);
 
 // TODO: tune PID for each peak level :skull:
 
@@ -46,7 +46,7 @@ lemlib::PID lvl2A(15, 0.5, 20, 0, false);
 lemlib::PID levels[3][2] = {{lvl0L, lvl0A}, {lvl1L, lvl1A}, {lvl2L, lvl2A}};
 
 // Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain.
-lemlib::Chassis chassis(drivetrain, lateral_controller_lvl0, angular_controller_lvl0, sensors);
+lemlib::Chassis chassis(drivetrain, lateral_controller_lvl1, angular_controller_lvl1, sensors);
 // Creating expo drive curve
 lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
 
@@ -61,16 +61,16 @@ void set_PID(int level) {
   //TODO tune these PID constants
   switch(level){
     case 0:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
     break;
     case 1:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
     break;
     case 2:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
     break;
     case 3:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
     break;
   }
 }
@@ -215,6 +215,8 @@ void opcontrol() {
 #endif
 #ifdef _DEBUG_
   master.set_text(1, 4, "DEBUG");
+  //pidTestingAngular();
+  pidTestingLateral();
 #endif
   while (true) {
     // Arcade control scheme
