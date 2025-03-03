@@ -13,10 +13,11 @@
 #include "auton.hpp"
 #include "clamp.hpp"
 
+//6-sec compilation time :skull:
+
 // Important Note: This file has all of our drivetrain and remote control-related code.
 
 // LemLib setup
-// TODO
 // Setting up of drivetrain sides: side_motors({low_1, high, low 2})
 // Technically, order of motors on one side doesn't matter, as they spin in the same direction.
 pros::MotorGroup left_motors({-4, -5, -6}, pros::MotorGearset::green);
