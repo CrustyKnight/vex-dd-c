@@ -24,7 +24,7 @@ pros::MotorGroup right_motors({13, 14, 15}, pros::MotorGearset::green);
 
 // Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality.
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 12.625, lemlib::Omniwheel::NEW_325, 355.55555, 3);
-pros::Imu imu(11);
+pros::Imu imu(3);
 lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 
 // kP, kI, kD, anti-windup, small error range, small error range timeout,
@@ -32,7 +32,7 @@ lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 // lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
 // lemlib::ControllerSettings angr_controller(2,  0,  10, 3, 1, 100, 3, 500, 0);
 lemlib::ControllerSettings lateral_controller_lvl1(14, 0.2, 20, 2, 0.5, 0, 0, 0, 0);
-lemlib::ControllerSettings angular_controller_lvl1(10, 0.5, 27, 2, 0.5, 100, 0, 0, 0);
+lemlib::ControllerSettings angular_controller_lvl1(2, 0, 10, 3, 1, 0.5, 0, 0, 0);
 
 // TODO: tune PID for each peak level :skull:
 
@@ -161,6 +161,8 @@ void autonomous() {
   // If we do alliance & get mogo, put that code here.
 #endif
 #ifdef _SKILLS_AUTON_
+  autonSkills(&chassis);
+  /*
   peak::raise_to_level(__PEAK_ARG_MOGO);
   pros::delay(1500);
   intake::run_forward(120);
@@ -192,6 +194,7 @@ void autonomous() {
   left_motors.move(0);
   right_motors.move(0);
   // autonSkills(&chassis);
+  */
 #endif
 }
 
@@ -215,7 +218,6 @@ void opcontrol() {
 #endif
 #ifdef _DEBUG_
   master.set_text(1, 4, "DEBUG");
-  //pidTestingAngular();
   pidTestingLateral();
 #endif
   while (true) {
