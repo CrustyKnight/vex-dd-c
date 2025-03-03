@@ -112,4 +112,57 @@ extern lemlib::Chassis chassis;
 #endif
 #endif
 
+#ifdef _NEG_RED_
+#ifdef _POS_RED_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _NEG_BLUE_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _POS_BLUE_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#endif
+
+#ifdef _POS_RED_
+#ifdef _NEG_RED_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _NEG_BLUE_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _POS_BLUE_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#endif
+
+#ifdef _NEG_BLUE_
+#ifdef _NEG_RED_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _POS_RED_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _POS_BLUE_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#endif
+
+#ifdef _POS_BLUE_
+#ifdef _NEG_RED_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _POS_RED_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _NEG_BLUE_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#endif
+
+#define _NEG_RED_
+//#define _POS_RED_
+//#define _NEG_BLUE_
+//#define _POS_BLUE_
+
 #endif  // CONFIG_H
