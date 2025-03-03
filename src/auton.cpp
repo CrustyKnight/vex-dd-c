@@ -105,9 +105,52 @@ void autonSkills(lemlib::Chassis* chassis) {
   */
 }
 
-// #TODO: create game plan...
-void defensiveAuton() {
+// #TODO: create game plan...These functions below are our game autons!!!
+
+//Our plan here is to score on the alliance stake, then score on the other 2 MOGOs, and to also be dragging them toward the positive corner. 
+void left_red(lemlib::Chassis* chassis) {
+  //For this auton, it was assumed that PID is functioning properly, or at least, accurately enough. 
+  //I also assumed that x = horizontal and y = vertical axis, on the image of the field, with (0, 0) being the top left corner...
+
+  //First things first: setting the position of the robot...This is theoretically where we place in on the field...
+  lemlib::Pose starting_pose(12, 48, 180);
+  chassis->setPose(starting_pose);
+
+  //Opening Moves: Moving towards the LEFT MOGO, clamping it, and scoring our preload...~3 seconds...
+  chassis->moveToPoint(48, 48, 2500, {.forwards = false, .minSpeed = 20}, false);
+  clamp::engage();
+  intake::on();
+  
+  //Depositing grabbed MOGO near positive corner (right side). This is the meta...
+  chassis->moveToPoint(24, 72, 1500);
+  chassis->moveToPoint(24, 96, 1500, {.forwards = false, .minSpeed = 20}, false);
+  clamp::disengage();
+
+  //Grab 2nd MOGO, return to 'center' of our alliance's side. 
+  chassis->moveToPoint(48, 96, 1500, {.forwards = false, .minSpeed = 20}, false);
+  clamp::engage();
+  chassis->moveToPoint(24, 72, 1500);
+  
+  //7 seconds used so far...Return to left side with out 2nd MOGO to score 2 remaining rings on it.
+  intake::on();
+  chassis->moveToPoint(72, 28, 1500);
+  chassis->moveToPoint(72, 20, 750);
+  intake::off();
+  
+  //9.25 seconds used so far...Time to bring MOGO back toward positive side, clear positive corner, then grab ladder. 
+  chassis->moveToPoint(24, 72, 1500);
+  clamp::disengage();
+  chassis->moveToPoint(48, 48, 1500);
+  chassis->moveToPoint(60, 60, 1500);
 }
 
-void offensiveAuton() {
+void right_red(lemlib::Chassis* chassis){
+
+}
+
+void left_blue(lemlib::Chassis* chassis){
+
+}
+void right_blue(lemlib::Chassis* chassis){
+
 }
