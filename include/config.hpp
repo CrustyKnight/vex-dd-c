@@ -1,7 +1,25 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-// Buttons
+/* **MID-COMP ADJUSTMENTS** */
+
+/*game Auton*/
+#define _NEG_RED_
+//#define _POS_RED_
+//#define _NEG_BLUE_
+//#define _POS_BLUE_
+
+/*skills Auton*/
+//#define _SKILLS_AUTON_
+
+
+
+
+
+
+/* **CONSTANTS** */
+
+//Buttons
 #define INTAKE_BUTTON DIGITAL_R2
 #define INTAKE_REVERSE_BUTTON DIGITAL_R1
 #define CLAMP_UP_BUTTON DIGITAL_B
@@ -82,33 +100,29 @@
 #include "lemlib/api.hpp"
 extern lemlib::Chassis chassis;
 
-// #define _ALLIANCE_AUTON_
-//#define _MOGO_AUTON_
-#define _SKILLS_AUTON_
-#ifdef _ALLIANCE_AUTON_
-#ifdef _MOGO_AUTON_
-#error "ONLY ONE AUTON AT A TIME (Alliance & Mogo are enabled)"
-#endif
-#ifdef _ALLIANCE_MOGO_AUTON_
-#error "ONLY ONE AUTON AT A TIME (Alliance & Alliance+Mogo are enabled)"
-#endif
-#ifdef _SKILLS_AUTON_
-#error "ONLY ONE AUTON AT A TIME (alliance & skills are enabled)"
-#endif
-#endif
 
-#ifdef _MOGO_AUTON_
-#ifdef _ALLIANCE_MOGO_AUTON_
-#error "ONLY ONE AUTON AT A TIME (Mogo & Alliance+Mogo are enabled)"
-#endif
-#ifdef _SKILLS_AUTON_
-#error "ONLY ONE AUTON AT A TIME (Mogo & skills are enabled)"
-#endif
-#endif
+
+
+
+/* **ERROR CHECKING** */
+
+
+
+
+
 
 #ifdef _SKILLS_AUTON_
-#ifdef _ALLIANCE_MOGO_AUTON_
-#error "ONLY ONE AUTON AT A TIME (Skills & Alliance+Mogo are enabled)"
+#ifdef _POS_RED_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _NEG_BLUE_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#ifdef _POS_BLUE_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
+#if_def _NEG_RED_
+#error "ONLY ONE AUTON AT A TIME"
 #endif
 #endif
 
@@ -122,6 +136,9 @@ extern lemlib::Chassis chassis;
 #ifdef _POS_BLUE_
 #error "ONLY ONE AUTON AT A TIME"
 #endif
+#ifdef _SKILLS_AUTON_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
 #endif
 
 #ifdef _POS_RED_
@@ -134,6 +151,9 @@ extern lemlib::Chassis chassis;
 #ifdef _POS_BLUE_
 #error "ONLY ONE AUTON AT A TIME"
 #endif
+#ifdef _SKILLS_AUTON_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
 #endif
 
 #ifdef _NEG_BLUE_
@@ -146,6 +166,9 @@ extern lemlib::Chassis chassis;
 #ifdef _POS_BLUE_
 #error "ONLY ONE AUTON AT A TIME"
 #endif
+#ifdef _SKILLS_AUTON_
+#error "ONLY ONE AUTON AT A TIME"
+#endif
 #endif
 
 #ifdef _POS_BLUE_
@@ -158,11 +181,8 @@ extern lemlib::Chassis chassis;
 #ifdef _NEG_BLUE_
 #error "ONLY ONE AUTON AT A TIME"
 #endif
+#ifdef _SKILLS_AUTON_
+#error "ONLY ONE AUTON AT A TIME"
 #endif
-
-#define _NEG_RED_
-//#define _POS_RED_
-//#define _NEG_BLUE_
-//#define _POS_BLUE_
 
 #endif  // CONFIG_H
