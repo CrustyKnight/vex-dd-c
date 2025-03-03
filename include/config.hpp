@@ -70,7 +70,7 @@
 // Ladder height
 #define ENDGAME_HEIGHT 7.5
 
-#define _DEBUG_
+//#define _DEBUG_
 #ifdef _DEBUG_
 
 #define _DEBUG_AUTON_
@@ -84,7 +84,7 @@ extern lemlib::Chassis chassis;
 
 // #define _ALLIANCE_AUTON_
 //#define _MOGO_AUTON_
-//  #define _SKILLS_AUTON_
+#define _SKILLS_AUTON_
 #ifdef _ALLIANCE_AUTON_
 #ifdef _MOGO_AUTON_
 #error "ONLY ONE AUTON AT A TIME (Alliance & Mogo are enabled)"

@@ -54,7 +54,7 @@ lemlib::PID lvl2A(15, 0.5, 20, 0, false);
 lemlib::PID levels[3][2] = {{lvl0L, lvl0A}, {lvl1L, lvl1A}, {lvl2L, lvl2A}};
 
 // Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain.
-lemlib::Chassis chassis(drivetrain, lateral_controller_lvl1, angular_controller_lvl1, sensors);
+lemlib::Chassis chassis(drivetrain, lateral_controller_lvl0, angular_controller_lvl0, sensors);
 // Creating expo drive curve
 lemlib::ExpoDriveCurve driveCurve(5.00, 12.00, 1.132);
 

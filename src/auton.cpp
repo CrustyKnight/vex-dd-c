@@ -105,18 +105,17 @@ void autonSkills(lemlib::Chassis* chassis) {
   */
 }
 
-// #TODO: create game plan...These functions below are our game autons!!!
+/*
+Scores on alliance stake, then on other 2 MOGOs
+Drags mogos toward positive corner
+x axis is horizontal, y axis is vertical
+*/
+void negative_red(lemlib::Chassis* chassis) {
 
-//Our plan here is to score on the alliance stake, then score on the other 2 MOGOs, and to also be dragging them toward the positive corner. 
-void left_red(lemlib::Chassis* chassis) {
-  //For this auton, it was assumed that PID is functioning properly, or at least, accurately enough. 
-  //I also assumed that x = horizontal and y = vertical axis, on the image of the field, with (0, 0) being the top left corner...
-
-  //First things first: setting the position of the robot...This is theoretically where we place in on the field...
   lemlib::Pose starting_pose(12, 48, 180);
   chassis->setPose(starting_pose);
 
-  //Opening Moves: Moving towards the LEFT MOGO, clamping it, and scoring our preload...~3 seconds...
+  //Moving towards the LEFT MOGO, clamping it, and scoring our preload...~3 seconds...
   chassis->moveToPoint(48, 48, 2500, {.forwards = false, .minSpeed = 20}, false);
   clamp::engage();
   intake::on();
@@ -144,13 +143,13 @@ void left_red(lemlib::Chassis* chassis) {
   chassis->moveToPoint(60, 60, 1500);
 }
 
-void right_red(lemlib::Chassis* chassis){
+void positive_red(lemlib::Chassis* chassis){
 
 }
 
-void left_blue(lemlib::Chassis* chassis){
+void negative_blue(lemlib::Chassis* chassis){
 
 }
-void right_blue(lemlib::Chassis* chassis){
+void positive_blue(lemlib::Chassis* chassis){
 
 }
