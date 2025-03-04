@@ -29,11 +29,12 @@ void autonSkills(lemlib::Chassis* chassis) {
 
   //mogo
   chassis->turnToHeading(0, 100000);
-  chassis->moveToPoint(120, 0, 100000);
+  chassis->moveToPoint(120, 0, 100000, {.forwards = true}, false);
   pros::delay(500);
   clamp::engage();
 
- // intake::on();
+  intake::on();
+  
 
   /*
 
