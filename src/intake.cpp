@@ -48,7 +48,10 @@ void jammed_handler(void* param) {
       // WERE JAMMED!!!!
       motor.move(0);
       motor.move_relative(-30, 100);
+      pros::delay(500);
+      on();
     }
+    pros::delay(250);
   }
 }
 
