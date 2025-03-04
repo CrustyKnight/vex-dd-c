@@ -105,51 +105,128 @@ void autonSkills(lemlib::Chassis* chassis) {
   */
 }
 
+//#TODO: Test/enhance/modify the game autons below to our needs. Currently, they are set to help us get most of the AWP. 
+
 /*
-Scores on alliance stake, then on other 2 MOGOs
-Drags mogos toward positive corner
-x axis is horizontal, y axis is vertical
+Scores on one MOGO, then on alliance stake, then touches the ladder.
 */
 void negative_red(lemlib::Chassis* chassis) {
+  lemlib::Pose start(12, 48, 180);
+  chassis->setPose(start);
 
-  lemlib::Pose starting_pose(12, 48, 180);
-  chassis->setPose(starting_pose);
-
-  //Moving towards the LEFT MOGO, clamping it, and scoring our preload...~3 seconds...
-  chassis->moveToPoint(48, 48, 2500, {.forwards = false, .minSpeed = 20}, false);
+  //Picking up MOGO on negative side and scoring preload on it
+  chassis->moveToPoint(48, 48, 1500, {.forwards = false, .minSpeed = 20}, false);
   clamp::engage();
   intake::on();
-  
-  //Depositing grabbed MOGO near positive corner (right side). This is the meta...
-  chassis->moveToPoint(24, 72, 1500);
-  chassis->moveToPoint(24, 96, 1500, {.forwards = false, .minSpeed = 20}, false);
+
+  //Grabbing and scoring another donut, then leftmost of 2 touching donuts
+  chassis->moveToPoint(48, 12, 1500);
+  chassis->moveToPose(60, 12, -45, 1500);
+
+  //Backing up, then scoring rightmost of 2 touching donuts.
+  chassis->moveToPoint(48, 9, 1500, {.forwards = false, .minSpeed = 20}, false);
+  chassis->moveToPose(60, 36, 45, 1500);
+
+  //Scoring ring nearest to alliance stake onto alliance stake, and dropping MOGO on the way
+  chassis->moveToPoint(24, 48, 2000, {.forwards = false, .minSpeed = 20}, false);
   clamp::disengage();
-
-  //Grab 2nd MOGO, return to 'center' of our alliance's side. 
-  chassis->moveToPoint(48, 96, 1500, {.forwards = false, .minSpeed = 20}, false);
-  clamp::engage();
-  chassis->moveToPoint(24, 72, 1500);
-  
-  //7 seconds used so far...Return to left side with out 2nd MOGO to score 2 remaining rings on it.
-  intake::on();
-  chassis->moveToPoint(72, 28, 1500);
-  chassis->moveToPoint(72, 20, 750);
+  chassis->turnToHeading(90, 750);
+  chassis->moveToPoint(24, 72, 1000);
   intake::off();
-  
-  //9.25 seconds used so far...Time to bring MOGO back toward positive side, clear positive corner, then grab ladder. 
-  chassis->moveToPoint(24, 72, 1500);
-  clamp::disengage();
-  chassis->moveToPoint(48, 48, 1500);
-  chassis->moveToPoint(60, 60, 1500);
+  chassis->moveToPose(12, 72, 0, 750);
+  intake::digest_donut();
+
+  //Touching the ladder on our auton side's negative side. 
+  chassis->moveToPoint(48, 48, 1000);
+  chassis->moveToPoint(60, 60, 1000);
 }
 
 void positive_red(lemlib::Chassis* chassis){
+  lemlib::Pose start(12, 96, 180);
+  chassis->setPose(start);
 
+  //Rushing to the central MOGO
+  chassis->moveToPose(66, 114, 45, 1500, {.forwards = false, .minSpeed = 20}, false);
+  clamp::engage();
+
+  //Not Scoring on "grabbed MOGO" in the event that the other team gets it, but grabbing a donut on the way. 
+  chassis->moveToPose(36, 108, 45, 1000);
+  intake::eat_donut();
+ 
+  //Letting MOGO go, grabbing the other MOGO on our side, and scoring preload + grabbed ring...
+  clamp::disengage();
+  chassis->moveToPoint(48, 96, 2000, {.forwards = false, .minSpeed = 20}, false);
+  clamp::engage();
+  intake::on();
+
+  //Use MOGO to clear out positive corner, then place it there
+  chassis->moveToPose(9, 135, 135, 2000);
+  chassis->turnToHeading(675, 2000);
+  chassis->moveToPoint(6, 138, 1500, {.forwards = false, .minSpeed = 20}, false);
+  clamp::disengage();
+
+  //Touching the ladder (and turning intake off before doing so)
+  chassis->moveToPose(48, 96, 180, 1500, {.forwards = false, .minSpeed = 20}, false);
+  intake::off();
+  chassis->moveToPoint(96, 48, 10000, {.forwards = false, .minSpeed = 20}, false);
 }
 
 void negative_blue(lemlib::Chassis* chassis){
+  lemlib::Pose start(132, 48, 180);
+  chassis->setPose(start);
 
+  //Picking up MOGO on negative side and scoring preload on it
+  chassis->moveToPoint(96, 48, 1500, {.forwards = false, .minSpeed = 20}, false);
+  clamp::engage();
+  intake::on();
+
+  //Grabbing and scoring another donut, then rightmost of 2 touching donuts
+  chassis->moveToPoint(96, 24, 1500);
+  chassis->moveToPose(84, 12, 135, 1500);
+
+  //Backing up, then scoring leftmost of 2 touching donuts.
+  chassis->moveToPoint(48, 9, 1500, {.forwards = false, .minSpeed = 20}, false);
+  chassis->moveToPose(96, 36, -135, 1500);
+
+  //Scoring ring nearest to alliance stake onto alliance stake, and dropping MOGO on the way
+  chassis->moveToPoint(120, 48, 2000, {.forwards = false, .minSpeed = 20}, false);
+  clamp::disengage();
+  chassis->turnToHeading(90, 750);
+  chassis->moveToPoint(120, 72, 1000);
+  intake::off();
+  chassis->moveToPose(132, 72, 0, 750);
+  intake::digest_donut();
+
+  //Touching the ladder on our auton side's negative side. 
+  chassis->moveToPoint(96, 48, 1000);
+  chassis->moveToPoint(84, 60, 1000);
 }
 void positive_blue(lemlib::Chassis* chassis){
+  lemlib::Pose start(132, 96, 180);
+  chassis->setPose(start);
 
+  //Rushing to the central MOGO
+  chassis->moveToPose(90, 114, 135, 1500, {.forwards = false, .minSpeed = 20}, false);
+  clamp::engage();
+
+  //Not Scoring on "grabbed MOGO" in the event that the other team gets it, but grabbing a donut on the way. 
+  chassis->moveToPose(96, 108, 45, 1000);
+  intake::eat_donut();
+ 
+  //Letting MOGO go, grabbing the other MOGO on our side, and scoring preload + grabbed ring...
+  clamp::disengage();
+  chassis->moveToPoint(96, 96, 2000, {.forwards = false, .minSpeed = 20}, false);
+  clamp::engage();
+  intake::on();
+
+  //Use MOGO to clear out positive corner, then place it there
+  chassis->moveToPose(125, 135, 135, 2000);
+  chassis->turnToHeading(675, 2000);
+  chassis->moveToPoint(138, 138, 1500, {.forwards = false, .minSpeed = 20}, false);
+  clamp::disengage();
+
+  //Touching the ladder (and turning intake off before doing so)
+  chassis->moveToPose(96, 96, 180, 1500, {.forwards = false, .minSpeed = 20}, false);
+  intake::off();
+  chassis->moveToPoint(48, 48, 5000, {.forwards = false, .minSpeed = 20}, false);
 }
