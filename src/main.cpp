@@ -65,10 +65,10 @@ void set_PID(int level) {
   // this might work.
   // magic from: https://a.opnxng.com/exchange/stackoverflow.com/questions/75840140/why-assignment-operator-implicitly-deleted-for-const-members-in-c
   chassis.lateralPID.~PID();
-  //new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
+  // new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
 
-  //TODO tune these PID constants
   switch(level){
+  // TODO tune these PID constants
     case 0:
       new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
     break;
@@ -233,3 +233,5 @@ void opcontrol() {
     pros::delay(10);
   }
 }
+
+// -*- compile-command: "pros build" -*-

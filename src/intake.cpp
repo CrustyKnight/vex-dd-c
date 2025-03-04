@@ -8,9 +8,6 @@ int power = 100;
 int direction = INTAKE_ON_DIRECTION;
 bool state = false;
 pros::Motor motor(7, pros::MotorGearset::green);
-void init() {
-  motor.set_encoder_units(MOTOR_ENCODER_ROTATIONS);
-}
 void set_power(int p) { power = p; }
 void on() {
   state = true;
@@ -37,6 +34,27 @@ void eat_donut() {
 void digest_donut() {
   double revs = 0.6 * INTAKE_RATIO;
   motor.move_relative(revs, 200);
+}
+
+void jammed_handler(void* param) {
+  // TODO return true if intake is jammed.
+  // TODO probably have a function that runs always, looking for jamming,
+  // and if it jams undo for like some amount of time, then continue in the same
+  // direction with the same power.
+  while (true) {
+    int power = motor.get_power();
+    int velocity = motor.get_actual_velocity();
+    if (power > 50 && velocity < 10) {
+      // WERE JAMMED!!!!
+      motor.move(0);
+      motor.move_relative(-30, 100);
+    }
+  }
+}
+
+void init() {
+  motor.set_encoder_units(MOTOR_ENCODER_ROTATIONS);
+  pros::Task jam_task(jammed_handler);
 }
 
 }  // namespace intake

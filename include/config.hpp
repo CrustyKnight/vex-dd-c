@@ -95,6 +95,12 @@
 #define DEBUG_LATERAL_TEST_BUTTON DIGITAL_L2
 #define DEBUG_ANGULAR_TEST_BUTTON DIGITAL_L1
 
+#ifdef _DEBUG_PID_
+#ifdef _DEBUG_AUTON_
+#error _DEBUG_PID_ and _DEBUG_AUTON_ cant both be active at the same time
+#endif  // _DEBUG_AUTON_
+#endif  // _DEBUG_PID_
+
 #endif  // _DEBUG_
 
 #include "lemlib/api.hpp"
