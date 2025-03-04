@@ -4,13 +4,13 @@
 /* **MID-COMP ADJUSTMENTS** */
 
 /*game Auton*/
-#define _NEG_RED_
+//#define _NEG_RED_
 //#define _POS_RED_
 //#define _NEG_BLUE_
 //#define _POS_BLUE_
 
 /*skills Auton*/
-//#define _SKILLS_AUTON_
+#define _SKILLS_AUTON_
 
 
 
@@ -121,7 +121,7 @@ extern lemlib::Chassis chassis;
 #ifdef _POS_BLUE_
 #error "ONLY ONE AUTON AT A TIME"
 #endif
-#if_def _NEG_RED_
+#ifdef _NEG_RED_
 #error "ONLY ONE AUTON AT A TIME"
 #endif
 #endif
@@ -185,4 +185,5 @@ extern lemlib::Chassis chassis;
 #error "ONLY ONE AUTON AT A TIME"
 #endif
 
+#endif
 #endif  // CONFIG_H
