@@ -6,103 +6,121 @@
 // hi
 #include <string>
 
-#define SKILLS_X_START -58
-#define SKILLS_Y_START 23
-#define SKILLS_THETA_START 180
-
 #define ROBOT_WIDTH 14.76
 #define ROBOT_HEIGHT 17.52
 
-#define D1X -22.5
-#define D1Y 23
-
-#define D2X 0
-#define D2Y 60
-
-#define D3X 23
-#define D3Y 47
-
-#define D4X -48
-#define D4Y 47
-
-#define D5X 60
-#define D5Y 47
-
-#define D6X -47
-#define D6Y 60
-
-#define D7X -59
-#define D7Y -47
-
-#define D8X -47
-#define D8Y -47
-
-#define D9X -47
-#define D9Y -59
-
-#define D10X -24
-#define D10Y -47
-
-#define D11X 0
-#define D11Y -59
-
-// cursed :)
-void drop_mogo() {
-  clamp::disengage();
-}
-// Blocking
-void get_mogo(lemlib::Chassis* chassis, double x, double y) {
-  chassis->moveToPoint(x, y, 10000, {.forwards = false}, false);
-  clamp::engage();
-}
-
-/* TEST
-chassis.moveToPoint(0, -13, 10000, {.forwards = false, .minSpeed = 20}, false);
-clamp::engage();
-chassis.moveToPoint(0, -16, 10000, {.forwards = false, .maxSpeed = 20}, false);
+/*
+puts preload into alliance stake
+Scores 2 full mogos and puts them into corners 
 */
-
-void grab_mogo(float x, float y, lemlib::Chassis* chassis) {
-  chassis->moveToPoint(x, y, 10000, {.forwards = false, .minSpeed = 20,}, false);
-  clamp::engage();
-  chassis->moveToPoint(x+ 2, y, 10000, {.forwards = false, .minSpeed = 20}, false);
-}
-// #TODO: create efficient skills plan...
+//TODO test and tune
 void autonSkills(lemlib::Chassis* chassis) {
   peak::raise_to_level(1);
-  chassis->setPose(SKILLS_X_START, SKILLS_Y_START, SKILLS_THETA_START);
 
-  grab_mogo(-55, 23.5, chassis);
+  lemlib::Pose starting_pose(-150, 0, 0);
+  chassis->setPose(starting_pose);
+
+  //wall stake
+  pros::delay(1500);
+  intake::run_forward(120);
+  pros::delay(2000);
+  intake::off();
+
+
+  //mogo
+  chassis->moveToPoint(120, 0, 100000);
+  clamp::engage();
 
   intake::on();
 
-  chassis->moveToPose(D1X, D1Y, 0, 5000);
-  pros::delay(300);
-  chassis->moveToPoint(D2X, D2Y, 5000);
-  pros::delay(300);
-  chassis->moveToPose(D3X, D3Y, 180, 5000);
-  pros::delay(300);
-  chassis->moveToPoint(D4X, D4Y, 5000);
-  pros::delay(300);
-  chassis->moveToPoint(D5X, D5Y, 5000);
+  //donuts
+  chassis->turnToHeading(45, 100000);
+  chassis->moveToPoint(60, 60, 100000);
+  pros::delay(1500);
 
-  chassis->turnToHeading(45, 5000);
-  chassis->moveToPoint(D6X, D6Y, 5000);
+  chassis->turnToHeading(90, 100000);
+  chassis->moveToPoint(60, 120, 100000);
+  pros::delay(1500);
 
-  chassis->moveToPose(-64, -65, -45, 5000);
-  drop_mogo();
+  chassis->turnToHeading(180, 100000);
+  chassis->moveToPoint(120, 120, 100000);
+  pros::delay(3000);
 
-  /*
-  chassis->turnToHeading(-45, 5000);
-  get_mogo(chassis, -47, -16);
+  chassis->moveToPoint(150, 120, 100000);
+  pros::delay(3000);
 
-  chassis->moveToPose(D7X, D7Y, 235, 5000);
-  chassis->moveToPose(D8X, D8Y, -90, 5000);
-  chassis->moveToPose(D9X, D9Y, 30, 5000);
-  chassis->moveToPose(D10X, D10Y, -30, 5000);
+  chassis->turnToHeading(30, 100000);
+  chassis->moveToPoint(163, 163, 100000);
+  pros::delay(1000);
+  clamp::disengage();
 
-  chassis->moveToPose(D11X, D11Y, 30, 5000);
-  */
+  intake::off();
+
+  //TODO tune grabbing of 2 donuts
+
+  chassis->moveToPoint(60, 120, 100000);
+  intake::eat_donut();
+  chassis->moveToPoint(0, 150, 100000);
+  intake::eat_donut();
+
+  //wall stake
+  chassis->turnToHeading(90, 100000);
+  peak::raise_to_level(3);
+  intake::on();
+  pros::delay(5000);
+  intake::off();
+  peak::raise_to_level(1);
+
+  //grab another 2 donuts and put them on mogo
+  chassis->turnToHeading(180, 100000);
+  chassis->moveToPoint(120, 150, 100000);
+  intake::eat_donut();
+  pros::delay(500);
+  intake::eat_donut();
+
+  chassis->turnToHeading(330, 100000);
+  chassis->moveToPoint(150, 60, 100000);
+  clamp::engage();
+  chassis->turnToHeading(-90, 100000);
+
+  chassis->moveToPose(170, -170, -45, 100000);
+  chassis->turnToHeading(45, 100000);
+
+  intake::on();
+  chassis->moveToPoint(120, -120, 100000);
+  pros::delay(1500);
+
+  chassis->turnToHeading(0, 100000);
+  chassis->moveToPoint(60, -120, 100000);
+  pros::delay(1500);
+
+  intake::off();
+
+  chassis->turnToHeading(-30, 100000);
+  chassis->moveToPoint(0, -150, 100000);
+  intake::eat_donut();
+
+  //wall stake 2
+  chassis->turnToHeading(-90, 100000);
+  peak::raise_to_level(3);
+
+  intake::on();
+  pros::delay(1500);
+  intake::off();
+
+  peak::raise_to_level(1);
+
+  intake::on();
+  chassis->turnToHeading(30, 100000);
+  chassis->moveToPoint(-60, 120, 100000);
+
+  chassis->turnToHeading(-30, 100000);
+  chassis->moveToPoint(120, -150, 100000);
+
+  chassis->turnToHeading(150, 100000);
+  chassis->moveToPoint(-167, -167, 100000);
+  clamp::disengage();
+  
 }
 
 /*
@@ -111,6 +129,7 @@ Drags mogos toward positive corner
 x axis is horizontal, y axis is vertical
 */
 void negative_red(lemlib::Chassis* chassis) {
+  peak::raise_to_level(1);
 
   lemlib::Pose starting_pose(12, 48, 180);
   chassis->setPose(starting_pose);
@@ -144,12 +163,15 @@ void negative_red(lemlib::Chassis* chassis) {
 }
 
 void positive_red(lemlib::Chassis* chassis){
+  peak::raise_to_level(1);
 
 }
 
 void negative_blue(lemlib::Chassis* chassis){
+  peak::raise_to_level(1);
 
 }
 void positive_blue(lemlib::Chassis* chassis){
+  peak::raise_to_level(1);
 
 }
