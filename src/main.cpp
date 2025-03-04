@@ -33,7 +33,7 @@ lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 // lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
 // lemlib::ControllerSettings angr_controller(2,  0,  10, 3, 1, 100, 3, 500, 0);
 float kp_l = 14;
-float ki_l = 0.5;
+float ki_l = 0.7;
 float kd_l = 20;
 lemlib::ControllerSettings lateral_controller_lvl0(kp_l, ki_l, kd_l, 0, 0, 0, 0, 0, 0);
 float kp_a = 4;
@@ -222,6 +222,7 @@ void opcontrol() {
   master.set_text(1, 4, "DEBUG");
   pidTestingLateral();
 #endif
+  //autonomous();
   while (true) {
     // Arcade control scheme
     drive_arcade(master, &left_motors, &right_motors);

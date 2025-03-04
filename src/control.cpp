@@ -71,8 +71,8 @@ void pidTestingAngular() {
 
 void pidTestingLateral() {
   chassis.setPose(0,0,0);
-  chassis.moveToPose(48, 48, 45, 100000);
-
+  chassis.moveToPose(24, 24, 45, 3000);
+  chassis.moveToPose(0, 0, 225, 3000);
 }
 
 void drivePIDTest(pros::Controller master) {

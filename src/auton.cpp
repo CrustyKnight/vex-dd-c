@@ -17,41 +17,47 @@ Scores 2 full mogos and puts them into corners
 void autonSkills(lemlib::Chassis* chassis) {
   peak::raise_to_level(1);
 
-  lemlib::Pose starting_pose(-150, 0, 0);
+  lemlib::Pose starting_pose(180, 0, 0);
   chassis->setPose(starting_pose);
 
-  //wall stake
+  //alliance stake
   pros::delay(1500);
   intake::run_forward(120);
-  pros::delay(2000);
+  pros::delay(1000);
   intake::off();
 
 
   //mogo
+  chassis->turnToHeading(0, 100000);
   chassis->moveToPoint(120, 0, 100000);
+  pros::delay(500);
   clamp::engage();
 
-  intake::on();
+ // intake::on();
+
+  /*
 
   //donuts
   chassis->turnToHeading(45, 100000);
+  pros::delay(500);
   chassis->moveToPoint(60, 60, 100000);
-  pros::delay(1500);
 
   chassis->turnToHeading(90, 100000);
+  pros::delay(500);
   chassis->moveToPoint(60, 120, 100000);
-  pros::delay(1500);
+  pros::delay(150);
 
   chassis->turnToHeading(180, 100000);
   chassis->moveToPoint(120, 120, 100000);
-  pros::delay(3000);
+  pros::delay(300);
 
   chassis->moveToPoint(150, 120, 100000);
-  pros::delay(3000);
+  pros::delay(300);
 
   chassis->turnToHeading(30, 100000);
+  pros::delay(500);
   chassis->moveToPoint(163, 163, 100000);
-  pros::delay(1000);
+  pros::delay(100);
   clamp::disengage();
 
   intake::off();
@@ -59,20 +65,24 @@ void autonSkills(lemlib::Chassis* chassis) {
   //TODO tune grabbing of 2 donuts
 
   chassis->moveToPoint(60, 120, 100000);
+  pros::delay(500);
   intake::eat_donut();
   chassis->moveToPoint(0, 150, 100000);
+  pros::delay(500);
   intake::eat_donut();
 
   //wall stake
   chassis->turnToHeading(90, 100000);
+  pros::delay(500);
   peak::raise_to_level(3);
   intake::on();
-  pros::delay(5000);
+  pros::delay(500);
   intake::off();
   peak::raise_to_level(1);
 
   //grab another 2 donuts and put them on mogo
   chassis->turnToHeading(180, 100000);
+  pros::delay(500);
   chassis->moveToPoint(120, 150, 100000);
   intake::eat_donut();
   pros::delay(500);
@@ -120,6 +130,7 @@ void autonSkills(lemlib::Chassis* chassis) {
   chassis->turnToHeading(150, 100000);
   chassis->moveToPoint(-167, -167, 100000);
   clamp::disengage();
+  */
   
 }
 
