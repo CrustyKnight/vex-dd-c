@@ -70,8 +70,9 @@ void pidTestingAngular() {
 }
 
 void pidTestingLateral() {
-  chassis.setPose(0, 0, 0);
-  chassis.moveToPoint(0, 48, 100000);
+  chassis.setPose(0,0,0);
+  chassis.moveToPose(48, 48, 45, 100000);
+
 }
 
 void drivePIDTest(pros::Controller master) {
@@ -80,7 +81,7 @@ void drivePIDTest(pros::Controller master) {
   if (pid_run_lateral_test_button.just_pressed())
     pidTestingLateral();
   if (pid_run_angular_test_button.just_pressed())
-    pidTestingLateral();
+    pidTestingAngular();
 }
 #endif
 

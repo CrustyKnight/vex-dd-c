@@ -11,7 +11,7 @@
 // Constants are estimated heights that are needed
 
 // Peak power/direction & Different peak heights' constant declarations (in inches)
-int peak_power = 100;
+int peak_power = 126;
 int peak_dir = 1;
 // float DEFAULT_HEIGHT = 0.0;
 // float ALLIANCE_STAKE_HEIGHT = 5.0;

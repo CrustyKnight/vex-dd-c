@@ -13,10 +13,11 @@
 #include "auton.hpp"
 #include "clamp.hpp"
 
+//6-sec compilation time :skull:
+
 // Important Note: This file has all of our drivetrain and remote control-related code.
 
 // LemLib setup
-// TODO
 // Setting up of drivetrain sides: side_motors({low_1, high, low 2})
 // Technically, order of motors on one side doesn't matter, as they spin in the same direction.
 pros::MotorGroup left_motors({-4, -5, -6}, pros::MotorGearset::green);
@@ -24,7 +25,7 @@ pros::MotorGroup right_motors({13, 14, 15}, pros::MotorGearset::green);
 
 // Setup of drivetrain, IMU, and odometry sensors (just our IMU for now): using lemlib for odometry functionality.
 lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 12.625, lemlib::Omniwheel::NEW_325, 355.55555, 3);
-pros::Imu imu(10);
+pros::Imu imu(3);
 lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 
 // kP, kI, kD, anti-windup, small error range, small error range timeout,
@@ -69,16 +70,16 @@ void set_PID(int level) {
   switch(level){
   // TODO tune these PID constants
     case 0:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
     break;
     case 1:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
     break;
     case 2:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
     break;
     case 3:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false));
+      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
     break;
   }
 }
@@ -144,31 +145,26 @@ void competition_initialize() {}
  */
 
 void autonomous() {
-// DEFENSIVE
-#ifdef _ALLIANCE_AUTON_
-  peak::raise_to_level(__PEAK_ARG_MOGO);
-  pros::delay(1000);
-  intake::run_forward(INTAKE_INIT_POWER);
-  pros::delay(1000);
-  chassis.moveToPoint(0, 57, 10000);  // go forward & run into the ladder.
-  // ^ this is a guess. refine this.
+
+#ifdef _NEG_RED_
+  negative_red(&chassis);  
 #endif
-#ifdef _MOGO_AUTON_
-  chassis.setPose(0, 0, 180);
-  peak::raise_to_level(__PEAK_ARG_MOGO);
-  chassis.moveToPoint(0, 24, 30000, {.forwards = false, .maxSpeed = 40, .minSpeed = 20}, false);
-  clamp::engage();
-  chassis.moveToPoint(0, 27, 5000, {.forwards = false, .maxSpeed = 20}, false);
-  pros::delay(100);
-  intake::run_forward(120);
-  pros::delay(2000);
-  intake::off();
-  // chassis.moveToPose(57, 24, -45, 10000);
+
+#ifdef _POS_RED_
+  positive_red(&chassis);
 #endif
-#ifdef _ALLIANCE_MOGO_AUTON_
-  // If we do alliance & get mogo, put that code here.
+
+#ifdef _NEG_BLUE_
+  negative_blue(&chassis);
 #endif
+
+#ifdef _POS_BLUE_
+  positive_blue(&chassis);
+#endif
+
 #ifdef _SKILLS_AUTON_
+  autonSkills(&chassis);
+  /*
   peak::raise_to_level(__PEAK_ARG_MOGO);
   pros::delay(1500);
   intake::run_forward(120);
@@ -200,6 +196,7 @@ void autonomous() {
   left_motors.move(0);
   right_motors.move(0);
   // autonSkills(&chassis);
+  */
 #endif
 }
 
@@ -223,6 +220,7 @@ void opcontrol() {
 #endif
 #ifdef _DEBUG_
   master.set_text(1, 4, "DEBUG");
+  pidTestingLateral();
 #endif
   while (true) {
     // Arcade control scheme

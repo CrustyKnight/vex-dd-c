@@ -6,6 +6,8 @@
 
 #ifdef _DEBUG_
 void drivePIDTest(pros::Controller);
+void pidTestingLateral();
+void pidTestingAngular();
 #endif  // _DEBUG_
 
 void drive_intake(pros::Controller);
