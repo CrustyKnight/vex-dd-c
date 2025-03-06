@@ -8,6 +8,7 @@ void off();
 void set_power(int);
 void run_forward(int);
 void run_backward(int);
+void eat_donut(float);
 void eat_donut();
 void digest_donut();
 }  // namespace intake

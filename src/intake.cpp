@@ -28,8 +28,17 @@ void run_backward(int p) {
   direction = INTAKE_ON_DIRECTION * -1;
   on();
 }
-void eat_donut() {
+void eat_donut(float dist) {
   motor.move_relative(50, 50);
+  lemlib::Pose currentPose = chassis.getPose(true);
+  float new_x = (float)(cos(currentPose.theta) * dist);  // Changed sin to cos; x is cos no? (Debangshu)
+  float new_y = (float)(sin(currentPose.theta) * dist);
+  chassis.moveToPoint(new_x, new_y, 500);  // you might need to tune this
+  chassis.moveToPoint(currentPose.x, currentPose.y, 600, {.forwards = false});
+}
+
+void eat_donut() {  // default distance, made this up, should probably be changed.
+  eat_donut(5);
 }
 void digest_donut() {
   double revs = 0.6 * INTAKE_RATIO;
