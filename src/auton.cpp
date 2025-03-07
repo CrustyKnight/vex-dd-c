@@ -108,22 +108,35 @@ Scores on one MOGO, then on alliance stake, then touches the ladder.
 
 void negative_red(lemlib::Chassis* chassis) {
   peak::raise_to_level(1);
+  pros::delay(1000);
   lemlib::Pose start(60, 24, 90);
   chassis->setPose(start);
 
   chassis->moveToPoint(28, 24, 1500, {.forwards = false, .minSpeed = 30});
-  chassis->moveToPoint(24, 24, 750, {.forwards = false}, false);
+  chassis->moveToPoint(26, 24, 1500, {.forwards = false, .maxSpeed = 30, .minSpeed = 10});
   clamp::engage();
+  chassis->moveToPoint(24, 24, 750, {.forwards = false, .maxSpeed = 60}, false);
+
+  intake::run_forward(120);
+  pros::delay(1000);
+
+
   /*
-  intake::on();
+  chassis->turnToPoint(-24, 48, 1250, {.maxSpeed = 70}, false);
+  chassis->moveToPoint(-24, 48, 1250, {.maxSpeed = 70}, false);
+  */
 
-  chassis->moveToPoint(-24, 48, 1250, {.minSpeed = 30}, false);
-
+  /*
   chassis->moveToPose(-20, 52, 90, 1000, {.lead = 0}, false);
   pros::delay(500);
   chassis->moveToPoint(-24, 48, 1250, {.forwards = false}, false);
   chassis->moveToPose(-28, 52, 90, 1000, {.lead = 0}, false);
   pros::delay(500);
+/**/
+
+//  chassis->moveToPose(-20, 9, 315, 1000, {.maxSpeed = 100});
+
+  /*
 
   chassis->moveToPoint(-48, 0, 2000, {.maxSpeed = 90}, false);
   pros::delay(500);
@@ -135,6 +148,7 @@ void negative_red(lemlib::Chassis* chassis) {
 
   chassis->moveToPose(-20, 9, 315, 1000, {.maxSpeed = 100});
   */
+
 }
 
 void positive_red(lemlib::Chassis* chassis){
@@ -173,6 +187,7 @@ void negative_blue(lemlib::Chassis* chassis) {
   chassis->moveToPoint(24, 24, 750, {.forwards = false}, false);
   clamp::engage();
   intake::run_forward(120);
+  pros::delay(1000);
 
   /*
 
