@@ -33,6 +33,21 @@ void autonSkills(lemlib::Chassis* chassis) {
   intake::on();
 
   chassis->moveToPose(-60, 120, 0, 1000, {.horizontalDrift = 10, .lead = 0.4, .maxSpeed = 60}, false);
+  pros::delay(100);
+
+  chassis->turnToHeading(180, 3000, {.minSpeed = 20}, false);
+  pros::delay(100);
+
+  chassis->moveToPoint(-150, 120, 10000, {.maxSpeed = 60}, false);
+  pros::delay(100);
+
+  chassis->turnToPoint(-120, 150, 1000, {.minSpeed = 20}, false);
+  chassis->moveToPoint(-120, 150, 1000, {.maxSpeed = 60}, false);
+
+  pros::delay(100);
+
+  chassis->moveToPose(-170, 170, 215, 1000, {.minSpeed = 30}, false);
+  chassis->moveToPoint(-160, 160, 500, {.forwards = false, .minSpeed = 40}, false);
 
   /*
   //get donuts
@@ -112,12 +127,6 @@ void positive_red(lemlib::Chassis* chassis){
   chassis->moveToPoint(48, 96, 2000, {.forwards = false, .minSpeed = 20}, false);
   clamp::engage();
   intake::on();
-
-  //Use MOGO to clear out positive corner, then place it there
-  chassis->moveToPose(9, 135, 135, 2000);
-  chassis->turnToHeading(675, 2000);
-  chassis->moveToPoint(6, 138, 1500, {.forwards = false, .minSpeed = 20}, false);
-  clamp::disengage();
 
   //Touching the ladder (and turning intake off before doing so)
   chassis->moveToPose(48, 96, 180, 1500, {.forwards = false, .minSpeed = 20}, false);
