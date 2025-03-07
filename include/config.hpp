@@ -4,7 +4,7 @@
 /* **MID-COMP ADJUSTMENTS** */
 
 /*game Auton*/
-#define _NEG_RED_
+//#define _NEG_RED_
 //#define _POS_RED_
 //#define _NEG_BLUE_
 //#define _POS_BLUE_
@@ -44,7 +44,7 @@
 #define INTAKE_INIT_POWER 127
 
 #define PEAK_ON_DIRECTION -1
-#define PEAK_ON_POWER 100
+#define PEAK_ON_POWER 200
 
 // peak level (in)
 #define PEAK_LEVEL_REST 0

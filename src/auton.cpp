@@ -67,13 +67,12 @@ void negative_red(lemlib::Chassis* chassis) {
     lemlib::Pose start(-150, 60, 90);
     chassis->setPose(start);
 
-    pros::delay(300);
     chassis->moveToPoint(-60, 60, 1500, {.forwards = false}, false);
     pros::delay(3000);
     clamp::engage();
     pros::delay(1000);
 
-    chassis->turnToHeading(90, 150, {.maxSpeed = 120}, false);
+    chassis->turnToPoint(-60, 120, 1500, {.forwards = true}, false);
     pros::delay(500);
     chassis->moveToPose(-60, 120, 90, 1500, {.forwards = false, .maxSpeed = 30}, false);
     

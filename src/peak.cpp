@@ -21,7 +21,7 @@ int PEAK_LENGTH = 14;
 int peak_current_level = 0;
 
 // Motor declaration
-pros::Motor peak_motor(8, pros::MotorGearset::red);
+pros::Motor peak_motor(8, pros::MotorGearset::green);
 // Functions written out here
 void set_peak_power(int power) {
   peak_power = power;
@@ -58,7 +58,7 @@ namespace peak {
 double height = 0;        // inches
 double teeth_height = 0;  // teeth
 
-pros::Motor motor(PEAK_MOTOR_PORT, pros::MotorGearset::red);
+pros::Motor motor(PEAK_MOTOR_PORT, pros::MotorGearset::green);
 void init() { motor.set_encoder_units(pros::E_MOTOR_ENCODER_ROTATIONS); }
 bool moving() { return (std::floor(motor.get_actual_velocity()) != 0); }
 bool still() { return (std::floor(motor.get_actual_velocity()) == 0); }
