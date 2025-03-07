@@ -41,7 +41,7 @@ void eat_donut() {  // default distance, made this up, should probably be change
   eat_donut(5);
 }
 void digest_donut() {
-  double revs = 0.6 * INTAKE_RATIO;
+  double revs = -0.6 * INTAKE_RATIO;
   motor.move_relative(revs, 200);
 }
 

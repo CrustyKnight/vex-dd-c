@@ -216,13 +216,12 @@ void autonomous() {
 void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
 #ifdef _DEBUG_AUTON_
-  autonomous();
 #endif
 #ifdef _DEBUG_
   master.set_text(1, 4, "DEBUG");
-  pidTestingLateral();
+  autonomous();
+  //pidTestingLateral();
 #endif
-  //autonomous();
   while (true) {
     // Arcade control scheme
     drive_arcade(master, &left_motors, &right_motors);

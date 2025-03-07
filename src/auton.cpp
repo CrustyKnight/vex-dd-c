@@ -19,29 +19,42 @@ void autonSkills(lemlib::Chassis* chassis) {
   lemlib::Pose start(-150, 0, 0);
   chassis->setPose(start);
 
+  pros::delay(1000);
   //alliance stake
-  intake::run_forward(120);
+  intake::digest_donut();
+  pros::delay(2000);
 
   //grab mogo
-  chassis->turnToHeading(210, 100000);
-  chassis->moveToPoint(-120, 50, 100000, {.forwards = false, .minSpeed = 20}, false);
+  chassis->turnToHeading(-120, 1000, {.maxSpeed = 120}, false);
+  pros::delay(200);
+  chassis->moveToPoint(-120, 60, 1000, {.forwards = false, .minSpeed = 20}, false);
   clamp::engage();
+  pros::delay(100);
 
+  /*
   //get donuts
-  intake::on();
 
-  chassis->turnToHeading(0, 100000);
-  chassis->moveToPoint(-60, 60, 100000, {.minSpeed = 20}, false);
+  chassis->turnToHeading(0, 1000, {.maxSpeed = 120}, false);
+  pros::delay(1000);
+  chassis->moveToPoint(-60, 60, 1000, {.maxSpeed = 120}, false);
+  pros::delay(1000);
 
-  chassis->turnToHeading(180, 100000);
-  chassis->moveToPoint(-150, 120, 100000, {.maxSpeed = 20}, false);
+  chassis->turnToHeading(180, 1000, {.maxSpeed = 120}, false);
+  pros::delay(1000);
+  chassis->moveToPoint(-150, 120, 1000, {.maxSpeed = 120}, false);
+  pros::delay(1000);
 
-  chassis->turnToHeading(45, 100000);
-  chassis->moveToPoint(-120, 150, 100000, {.forwards=true}, false);
+  chassis->turnToHeading(45, 1000, {.maxSpeed = 120}, false);
+  pros::delay(1000);
+  chassis->moveToPoint(-120, 150, 1000, {.maxSpeed = 120}, false);
+  pros::delay(1000);
 
-  chassis->turnToHeading(150, 100000);
-  chassis->moveToPoint(-165, 165, 100000, {.forwards = false}, false);
+  chassis->turnToHeading(150, 1000, {.maxSpeed=120}, false);
+  pros::delay(1000);
+  chassis->moveToPoint(-165, 165, 1000, {.maxSpeed=120}, false);
+  pros::delay(1000);
   clamp::disengage();
+  */
 }
 
 //#TODO: Test/enhance/modify the game autons below to our needs. Currently, they are set to help us get most of the AWP. 

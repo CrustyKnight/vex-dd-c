@@ -10,7 +10,7 @@
 //#define _POS_BLUE_
 
 /*skills Auton*/
-//#define _SKILLS_AUTON_
+#define _SKILLS_AUTON_
 
 
 
@@ -49,7 +49,7 @@
 // peak level (in)
 #define PEAK_LEVEL_REST 0
 // #define PEAK_LEVEL_MOGO 3.075
-#define PEAK_LEVEL_MOGO 2.780
+#define PEAK_LEVEL_MOGO 2.800
 // #define PEAK_LEVEL_MOGO 3.505
 #define PEAK_LEVEL_ALLIANCE PEAK_LEVEL_MOGO
 // 3.575
