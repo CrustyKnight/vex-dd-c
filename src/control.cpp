@@ -70,24 +70,20 @@ void pidTestingAngular() {
 }
 
 void pidTestingLateral() {
-  chassis.setPose(0,0,0);
-  chassis.moveToPose(24, 24, 0, 750,{.horizontalDrift = 50, .lead = 0.6, .maxSpeed = 40}, false);
-  /*
   chassis.setPose(0, 0, 0);
-  chassis.moveToPoint(0, 24, 5000, {.forwards = true, .maxSpeed = 30}, false);
-  pros::delay(100);
-  chassis.turnToPoint(24, 24, 5000, {.maxSpeed = 30}, false);
-  pros::delay(100);
-  chassis.moveToPoint(24, 24, 5000, {.maxSpeed = 30}, false);
-  pros::delay(100);
-  chassis.turnToPoint(24, 0, 5000, {.maxSpeed = 30}, false);
-  pros::delay(100);
-  chassis.moveToPoint(24, 0, 5000, {.maxSpeed = 30}, false);
-  pros::delay(100);
-  chassis.turnToPoint(0, 0, 5000, {.maxSpeed = 30}, false);
-  pros::delay(100);
-  chassis.moveToPoint(0, 0, 5000, {.maxSpeed = 30}, false);
-  */
+  chassis.moveToPoint(0, 24, 5000, {.forwards = false, .maxSpeed = 90}, false);
+  pros::delay(400);
+  chassis.turnToPoint(24, 24, 5000, {.forwards = true, .maxSpeed = 90}, false);
+  pros::delay(400);
+  chassis.moveToPoint(24, 24, 5000, {.forwards = true, .maxSpeed = 90}, false);
+  pros::delay(400);
+  chassis.turnToPoint(24, 0, 5000, {.forwards = true, .maxSpeed = 90}, false);
+  pros::delay(400);
+  chassis.moveToPoint(24, 0, 5000, {.forwards = true, .maxSpeed = 90}, false);
+  pros::delay(400);
+  chassis.turnToPoint(0, 0, 5000, {.forwards = true, .maxSpeed = 90}, false);
+  pros::delay(400);
+  chassis.moveToPoint(0, 0, 5000, {.forwards = true, .maxSpeed = 90}, false);
 }
 
 void drivePIDTest(pros::Controller master) {

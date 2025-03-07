@@ -32,13 +32,13 @@ lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
 // large error range, large error range timeout, max acceleration (slew)
 // lemlib::ControllerSettings lateral_controller(10, 0, 3, 3, 1, 100, 3, 500, 20);
 // lemlib::ControllerSettings angr_controller(2,  0,  10, 3, 1, 100, 3, 500, 0);
-float kp_l = 14;
+float kp_l = 13;
 float ki_l = 0.7;
-float kd_l = 20;
+float kd_l = 22;
 lemlib::ControllerSettings lateral_controller_lvl0(kp_l, ki_l, kd_l, 0, 0, 0, 0, 0, 0);
-float kp_a = 4.0;
-float ki_a = 0.1;
-float kd_a = 30;
+float kp_a = 4.3;
+float ki_a = 0.0;
+float kd_a = 31;
 float windup_a = 0;
 float small_error_range_a = 0.1;
 lemlib::ControllerSettings angular_controller_lvl0(kp_a, ki_a, kd_a, windup_a, small_error_range_a, 100, 0, 0, 0);

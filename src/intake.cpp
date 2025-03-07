@@ -28,6 +28,10 @@ void run_backward(int p) {
   direction = INTAKE_ON_DIRECTION * -1;
   on();
 }
+void swallow() {
+  motor.move_relative(50, 50);
+}
+
 void eat_donut(float dist) {
   motor.move_relative(50, 50);
   lemlib::Pose currentPose = chassis.getPose(true);
