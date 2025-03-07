@@ -114,7 +114,30 @@ void negative_red(lemlib::Chassis* chassis) {
 }
 
 void positive_red(lemlib::Chassis* chassis){
+  peak::raise_to_level(1);
+  lemlib::Pose start(-60, -24, 90);
+  chassis->setPose(start);
 
+  //Rushing to the central MOGO (10, -40, 120)
+  chassis->moveToPose(-10, -40, 60, 1500, {.lead = 0.1, .minSpeed = 80});
+
+  //Not Scoring on "grabbed MOGO" in the event that the other team gets it, but grabbing a donut on the way. 
+  intake::on();
+  chassis->moveToPoint(-24, -48, 750, {.minSpeed = 40}, false);
+  pros::delay(500);
+  intake::off();
+
+ 
+  //Letting MOGO go, grabbing the other MOGO on our side, and scoring preload + grabbed ring...
+  clamp::disengage();
+  chassis->moveToPoint(-24, -24, 1000, {.forwards = false, .minSpeed = 20});
+  clamp::engage();
+  intake::on();
+
+  //Touching the ladder (and turning intake off before doing so)
+  chassis->moveToPose(-12, -14, 45, 1500, {.forwards = false, .minSpeed = 20}, false);
+  intake::off();
+  chassis->moveToPoint(-8, -16, 10000, {.forwards = false, .minSpeed = 20}, false);
 }
 
 void negative_blue(lemlib::Chassis* chassis){
