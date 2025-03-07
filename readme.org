@@ -1,6 +1,5 @@
-#+title: Readme
+#+ title : Readme
 
 The code for the Donut Dynamics vex team's (Tucson 85711C) robot.
 
 Using lemlib
-

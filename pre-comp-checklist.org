@@ -1,8 +1,5 @@
-#+title: Pre Comp Checklist
+#+ title : Pre Comp Checklist
 
-
-
-* TODO Checklist [0/1]
-SCHEDULED: <2025-02-15 Sat>
-** TODO Remove testing code
-You can do this be commenting out the definition of DEBUG in include/main.h
+*TODO Checklist[0 / 1] SCHEDULED : <2025 - 02 - 15 Sat>** TODO Remove testing code
+                                       You can do this be commenting out the definition of DEBUG in include /
+    main.h

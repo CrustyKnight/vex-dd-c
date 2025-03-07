@@ -1,35 +1,33 @@
-ARCHTUPLE=arm-none-eabi-
-DEVICE=VEX EDR V5
+ARCHTUPLE = arm - none - eabi -
+            DEVICE = VEX EDR V5
 
-MFLAGS=-mcpu=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=softfp -Os -g
-CPPFLAGS=-D_POSIX_THREADS -D_UNIX98_THREAD_MUTEX_ATTRIBUTES -D_POSIX_TIMERS -D_POSIX_MONOTONIC_CLOCK
-GCCFLAGS=-ffunction-sections -fdata-sections -fdiagnostics-color -funwind-tables
+                MFLAGS = -mcpu = cortex - a9 - mfpu = neon - fp16 - mfloat - abi = softfp - Os - g CPPFLAGS = -D_POSIX_THREADS - D_UNIX98_THREAD_MUTEX_ATTRIBUTES - D_POSIX_TIMERS - D_POSIX_MONOTONIC_CLOCK GCCFLAGS = -ffunction - sections - fdata - sections - fdiagnostics - color - funwind - tables
 
-# Check if the llemu files in libvgl exist. If they do, define macros that the
-# llemu headers in the kernel repo can use to conditionally include the libvgl
-# versions
-ifneq (,$(wildcard ./include/liblvgl/llemu.h))
-	CPPFLAGS += -D_PROS_INCLUDE_LIBLVGL_LLEMU_H
-endif
-ifneq (,$(wildcard ./include/liblvgl/llemu.hpp))
-	CPPFLAGS += -D_PROS_INCLUDE_LIBLVGL_LLEMU_HPP
-endif
+#Check if the llemu files in libvgl exist.If they do, define macros that the
+#llemu headers in the kernel repo can use to conditionally include the libvgl
+#versions
+                                                                                                                                                                                                                                                                                                        ifneq(, $(wildcard./ include / liblvgl / llemu.h)) CPPFLAGS += -D_PROS_INCLUDE_LIBLVGL_LLEMU_H
+                                                                                                                                                                                                                                                                                                                                                                           endif
+                                                                                                                                                                                                                                                                                                                                                                               ifneq(, $(wildcard./ include / liblvgl / llemu.hpp))
+                                                                                                                                                                                                                                                                                                                                                                                   CPPFLAGS += -D_PROS_INCLUDE_LIBLVGL_LLEMU_HPP
+                                                                                                                                                                                                                                                                                                                                                                                                   endif
 
-WARNFLAGS+=-Wno-psabi
+                                                                                                                                                                                                                                                                                                                                                                                                       WARNFLAGS += -Wno - psabi
 
-SPACE := $() $()
-COMMA := ,
+                                                                                                                                                                                                                                                                                                                                                                                                                               SPACE : = $() $()
+                                                                                                                                                                                                                                                                                                                                                                                                                                           COMMA : =,
 
-C_STANDARD?=gnu11
-CXX_STANDARD?=gnu++20
+            C_STANDARD ? = gnu11
+                                   CXX_STANDARD
+                               ? = gnu++ 20
 
-DEPDIR := .d
-$(shell mkdir -p $(DEPDIR))
-DEPFLAGS = -MT $$@ -MMD -MP -MF $(DEPDIR)/$$*.Td
-MAKEDEPFOLDER = -$(VV)mkdir -p $(DEPDIR)/$$(dir $$(patsubst $(BINDIR)/%, %, $(ROOT)/$$@))
-RENAMEDEPENDENCYFILE = -$(VV)mv -f $(DEPDIR)/$$*.Td $$(patsubst $(SRCDIR)/%, $(DEPDIR)/%.d, $(ROOT)/$$<) && touch $$@
+                                 DEPDIR
+                               : =.d
+                                  $(shell mkdir - p $(DEPDIR))
+                                      DEPFLAGS = -MT $$ @-MMD - MP - MF $(DEPDIR) / $$ *.Td MAKEDEPFOLDER = -$(VV) mkdir - p $(DEPDIR) / $$(dir $$(patsubst $(BINDIR) / %, %, $(ROOT) / $$ @))
+                                                                                                                                             RENAMEDEPENDENCYFILE = -$(VV) mv - f $(DEPDIR) / $$ *.Td $$(patsubst $(SRCDIR) / %, $(DEPDIR) / %.d, $(ROOT) / $$ <)&&touch $$ @
 
-LIBRARIES+=$(wildcard $(FWDIR)/*.a)
+                                                                                                                                                                                                  LIBRARIES += $(wildcard $(FWDIR)/*.a)
 # Cannot include newlib and libc because not all of the req'd stubs are implemented
 EXCLUDE_COLD_LIBRARIES+=$(FWDIR)/libc.a $(FWDIR)/libm.a
 COLD_LIBRARIES=$(filter-out $(EXCLUDE_COLD_LIBRARIES), $(LIBRARIES))
