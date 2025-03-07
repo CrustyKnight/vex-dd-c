@@ -81,34 +81,36 @@ void autonSkills(lemlib::Chassis* chassis) {
 /*
 Scores on one MOGO, then on alliance stake, then touches the ladder.
 */
+
+//Note: for game auton: we use jerry.io standards...
+
 void negative_red(lemlib::Chassis* chassis) {
-    peak::raise_to_level(1);
-    lemlib::Pose start(-150, 60, 90);
-    chassis->setPose(start);
+  peak::raise_to_level(1);
+  lemlib::Pose start(-60, 24, 270);
+  chassis->setPose(start);
 
-    pros::delay(400);
+  chassis->moveToPoint(-28, 24, 1500, {.forwards = false});
+  chassis->moveToPoint(-24, 24, 750, {.forwards = false, .minSpeed = 30}, false);
+  clamp::engage();
+  intake::on();
 
-    chassis->moveToPoint(-60, 60, 1500, {.forwards = false, .maxSpeed = 90}, false);
-    pros::delay(300);
-    clamp::engage();
-    pros::delay(400);
+  chassis->moveToPoint(-24, 48, 1250, {.minSpeed = 30}, false);
 
-    chassis->turnToPoint(-60, 120, 1500, {.forwards = true, .maxSpeed = 90}, false);
-    pros::delay(500);
-    chassis->moveToPoint(-60, 120, 1500, {.forwards = false, .maxSpeed = 30}, false);
-    
-    intake::on();
+  chassis->moveToPose(-20, 52, 90, 1000, {.lead = 0, .minSpeed = 30}, false);
+  pros::delay(500);
+  chassis->moveToPoint(-24, 48, 1250, {.forwards = false}, false);
+  chassis->moveToPose(-28, 52, 90, 1000, {.lead = 0}, false);
+  pros::delay(500);
+  
+  chassis->moveToPoint(-48, 0, 2000, {.minSpeed = 60}, false);
+  pros::delay(500);
+  intake::off();
+  chassis->moveToPose(-60, 0, 90, 1500, {.lead = 1, .maxSpeed = 80, .minSpeed = 30}, false);
+  intake::on();
+  pros::delay(2500);
+  intake::off();
 
-    chassis->turnToHeading(0, 1000, {.maxSpeed = 90}, false);
-    pros::delay(400);
-    chassis->moveToPoint(-9, 130, 1500, {.forwards = true, .maxSpeed = 50}, false);
-    pros::delay(400);
-
-    chassis->moveToPoint(-30, 130, 1500, {.maxSpeed = 50}, false);
-    chassis->moveToPoint(-41.2, 57.065, 1000, {.maxSpeed = 90}, false);
-    pros::delay(300);
-    chassis->moveToPoint(-40, 34, 1000, {.maxSpeed = 90}, false);
-    intake::on();
+  chassis->moveToPose(-20, 9, 315, 1000, {.minSpeed = 60});
 }
 
 void positive_red(lemlib::Chassis* chassis){
