@@ -47,8 +47,9 @@ lemlib::ControllerSettings angular_controller_lvl0(kp_a, ki_a, kd_a, windup_a, s
 
 lemlib::PID lvl0L(15, 0.5, 20, 0, false);
 lemlib::PID lvl0A(15, 0.5, 20, 0, false);
-lemlib::PID lvl1L(15, 0.5, 20, 0, false);
-lemlib::PID lvl1A(15, 0.5, 20, 0, false);
+//oops
+lemlib::PID lvl1L(kp_l, ki_l, kd_l, 0, false);
+lemlib::PID lvl1A(kp_a, ki_a, kd_a, windup_a, small_error_range_a);
 lemlib::PID lvl2L(15, 0.5, 20, 0, false);
 lemlib::PID lvl2A(15, 0.5, 20, 0, false);
 

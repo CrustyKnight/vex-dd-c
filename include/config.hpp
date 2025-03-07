@@ -4,13 +4,13 @@
 /* **MID-COMP ADJUSTMENTS** */
 
 /*game Auton*/
-//#define _NEG_RED_
+#define _NEG_RED_
 //#define _POS_RED_
 //#define _NEG_BLUE_
 //#define _POS_BLUE_
 
 /*skills Auton*/
-#define _SKILLS_AUTON_
+//#define _SKILLS_AUTON_
 
 
 
