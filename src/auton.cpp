@@ -16,123 +16,32 @@ Scores 2 full mogos and puts them into corners
 //TODO test and tune
 void autonSkills(lemlib::Chassis* chassis) {
   peak::raise_to_level(1);
-
-  lemlib::Pose starting_pose(180, 0, 0);
-  chassis->setPose(starting_pose);
+  lemlib::Pose start(-150, 0, 0);
+  chassis->setPose(start);
 
   //alliance stake
-  pros::delay(1500);
   intake::run_forward(120);
-  pros::delay(1000);
-  intake::off();
 
-
-  //mogo
-  chassis->turnToHeading(0, 100000);
-  chassis->moveToPoint(120, 0, 100000, {.forwards = true}, false);
-  pros::delay(500);
+  //grab mogo
+  chassis->turnToHeading(210, 100000);
+  chassis->moveToPoint(-120, 50, 100000, {.forwards = false, .minSpeed = 20}, false);
   clamp::engage();
 
+  //get donuts
   intake::on();
-  
-
-  /*
-
-  //donuts
-  chassis->turnToHeading(45, 100000);
-  pros::delay(500);
-  chassis->moveToPoint(60, 60, 100000);
-
-  chassis->turnToHeading(90, 100000);
-  pros::delay(500);
-  chassis->moveToPoint(60, 120, 100000);
-  pros::delay(150);
-
-  chassis->turnToHeading(180, 100000);
-  chassis->moveToPoint(120, 120, 100000);
-  pros::delay(300);
-
-  chassis->moveToPoint(150, 120, 100000);
-  pros::delay(300);
-
-  chassis->turnToHeading(30, 100000);
-  pros::delay(500);
-  chassis->moveToPoint(163, 163, 100000);
-  pros::delay(100);
-  clamp::disengage();
-
-  intake::off();
-
-  //TODO tune grabbing of 2 donuts
-
-  chassis->moveToPoint(60, 120, 100000);
-  pros::delay(500);
-  intake::eat_donut();
-  chassis->moveToPoint(0, 150, 100000);
-  pros::delay(500);
-  intake::eat_donut();
-
-  //wall stake
-  chassis->turnToHeading(90, 100000);
-  pros::delay(500);
-  peak::raise_to_level(3);
-  intake::on();
-  pros::delay(500);
-  intake::off();
-  peak::raise_to_level(1);
-
-  //grab another 2 donuts and put them on mogo
-  chassis->turnToHeading(180, 100000);
-  pros::delay(500);
-  chassis->moveToPoint(120, 150, 100000);
-  intake::eat_donut();
-  pros::delay(500);
-  intake::eat_donut();
-
-  chassis->turnToHeading(330, 100000);
-  chassis->moveToPoint(150, 60, 100000);
-  clamp::engage();
-  chassis->turnToHeading(-90, 100000);
-
-  chassis->moveToPose(170, -170, -45, 100000);
-  chassis->turnToHeading(45, 100000);
-
-  intake::on();
-  chassis->moveToPoint(120, -120, 100000);
-  pros::delay(1500);
 
   chassis->turnToHeading(0, 100000);
-  chassis->moveToPoint(60, -120, 100000);
-  pros::delay(1500);
+  chassis->moveToPoint(-60, 60, 100000, {.minSpeed = 20}, false);
 
-  intake::off();
+  chassis->turnToHeading(180, 100000);
+  chassis->moveToPoint(-150, 120, 100000, {.maxSpeed = 20}, false);
 
-  chassis->turnToHeading(-30, 100000);
-  chassis->moveToPoint(0, -150, 100000);
-  intake::eat_donut();
-
-  //wall stake 2
-  chassis->turnToHeading(-90, 100000);
-  peak::raise_to_level(3);
-
-  intake::on();
-  pros::delay(1500);
-  intake::off();
-
-  peak::raise_to_level(1);
-
-  intake::on();
-  chassis->turnToHeading(30, 100000);
-  chassis->moveToPoint(-60, 120, 100000);
-
-  chassis->turnToHeading(-30, 100000);
-  chassis->moveToPoint(120, -150, 100000);
+  chassis->turnToHeading(45, 100000);
+  chassis->moveToPoint(-120, 150, 100000, {.forwards=true}, false);
 
   chassis->turnToHeading(150, 100000);
-  chassis->moveToPoint(-167, -167, 100000);
+  chassis->moveToPoint(-165, 165, 100000, {.forwards = false}, false);
   clamp::disengage();
-  */
-  
 }
 
 //#TODO: Test/enhance/modify the game autons below to our needs. Currently, they are set to help us get most of the AWP. 
