@@ -72,7 +72,7 @@ void extend_teeth(double teeth) {
     throw std::invalid_argument("Attempt to extend too low");
   }
   teeth_height = possible_teeth_height;
-  motor.move_relative(revs, 100);
+  motor.move_relative(revs, 126);
 }
 
 void extend(double inches) {

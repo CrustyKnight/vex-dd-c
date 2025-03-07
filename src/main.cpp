@@ -43,18 +43,6 @@ float windup_a = 0;
 float small_error_range_a = 0.1;
 lemlib::ControllerSettings angular_controller_lvl0(kp_a, ki_a, kd_a, windup_a, small_error_range_a, 100, 0, 0, 0);
 
-// TODO: tune PID for each peak level :skull:
-
-lemlib::PID lvl0L(15, 0.5, 20, 0, false);
-lemlib::PID lvl0A(15, 0.5, 20, 0, false);
-// oops
-lemlib::PID lvl1L(kp_l, ki_l, kd_l, 0, false);
-lemlib::PID lvl1A(kp_a, ki_a, kd_a, windup_a, small_error_range_a);
-lemlib::PID lvl2L(15, 0.5, 20, 0, false);
-lemlib::PID lvl2A(15, 0.5, 20, 0, false);
-
-lemlib::PID levels[3][2] = {{lvl0L, lvl0A}, {lvl1L, lvl1A}, {lvl2L, lvl2A}};
-
 // Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain.
 lemlib::Chassis chassis(drivetrain, lateral_controller_lvl0, angular_controller_lvl0, sensors);
 // Creating expo drive curve
@@ -68,6 +56,7 @@ void set_PID(int level) {
   chassis.lateralPID.~PID();
   // new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
 
+  // TODO: tune PID for each peak level :skull:
   // TODO tune these PID constants
   switch (level) {
     case 0:
@@ -164,39 +153,6 @@ void autonomous() {
 
 #ifdef _SKILLS_AUTON_
   autonSkills(&chassis);
-  /*
-  peak::raise_to_level(__PEAK_ARG_MOGO);
-  pros::delay(1500);
-  intake::run_forward(120);
-  pros::delay(2000);
-  intake::off();
-  chassis.setPose(0, 0, 0);
-  chassis.moveToPoint(0, 15.5, 2000);
-  // chassis.turnToHeading(90, 5000);
-  pros::delay(3000);
-  chassis.cancelAllMotions();
-  right_motors.move(50);
-  left_motors.move(-50);
-  pros::delay(595);
-  left_motors.move(0);
-  right_motors.move(0);
-  right_motors.move(-50);
-  left_motors.move(-50);
-  pros::delay(3300);
-  clamp::engage();
-  pros::delay(500);
-  left_motors.move(0);
-  right_motors.move(0);
-  right_motors.move(-50);
-  left_motors.move(50);
-  pros::delay(300);
-  left_motors.move(-50);
-  right_motors.move(-50);
-  pros::delay(4000);
-  left_motors.move(0);
-  right_motors.move(0);
-  // autonSkills(&chassis);
-  */
 #endif
 }
 

@@ -4,22 +4,17 @@
 /* **MID-COMP ADJUSTMENTS** */
 
 /*game Auton*/
-//#define _NEG_RED_
-//#define _POS_RED_
-//#define _NEG_BLUE_
-//#define _POS_BLUE_
+// #define _NEG_RED_
+// #define _POS_RED_
+// #define _NEG_BLUE_
+// #define _POS_BLUE_
 
 /*skills Auton*/
 #define _SKILLS_AUTON_
 
-
-
-
-
-
 /* **CONSTANTS** */
 
-//Buttons
+// Buttons
 #define INTAKE_BUTTON DIGITAL_R2
 #define INTAKE_REVERSE_BUTTON DIGITAL_R1
 #define CLAMP_UP_BUTTON DIGITAL_B
@@ -88,10 +83,10 @@
 // Ladder height
 #define ENDGAME_HEIGHT 7.5
 
-#define _DEBUG_
+// #define _DEBUG_
 #ifdef _DEBUG_
 
-#define _DEBUG_AUTON_
+// #define _DEBUG_AUTON_
 #define DEBUG_LATERAL_TEST_BUTTON DIGITAL_L2
 #define DEBUG_ANGULAR_TEST_BUTTON DIGITAL_L1
 
@@ -106,16 +101,7 @@
 #include "lemlib/api.hpp"
 extern lemlib::Chassis chassis;
 
-
-
-
-
 /* **ERROR CHECKING** */
-
-
-
-
-
 
 #ifdef _SKILLS_AUTON_
 #ifdef _POS_RED_
