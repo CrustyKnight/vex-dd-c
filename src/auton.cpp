@@ -16,7 +16,7 @@ Scores 2 full mogos and puts them into corners
 //TODO test and tune
 void autonSkills(lemlib::Chassis* chassis) {
   peak::raise_to_level(1);
-  lemlib::Pose start(-150, 0, 0);
+  lemlib::Pose start(-60, 0, 0);
   chassis->setPose(start);
 
   pros::delay(1000);
@@ -26,9 +26,9 @@ void autonSkills(lemlib::Chassis* chassis) {
   intake::run_forward(0);
 
   //mogo
-  chassis->turnToPoint(120, -60, 2000, {.maxSpeed = 90}, false);
+  chassis->turnToPoint(48, -24, 2000, {.maxSpeed = 90}, false);
   pros::delay(100);
-  chassis->moveToPoint(-120, 60, 2000, {.forwards = false, .maxSpeed = 90}, false);
+  chassis->moveToPoint(-48, 24, 2000, {.forwards = false, .maxSpeed = 90}, false);
   clamp::engage();
 
   pros::delay(300);
@@ -36,40 +36,43 @@ void autonSkills(lemlib::Chassis* chassis) {
   //donuts are yummy
   intake::run_forward(120);
 
-  chassis->turnToPoint(-60, 60, 3000, {.maxSpeed = 90}, false);
+  chassis->turnToPoint(-24, 24, 3000, {.maxSpeed = 90}, false);
   pros::delay(100);
-  chassis->moveToPoint(-60, 55, 2000, {.maxSpeed = 90, .minSpeed = 30}, false);
-  chassis->moveToPoint(-60, 60, 2000, {.maxSpeed = 90}, false);
+  chassis->moveToPoint(-24, 22, 2000, {.maxSpeed = 90, .minSpeed = 30}, false);
+  chassis->moveToPoint(-24, 24, 2000, {.maxSpeed = 90}, false);
   pros::delay(100);
-  chassis->turnToPoint(-150, 120, 2000, {.maxSpeed = 90}, false);
-  chassis->moveToPoint(-150, 120, 7000, {.maxSpeed = 50}, false);
+  chassis->turnToPoint(-24, 48, 2000, {.maxSpeed = 90}, false);
+  chassis->moveToPoint(-24, 48, 7000, {.maxSpeed = 50}, false);
 
   pros::delay(100);
-  chassis->turnToPoint(-120, 150, 2000, {.maxSpeed = 50}, false);
-  chassis->moveToPoint(-120, 150, 2000, {.maxSpeed = 50}, false);
+  chassis->turnToPoint(-48, 48, 2000, {.maxSpeed = 50}, false);
+  chassis->moveToPoint(-48, 48, 2000, {.maxSpeed = 50}, false);
 
   intake::off();
   pros::delay(100);
 
-  chassis->turnToPoint(160, -160, 3000, {.maxSpeed = 50}, false);
-  chassis->moveToPoint(-160, 160, 3000, {.forwards = false, .maxSpeed = 100, .minSpeed = 30}, false);
+  chassis->turnToPoint(64, -64, 3000, {.maxSpeed = 50}, false);
+  chassis->moveToPoint(-64, 64, 3000, {.forwards = false, .maxSpeed = 100, .minSpeed = 30}, false);
   clamp::disengage();
-  chassis->moveToPoint(-145, 157, 3000, {.forwards = true, .maxSpeed = 100}, false);
+  chassis->moveToPoint(-57, 62, 3000, {.forwards = true, .maxSpeed = 100}, false);
 
   pros::delay(100);
-  chassis->turnToPoint(0, 150, 3000, {.maxSpeed = 90}, false);
-  intake::run_forward(120);
-  chassis->moveToPoint(-5, 150, 3000, {.maxSpeed = 90, .minSpeed = 30}, false);
-  chassis->moveToPoint(0, 150, 3000, {.maxSpeed = 90}, false);
+  chassis->turnToPoint(24, 48, 3000, {.maxSpeed = 90}, false);
+  chassis->moveToPoint(24, 48, 3000, {.maxSpeed = 90}, false);
+  intake::swallow();
+
 
   pros::delay(100);
-  chassis->turnToPoint(0, 170, 4000, {.maxSpeed = 50}, false);
-
-  intake::eat_donut();
+  chassis->turnToPoint(0, 60, 4000, {.maxSpeed = 50}, false);
+  chassis->moveToPoint(0, 60, 4000, {.maxSpeed = 90}, false);
+  intake::swallow();
 
   peak::raise_to_level(3);
-  pros::delay
+  pros::delay(2000);
   intake::run_forward(120);
+  pros::delay(2000);
+  intake::off();
+
 
 }
 

@@ -10,6 +10,7 @@ void run_forward(int);
 void run_backward(int);
 void eat_donut(float);
 void eat_donut();
+void swallow();
 void digest_donut();
 void pass(int percentage);
 }  // namespace intake
