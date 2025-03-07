@@ -146,9 +146,31 @@ void positive_red(lemlib::Chassis* chassis){
 
 void negative_blue(lemlib::Chassis* chassis){
   peak::raise_to_level(1);
-  lemlib::Pose start(150, 120, 180);
+  lemlib::Pose start(60, 24, 90);
   chassis->setPose(start);
-  peak::raise_to_level(1);
+
+  chassis->moveToPoint(28, 24, 1500, {.forwards = false});
+  chassis->moveToPoint(24, 24, 750, {.forwards = false, .minSpeed = 30}, false);
+  clamp::engage();
+  intake::on();
+
+  chassis->moveToPoint(24, 48, 1250, {.minSpeed = 30}, false);
+
+  chassis->moveToPose(20, 52, 270, 1000, {.lead = 0, .minSpeed = 30}, false);
+  pros::delay(500);
+  chassis->moveToPoint(24, 48, 1250, {.forwards = false}, false);
+  chassis->moveToPose(28, 52, 270, 1000, {.lead = 0}, false);
+  pros::delay(500);
+  
+  chassis->moveToPoint(48, 0, 2000, {.minSpeed = 60}, false);
+  pros::delay(500);
+  intake::off();
+  chassis->moveToPose(60, 0, 270, 1500, {.lead = 1, .maxSpeed = 80, .minSpeed = 30}, false);
+  intake::on();
+  pros::delay(2500);
+  intake::off();
+
+  chassis->moveToPose(20, 9, 45, 1000, {.minSpeed = 60});
 }
 void positive_blue(lemlib::Chassis* chassis){
   peak::raise_to_level(1);
