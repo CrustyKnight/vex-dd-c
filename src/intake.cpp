@@ -31,8 +31,8 @@ void run_backward(int p) {
 void eat_donut(float dist) {
   motor.move_relative(50, 50);
   lemlib::Pose currentPose = chassis.getPose(true);
-  float new_x = (float)(cos(currentPose.theta) * dist);  // Changed sin to cos; x is cos no? (Debangshu)
-  float new_y = (float)(sin(currentPose.theta) * dist);
+  float new_x = currentPose.x + (float)(cos(currentPose.theta) * dist);  // Changed sin to cos; x is cos no? (Debangshu)
+  float new_y = currentPose.y + (float)(sin(currentPose.theta) * dist);
   chassis.moveToPoint(new_x, new_y, 500);  // you might need to tune this
   chassis.moveToPoint(currentPose.x, currentPose.y, 600, {.forwards = false});
 }
