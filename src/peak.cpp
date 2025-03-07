@@ -11,7 +11,7 @@
 // Constants are estimated heights that are needed
 
 // Peak power/direction & Different peak heights' constant declarations (in inches)
-int peak_power = 126;
+int peak_power = 127;
 int peak_dir = 1;
 // float DEFAULT_HEIGHT = 0.0;
 // float ALLIANCE_STAKE_HEIGHT = 5.0;
@@ -72,7 +72,7 @@ void extend_teeth(double teeth) {
     throw std::invalid_argument("Attempt to extend too low");
   }
   teeth_height = possible_teeth_height;
-  motor.move_relative(revs, 100);
+  motor.move_relative(revs, 126);
 }
 
 void extend(double inches) {

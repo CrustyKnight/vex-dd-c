@@ -21,58 +21,56 @@ void autonSkills(lemlib::Chassis* chassis) {
 
   pros::delay(1000);
   //alliance stake
-  intake::digest_donut();
+  intake::run_forward(120);
   pros::delay(2000);
+  intake::run_forward(0);
 
-  //grab mogo
-  chassis->turnToPoint(120, -60, 1000, {.forwards = true}, false);
-  pros::delay(200);
-  chassis->moveToPoint(-120, 60, 1000, {.forwards = false, .minSpeed = 30}, false);
+  //mogo
+  chassis->turnToPoint(120, -60, 2000, {.maxSpeed = 90}, false);
+  pros::delay(100);
+  chassis->moveToPoint(-120, 60, 2000, {.forwards = false, .maxSpeed = 90}, false);
   clamp::engage();
+
+  pros::delay(300);
+
+  //donuts are yummy
+  intake::run_forward(120);
+
+  chassis->turnToPoint(-60, 60, 3000, {.maxSpeed = 90}, false);
   pros::delay(100);
-  intake::on();
-
-  chassis->moveToPose(-60, 120, 0, 1000, {.horizontalDrift = 10, .lead = 0.4, .maxSpeed = 60}, false);
+  chassis->moveToPoint(-60, 55, 2000, {.maxSpeed = 90, .minSpeed = 30}, false);
+  chassis->moveToPoint(-60, 60, 2000, {.maxSpeed = 90}, false);
   pros::delay(100);
-
-  chassis->turnToHeading(180, 3000, {.minSpeed = 20}, false);
-  pros::delay(100);
-
-  chassis->moveToPoint(-150, 120, 10000, {.maxSpeed = 60}, false);
-  pros::delay(100);
-
-  chassis->turnToPoint(-120, 150, 1000, {.minSpeed = 20}, false);
-  chassis->moveToPoint(-120, 150, 1000, {.maxSpeed = 60}, false);
+  chassis->turnToPoint(-150, 120, 2000, {.maxSpeed = 90}, false);
+  chassis->moveToPoint(-150, 120, 7000, {.maxSpeed = 50}, false);
 
   pros::delay(100);
+  chassis->turnToPoint(-120, 150, 2000, {.maxSpeed = 50}, false);
+  chassis->moveToPoint(-120, 150, 2000, {.maxSpeed = 50}, false);
 
-  chassis->moveToPose(-170, 170, 215, 1000, {.minSpeed = 30}, false);
-  chassis->moveToPoint(-160, 160, 500, {.forwards = false, .minSpeed = 40}, false);
+  intake::off();
+  pros::delay(100);
 
-  /*
-  //get donuts
-
-  chassis->turnToHeading(0, 1000, {.maxSpeed = 120}, false);
-  pros::delay(1000);
-  chassis->moveToPoint(-60, 60, 1000, {.maxSpeed = 120}, false);
-  pros::delay(1000);
-
-  chassis->turnToHeading(180, 1000, {.maxSpeed = 120}, false);
-  pros::delay(1000);
-  chassis->moveToPoint(-150, 120, 1000, {.maxSpeed = 120}, false);
-  pros::delay(1000);
-
-  chassis->turnToHeading(45, 1000, {.maxSpeed = 120}, false);
-  pros::delay(1000);
-  chassis->moveToPoint(-120, 150, 1000, {.maxSpeed = 120}, false);
-  pros::delay(1000);
-
-  chassis->turnToHeading(150, 1000, {.maxSpeed=120}, false);
-  pros::delay(1000);
-  chassis->moveToPoint(-165, 165, 1000, {.maxSpeed=120}, false);
-  pros::delay(1000);
+  chassis->turnToPoint(160, -160, 3000, {.maxSpeed = 50}, false);
+  chassis->moveToPoint(-160, 160, 3000, {.forwards = false, .maxSpeed = 100, .minSpeed = 30}, false);
   clamp::disengage();
-  */
+  chassis->moveToPoint(-145, 157, 3000, {.forwards = true, .maxSpeed = 100}, false);
+
+  pros::delay(100);
+  chassis->turnToPoint(0, 150, 3000, {.maxSpeed = 90}, false);
+  intake::run_forward(120);
+  chassis->moveToPoint(-5, 150, 3000, {.maxSpeed = 90, .minSpeed = 30}, false);
+  chassis->moveToPoint(0, 150, 3000, {.maxSpeed = 90}, false);
+
+  pros::delay(100);
+  chassis->turnToPoint(0, 170, 4000, {.maxSpeed = 50}, false);
+
+  intake::eat_donut();
+
+  peak::raise_to_level(3);
+  pros::delay
+  intake::run_forward(120);
+
 }
 
 //#TODO: Test/enhance/modify the game autons below to our needs. Currently, they are set to help us get most of the AWP. 
@@ -85,27 +83,28 @@ void negative_red(lemlib::Chassis* chassis) {
     lemlib::Pose start(-150, 60, 90);
     chassis->setPose(start);
 
-    chassis->moveToPoint(-60, 60, 1500, {.forwards = false}, false);
-    pros::delay(3000);
-    clamp::engage();
-    pros::delay(1000);
+    pros::delay(400);
 
-    chassis->turnToPoint(-60, 120, 1500, {.forwards = true}, false);
+    chassis->moveToPoint(-60, 60, 1500, {.forwards = false, .maxSpeed = 90}, false);
+    pros::delay(300);
+    clamp::engage();
+    pros::delay(400);
+
+    chassis->turnToPoint(-60, 120, 1500, {.forwards = true, .maxSpeed = 90}, false);
     pros::delay(500);
     chassis->moveToPoint(-60, 120, 1500, {.forwards = false, .maxSpeed = 30}, false);
     
-    intake::eat_donut();
+    intake::on();
 
-    chassis->turnToHeading(0, 1000, {.maxSpeed = 120}, false);
-    pros::delay(500);
-    chassis->moveToPoint(-9, 130, 1500, {.forwards = true, .maxSpeed = 30}, false);
-    pros::delay(500);
-    intake::eat_donut();
+    chassis->turnToHeading(0, 1000, {.maxSpeed = 90}, false);
+    pros::delay(400);
+    chassis->moveToPoint(-9, 130, 1500, {.forwards = true, .maxSpeed = 50}, false);
+    pros::delay(400);
 
     chassis->moveToPoint(-30, 130, 1500, {.maxSpeed = 50}, false);
-    chassis->moveToPoint(-41.2, 57.065, 1000, {.maxSpeed = 120}, false);
+    chassis->moveToPoint(-41.2, 57.065, 1000, {.maxSpeed = 90}, false);
     pros::delay(300);
-    chassis->moveToPoint(-40, 34, 1000, {.maxSpeed = 120}, false);
+    chassis->moveToPoint(-40, 34, 1000, {.maxSpeed = 90}, false);
     intake::on();
 }
 
@@ -142,34 +141,9 @@ void positive_red(lemlib::Chassis* chassis){
 
 void negative_blue(lemlib::Chassis* chassis){
   peak::raise_to_level(1);
-  lemlib::Pose start(132, 48, 180);
+  lemlib::Pose start(150, 120, 180);
   chassis->setPose(start);
-
-  //Picking up MOGO on negative side and scoring preload on it
-  chassis->moveToPoint(96, 48, 1500, {.forwards = false, .minSpeed = 20}, false);
-  clamp::engage();
-  intake::on();
-
-  //Grabbing and scoring another donut, then rightmost of 2 touching donuts
-  chassis->moveToPoint(96, 24, 1500);
-  chassis->moveToPose(84, 12, 135, 1500);
-
-  //Backing up, then scoring leftmost of 2 touching donuts.
-  chassis->moveToPoint(48, 9, 1500, {.forwards = false, .minSpeed = 20}, false);
-  chassis->moveToPose(96, 36, -135, 1500);
-
-  //Scoring ring nearest to alliance stake onto alliance stake, and dropping MOGO on the way
-  chassis->moveToPoint(120, 48, 2000, {.forwards = false, .minSpeed = 20}, false);
-  clamp::disengage();
-  chassis->turnToHeading(90, 750);
-  chassis->moveToPoint(120, 72, 1000);
-  intake::off();
-  chassis->moveToPose(132, 72, 0, 750);
-  intake::digest_donut();
-
-  //Touching the ladder on our auton side's negative side. 
-  chassis->moveToPoint(96, 48, 1000);
-  chassis->moveToPoint(84, 60, 1000);
+  peak::raise_to_level(1);
 }
 void positive_blue(lemlib::Chassis* chassis){
   peak::raise_to_level(1);
