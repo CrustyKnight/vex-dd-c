@@ -4,7 +4,7 @@
 #include "pros/motors.h"
 
 namespace intake {
-int power = 100;
+int power = 200;
 int direction = INTAKE_ON_DIRECTION;
 bool state = false;
 pros::Motor motor(7, pros::MotorGearset::green);
@@ -42,6 +42,10 @@ void eat_donut() {  // default distance, made this up, should probably be change
 }
 void digest_donut() {
   double revs = -0.6 * INTAKE_RATIO;
+  motor.move_relative(revs, 200);
+}
+void pass(int percentage) {
+  double revs = -percentage * INTAKE_RATIO;
   motor.move_relative(revs, 200);
 }
 
