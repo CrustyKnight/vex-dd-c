@@ -70,10 +70,32 @@ void autonSkills(lemlib::Chassis* chassis) {
   intake::swallow();
 
   peak::raise_to_level(3);
-  pros::delay(2000);
+  pros::delay(2500);
   intake::run_forward(120);
-  pros::delay(2000);
+  pros::delay(2500);
   intake::off();
+
+  peak::raise_to_level(1);
+  pros::delay(2500);
+
+  chassis->turnToPoint(24, 24, 2000, {.maxSpeed = 60}, false);
+  chassis->moveToPoint(24, 24, 3000, {.maxSpeed = 90}, false);
+  intake::swallow();
+
+  chassis->turnToPoint(-48, 0, 2000, {.maxSpeed = 60}, false);
+  chassis->moveToPoint(48, 0, 3000, {.forwards = false, .maxSpeed = 60}, false);
+  pros::delay(800);
+  clamp::engage();
+
+  intake::on();
+
+  chassis->turnToPoint(24, -24, 1500, {.maxSpeed = 90}, false);
+  chassis->moveToPoint(24, -24, 1200, {.maxSpeed = 90}, false);
+  pros::delay(800);
+
+  chassis->turnToPoint(-60, 24, 1000, {.maxSpeed = 90}, false);
+  chassis->moveToPoint(60, 24, 1000, {.forwards = false, .maxSpeed = 90}, false);
+
 }
 
 // #TODO: Test/enhance/modify the game autons below to our needs. Currently, they are set to help us get most of the AWP.
@@ -86,31 +108,33 @@ Scores on one MOGO, then on alliance stake, then touches the ladder.
 
 void negative_red(lemlib::Chassis* chassis) {
   peak::raise_to_level(1);
-  lemlib::Pose start(-60, 24, 270);
+  lemlib::Pose start(60, 24, 90);
   chassis->setPose(start);
 
-  chassis->moveToPoint(-28, 24, 1500, {.forwards = false});
-  chassis->moveToPoint(-24, 24, 750, {.forwards = false, .minSpeed = 30}, false);
+  chassis->moveToPoint(28, 24, 1500, {.forwards = false, .minSpeed = 30});
+  chassis->moveToPoint(24, 24, 750, {.forwards = false}, false);
   clamp::engage();
+  /*
   intake::on();
 
   chassis->moveToPoint(-24, 48, 1250, {.minSpeed = 30}, false);
 
-  chassis->moveToPose(-20, 52, 90, 1000, {.lead = 0, .minSpeed = 30}, false);
+  chassis->moveToPose(-20, 52, 90, 1000, {.lead = 0}, false);
   pros::delay(500);
   chassis->moveToPoint(-24, 48, 1250, {.forwards = false}, false);
   chassis->moveToPose(-28, 52, 90, 1000, {.lead = 0}, false);
   pros::delay(500);
 
-  chassis->moveToPoint(-48, 0, 2000, {.minSpeed = 60}, false);
+  chassis->moveToPoint(-48, 0, 2000, {.maxSpeed = 90}, false);
   pros::delay(500);
   intake::off();
-  chassis->moveToPose(-60, 0, 90, 1500, {.lead = 1, .maxSpeed = 80, .minSpeed = 30}, false);
+  chassis->moveToPose(-60, 0, 90, 1500, {.lead = 1, .maxSpeed = 80}, false);
   intake::on();
   pros::delay(2500);
   intake::off();
 
-  chassis->moveToPose(-20, 9, 315, 1000, {.minSpeed = 60});
+  chassis->moveToPose(-20, 9, 315, 1000, {.maxSpeed = 100});
+  */
 }
 
 void positive_red(lemlib::Chassis* chassis){
@@ -142,15 +166,17 @@ void positive_red(lemlib::Chassis* chassis){
 
 void negative_blue(lemlib::Chassis* chassis) {
   peak::raise_to_level(1);
+  pros::delay(1000);
   lemlib::Pose start(60, 24, 90);
   chassis->setPose(start);
 
-  chassis->moveToPoint(28, 24, 1500, {.forwards = false});
-  chassis->moveToPoint(24, 24, 750, {.forwards = false, .minSpeed = 30}, false);
+  chassis->moveToPoint(24, 24, 750, {.forwards = false}, false);
   clamp::engage();
-  intake::on();
+  intake::run_forward(120);
 
-  chassis->moveToPoint(24, 48, 1250, {.minSpeed = 30}, false);
+  /*
+
+  chassis->moveToPoint(24, 48, 1250, {.maxSpeed = 90}, false);
 
   chassis->moveToPose(20, 52, 270, 1000, {.lead = 0, .minSpeed = 30}, false);
   pros::delay(500);
@@ -192,4 +218,5 @@ void positive_blue(lemlib::Chassis* chassis) {
   chassis->moveToPose(12, -14, 315, 1500, {.forwards = false, .minSpeed = 20}, false);
   intake::off();
   chassis->moveToPoint(8, -16, 10000, {.forwards = false, .minSpeed = 20}, false);
+  */
 }

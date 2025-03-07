@@ -175,8 +175,8 @@ void opcontrol() {
 #endif
 #ifdef _DEBUG_
   master.set_text(1, 4, "DEBUG");
-  // autonomous();
-  pidTestingLateral();
+  autonomous();
+  //pidTestingLateral();
 #endif
   while (true) {
     // Arcade control scheme

@@ -4,13 +4,13 @@
 /* **MID-COMP ADJUSTMENTS** */
 
 /*game Auton*/
-// #define _NEG_RED_
+//#define _NEG_RED_
 // #define _POS_RED_
-// #define _NEG_BLUE_
+#define _NEG_BLUE_
 // #define _POS_BLUE_
 
 /*skills Auton*/
-// #define _SKILLS_AUTON_
+//#define _SKILLS_AUTON_
 
 /* **CONSTANTS** */
 
@@ -83,7 +83,7 @@
 // Ladder height
 #define ENDGAME_HEIGHT 7.5
 
-// #define _DEBUG_
+#define _DEBUG_
 #ifdef _DEBUG_
 
 // #define _DEBUG_AUTON_

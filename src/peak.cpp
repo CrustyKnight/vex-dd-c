@@ -21,7 +21,7 @@ int PEAK_LENGTH = 14;
 int peak_current_level = 0;
 
 // Motor declaration
-pros::Motor peak_motor(8, pros::MotorGearset::green);
+pros::Motor peak_motor(8, pros::MotorGearset::red);
 // Functions written out here
 void set_peak_power(int power) {
   peak_power = power;
@@ -58,7 +58,7 @@ namespace peak {
 double height = 0;        // inches
 double teeth_height = 0;  // teeth
 
-pros::Motor motor(PEAK_MOTOR_PORT, pros::MotorGearset::green);
+pros::Motor motor(PEAK_MOTOR_PORT, pros::MotorGearset::red);
 void init() { motor.set_encoder_units(pros::E_MOTOR_ENCODER_ROTATIONS); }
 bool moving() { return (std::floor(motor.get_actual_velocity()) != 0); }
 bool still() { return (std::floor(motor.get_actual_velocity()) == 0); }
@@ -72,7 +72,7 @@ void extend_teeth(double teeth) {
     throw std::invalid_argument("Attempt to extend too low");
   }
   teeth_height = possible_teeth_height;
-  motor.move_relative(revs, 126);
+  motor.move_relative(revs, 127);
 }
 
 void extend(double inches) {
@@ -132,11 +132,11 @@ void raise_to_level(int level) {
       set_PID(2);
       break;
     case -1:  // go down
-      motor.move(-100);
+      motor.move(-127);
       // teeth_height = 0;
       break;
     case -2:
-      motor.move(100);
+      motor.move(127);
       // teeth_height = 0;
       break;
     case -3:
