@@ -71,7 +71,7 @@ void pidTestingAngular() {
 
 void pidTestingLateral() {
   chassis.setPose(0,0,0);
-  chassis.moveToPose(24, 24, -90, 10000, {.horizontalDrift = 50, .lead = 0.6, .maxSpeed = 40}, false);
+  chassis.moveToPose(24, 24, 0, 750,{.horizontalDrift = 50, .lead = 0.6, .maxSpeed = 40}, false);
   /*
   chassis.setPose(0, 0, 0);
   chassis.moveToPoint(0, 24, 5000, {.forwards = true, .maxSpeed = 30}, false);
