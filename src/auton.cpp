@@ -114,34 +114,7 @@ void negative_red(lemlib::Chassis* chassis) {
 }
 
 void positive_red(lemlib::Chassis* chassis){
-  peak::raise_to_level(1);
-  lemlib::Pose start(12, 96, 180);
-  chassis->setPose(start);
 
-  //Rushing to the central MOGO
-  chassis->turnToPoint(-66, 114, 1500, {.maxSpeed = 50}, false);
-  pros::delay(500);
-  chassis->moveToPose(-66,114,45, 1500, {.forwards = false, .minSpeed = 20}, false);
-  pros::delay(2000);
-  clamp::engage();
-
-  //Not Scoring on "grabbed MOGO" in the event that the other team gets it, but grabbing a donut on the way. 
-  chassis->turnToPoint(36, 108, 1000, {.maxSpeed = 50}, false);
-  pros::delay(500);
-  chassis->moveToPose(36, 108, 45, 1000);
-  pros::delay(500);
-  intake::eat_donut();
- 
-  //Letting MOGO go, grabbing the other MOGO on our side, and scoring preload + grabbed ring...
-  clamp::disengage();
-  chassis->moveToPoint(48, 96, 2000, {.forwards = false, .minSpeed = 20}, false);
-  clamp::engage();
-  intake::on();
-
-  //Touching the ladder (and turning intake off before doing so)
-  chassis->moveToPose(48, 96, 180, 1500, {.forwards = false, .minSpeed = 20}, false);
-  intake::off();
-  chassis->moveToPoint(96, 48, 10000, {.forwards = false, .minSpeed = 20}, false);
 }
 
 void negative_blue(lemlib::Chassis* chassis){
@@ -174,31 +147,27 @@ void negative_blue(lemlib::Chassis* chassis){
 }
 void positive_blue(lemlib::Chassis* chassis){
   peak::raise_to_level(1);
-  lemlib::Pose start(132, 96, 180);
+  lemlib::Pose start(60, -24, 90);
   chassis->setPose(start);
 
-  //Rushing to the central MOGO
-  chassis->moveToPose(90, 114, 135, 1500, {.forwards = false, .minSpeed = 20}, false);
-  clamp::engage();
+  //Rushing to the central MOGO (10, -40, 120)
+  chassis->moveToPose(10, -40, 60, 1500, {.lead = 0.1, .minSpeed = 80});
 
   //Not Scoring on "grabbed MOGO" in the event that the other team gets it, but grabbing a donut on the way. 
-  chassis->moveToPose(96, 108, 45, 1000);
-  intake::eat_donut();
+  intake::on();
+  chassis->moveToPoint(24, -48, 750, {.minSpeed = 40}, false);
+  pros::delay(500);
+  intake::off();
+
  
   //Letting MOGO go, grabbing the other MOGO on our side, and scoring preload + grabbed ring...
   clamp::disengage();
-  chassis->moveToPoint(96, 96, 2000, {.forwards = false, .minSpeed = 20}, false);
+  chassis->moveToPoint(24, -24, 1000, {.forwards = false, .minSpeed = 20});
   clamp::engage();
   intake::on();
 
-  //Use MOGO to clear out positive corner, then place it there
-  chassis->moveToPose(125, 135, 135, 2000);
-  chassis->turnToHeading(675, 2000);
-  chassis->moveToPoint(138, 138, 1500, {.forwards = false, .minSpeed = 20}, false);
-  clamp::disengage();
-
   //Touching the ladder (and turning intake off before doing so)
-  chassis->moveToPose(96, 96, 180, 1500, {.forwards = false, .minSpeed = 20}, false);
+  chassis->moveToPose(12, -14, 315, 1500, {.forwards = false, .minSpeed = 20}, false);
   intake::off();
-  chassis->moveToPoint(48, 48, 5000, {.forwards = false, .minSpeed = 20}, false);
+  chassis->moveToPoint(8, -16, 10000, {.forwards = false, .minSpeed = 20}, false);
 }
