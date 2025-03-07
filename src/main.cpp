@@ -13,7 +13,7 @@
 #include "auton.hpp"
 #include "clamp.hpp"
 
-//6-sec compilation time :skull:
+// 6-sec compilation time :skull:
 
 // Important Note: This file has all of our drivetrain and remote control-related code.
 
@@ -47,7 +47,7 @@ lemlib::ControllerSettings angular_controller_lvl0(kp_a, ki_a, kd_a, windup_a, s
 
 lemlib::PID lvl0L(15, 0.5, 20, 0, false);
 lemlib::PID lvl0A(15, 0.5, 20, 0, false);
-//oops
+// oops
 lemlib::PID lvl1L(kp_l, ki_l, kd_l, 0, false);
 lemlib::PID lvl1A(kp_a, ki_a, kd_a, windup_a, small_error_range_a);
 lemlib::PID lvl2L(15, 0.5, 20, 0, false);
@@ -66,22 +66,22 @@ void set_PID(int level) {
   // this might work.
   // magic from: https://a.opnxng.com/exchange/stackoverflow.com/questions/75840140/why-assignment-operator-implicitly-deleted-for-const-members-in-c
   chassis.lateralPID.~PID();
-  //new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
+  // new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
 
-  //TODO tune these PID constants
-  switch(level){
+  // TODO tune these PID constants
+  switch (level) {
     case 0:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
-    break;
+      new (&chassis.lateralPID) lemlib::PID(kp_l, ki_l, kd_l, 0, true);
+      break;
     case 1:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
-    break;
+      new (&chassis.lateralPID) lemlib::PID(kp_l, ki_l, kd_l, 0, true);
+      break;
     case 2:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
-    break;
+      new (&chassis.lateralPID) lemlib::PID(kp_l, ki_l, kd_l, 0, true);
+      break;
     case 3:
-      new (&chassis.lateralPID) lemlib::PID(15, 0.5, 20, 0, false);
-    break;
+      new (&chassis.lateralPID) lemlib::PID(kp_l, ki_l, kd_l, 0, true);
+      break;
   }
 }
 
@@ -146,9 +146,8 @@ void competition_initialize() {}
  */
 
 void autonomous() {
-
 #ifdef _NEG_RED_
-  negative_red(&chassis);  
+  negative_red(&chassis);
 #endif
 
 #ifdef _POS_RED_
@@ -220,7 +219,7 @@ void opcontrol() {
 #endif
 #ifdef _DEBUG_
   master.set_text(1, 4, "DEBUG");
-  //autonomous();
+  // autonomous();
   pidTestingLateral();
 #endif
   while (true) {
