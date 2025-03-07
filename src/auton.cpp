@@ -115,11 +115,17 @@ void positive_red(lemlib::Chassis* chassis){
   chassis->setPose(start);
 
   //Rushing to the central MOGO
-  chassis->moveToPose(66, 114, 45, 1500, {.forwards = false, .minSpeed = 20}, false);
+  chassis->turnToPoint(-66, 114, 1500, {.maxSpeed = 50}, false);
+  pros::delay(500);
+  chassis->moveToPose(-66,114,45, 1500, {.forwards = false, .minSpeed = 20}, false);
+  pros::delay(2000);
   clamp::engage();
 
   //Not Scoring on "grabbed MOGO" in the event that the other team gets it, but grabbing a donut on the way. 
+  chassis->turnToPoint(36, 108, 1000, {.maxSpeed = 50}, false);
+  pros::delay(500);
   chassis->moveToPose(36, 108, 45, 1000);
+  pros::delay(500);
   intake::eat_donut();
  
   //Letting MOGO go, grabbing the other MOGO on our side, and scoring preload + grabbed ring...
