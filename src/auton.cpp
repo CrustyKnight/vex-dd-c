@@ -208,6 +208,7 @@ void negative_blue(lemlib::Chassis* chassis) {
   intake::off();
 
   chassis->moveToPose(20, 9, 45, 1000, {.minSpeed = 60});
+  */
 }
 void positive_blue(lemlib::Chassis* chassis) {
   peak::raise_to_level(1);
@@ -233,5 +234,4 @@ void positive_blue(lemlib::Chassis* chassis) {
   chassis->moveToPose(12, -14, 315, 1500, {.forwards = false, .minSpeed = 20}, false);
   intake::off();
   chassis->moveToPoint(8, -16, 10000, {.forwards = false, .minSpeed = 20}, false);
-  */
 }
