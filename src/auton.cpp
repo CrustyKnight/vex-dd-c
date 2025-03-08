@@ -102,13 +102,11 @@ Scores on one MOGO, then on alliance stake, then touches the ladder.
 
 // Note: for game auton: we use jerry.io standards...
 
+// degrees is like on the unit circle, but backwards. (+ is clockwise)
 void negative_red(lemlib::Chassis* chassis) {
+  /* all good, testing next step
   peak::raise_to_level(1);
-  pros::delay(1000);
-
   chassis->setPose(0, 0, 90);
-  // degrees is like on the unit circle, but backwards. (+ is clockwise)
-
   // Go to the mogo & clamp it.
   // (moving through it works better)
   chassis->moveToPoint(-32, 0, 1500, {.forwards = false, .minSpeed = 30}, false);
@@ -121,12 +119,18 @@ void negative_red(lemlib::Chassis* chassis) {
   pros::delay(1000);
 
   // Go get another donut!!
-  chassis->turnToPoint(-36, 24, 1000, {.minSpeed = 30}, false);
-  chassis->turnToPoint(-36, 10, 1000, {.minSpeed = 50}, false);
-  // chassis->turnToPoint(24, 48, 1000, {}, false);
-  chassis->turnToPoint(-38, 24, 1000, {}, false);
-  chassis->moveToPoint(-36, 24, 2000, {.maxSpeed = 70}, false);
+  chassis->turnToPoint(-30, 24, 1000, {.minSpeed = 50}, false);
+  chassis->turnToPoint(-46, 24, 1000, {.minSpeed = 50}, false);
+  chassis->turnToHeading(0, 1000, {}, false);
+  chassis->moveToPoint(-38, 24, 2000, {.maxSpeed = 70}, false);
   intake::run_forward(120);
+  */
+
+  clamp::engage();
+
+  chassis->setPose(-38, 24, 0);  // for testing
+  chassis->turnToHeading(270, 2000, {}, false);
+  chassis->moveToPoint(-50, 24, 2000, {.maxSpeed = 70}, false);
 
   /*
   lemlib::Pose start(60, 24, 90);

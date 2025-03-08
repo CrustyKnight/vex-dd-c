@@ -160,12 +160,12 @@ void opcontrol() {
 #ifdef _DEBUG_
 #ifdef _DEBUG_AUTON_
   master.set_text(1, 4, "DEBUG");
-  // autonomous();
-  chassis.setPose(0, 0, 0);
+  autonomous();
+  // chassis.setPose(0, 0, 0);
   // chassis.turnToHeading(-90, 10000, {}, false);
-  chassis.turnToPoint(10, 0, 5000, {}, false);
-  pros::delay(1000);
-  chassis.turnToPoint(0, 10, 5000, {}, false);
+  // chassis.turnToPoint(10, 0, 5000, {}, false);
+  // pros::delay(1000);
+  // chassis.turnToPoint(0, 10, 5000, {}, false);
   // chassis.moveToPoint(-5, 0, 5000, {.forwards = false}, false);
   // chassis.turnToHeading(90, 3000, {}, false);
   // pidTestingLateral(chassis);
