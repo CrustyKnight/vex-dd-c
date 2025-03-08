@@ -176,6 +176,7 @@ void opcontrol() {
 #ifdef _DEBUG_
   master.set_text(1, 4, "DEBUG");
   autonomous();
+  pros::delay(5000);
   //pidTestingLateral();
 #endif
   while (true) {

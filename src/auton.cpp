@@ -109,6 +109,28 @@ Scores on one MOGO, then on alliance stake, then touches the ladder.
 void negative_red(lemlib::Chassis* chassis) {
   peak::raise_to_level(1);
   pros::delay(1000);
+
+  chassis->setPose(0, 0, 180);
+
+  // chassis->moveToPoint(0, 32, 1500, {.forwards = true, .maxSpeed = 90, .minSpeed = 30});
+  // chassis->moveToPoint(0, 22, 1500, {.forwards = true, .maxSpeed = 90, .minSpeed })
+  // chassis->moveTo
+  chassis->moveToPoint(0, 32, 1500, {.forwards = false, .minSpeed = 30});
+  chassis->moveToPoint(0, 34, 1500, {.forwards = false, .maxSpeed = 30, .minSpeed = 10});
+  clamp::engage();
+  chassis->moveToPoint(0, 36, 750, {.forwards = false, .maxSpeed = 60}, false);
+
+  intake::run_forward(120);
+  pros::delay(1000);
+
+  chassis->turnToPoint(-24, 36, 1000, {.minSpeed = 30}, false);
+  chassis->turnToPoint(-10, 36, 1000, {.minSpeed = 50}, false);
+  //chassis->turnToPoint(24, 48, 1000, {}, false);
+  chassis->turnToPoint(-24, 36, 1000, {}, false);
+  chassis->moveToPoint(-29, 36, 2000, {.maxSpeed = 70}, false);
+  intake::run_forward(120);
+
+  /*
   lemlib::Pose start(60, 24, 90);
   chassis->setPose(start);
 
@@ -119,6 +141,14 @@ void negative_red(lemlib::Chassis* chassis) {
 
   intake::run_forward(120);
   pros::delay(1000);
+
+  chassis->turnToPoint(24, 48, 1000, {.minSpeed = 30}, false);
+  chassis->turnToPoint(24, 30, 1000, {.minSpeed = 50}, false);
+  //chassis->turnToPoint(24, 48, 1000, {}, false);
+  chassis->turnToPoint(24, 48, 1000, {}, false);
+  chassis->moveToPoint(24, 49, 2000, {.maxSpeed = 70}, false);
+  intake::run_forward(120);
+  */
 
 
   /*
@@ -184,10 +214,24 @@ void negative_blue(lemlib::Chassis* chassis) {
   lemlib::Pose start(60, 24, 90);
   chassis->setPose(start);
 
-  chassis->moveToPoint(24, 24, 750, {.forwards = false}, false);
+  chassis->moveToPoint(28, 24, 1500, {.forwards = false, .minSpeed = 30});
+  chassis->moveToPoint(26, 24, 1500, {.forwards = false, .maxSpeed = 30, .minSpeed = 10});
   clamp::engage();
+  chassis->moveToPoint(24, 24, 750, {.forwards = false, .maxSpeed = 60}, false);
+
   intake::run_forward(120);
   pros::delay(1000);
+
+  chassis->turnToPoint(24, 48, 1000, {.minSpeed = 30}, false);
+  chassis->turnToPoint(24, 30, 1000, {.minSpeed = 50}, false);
+  //chassis->turnToPoint(24, 48, 1000, {}, false);
+  chassis->turnToPoint(24, 48, 1000, {}, false);
+  chassis->moveToPoint(24, 49, 2000, {.maxSpeed = 70}, false);
+  intake::run_forward(120);
+  // chassis->moveToPoint(20, 0, 5000, {.forwards = false, .maxSpeed = 50}, false);
+  // pros::delay(5000);
+  // intake::off();
+
 
   /*
 

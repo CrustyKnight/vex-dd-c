@@ -3,6 +3,8 @@
 
 /* **MID-COMP ADJUSTMENTS** */
 
+/*debug mode*/
+#define _DEBUG_
 /*game Auton*/
 #define _NEG_RED_
 // #define _POS_RED_
@@ -79,14 +81,13 @@
 // Stuff for the peak
 #define DEFAULT_HEIGHT 0.0
 #define ALLIANCE_STAKE_HEIGHT 5.0
-#define WALL_STAKE_HEIGHT 10.0
+#define WALL_STAKE_HEIGHT 10.-0
 // Ladder height
 #define ENDGAME_HEIGHT 7.5
 
-//#define _DEBUG_
 #ifdef _DEBUG_
 
-// #define _DEBUG_AUTON_
+#define _DEBUG_AUTON_
 #define DEBUG_LATERAL_TEST_BUTTON DIGITAL_L2
 #define DEBUG_ANGULAR_TEST_BUTTON DIGITAL_L1
 
