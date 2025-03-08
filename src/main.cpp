@@ -135,11 +135,11 @@ void competition_initialize() {}
  */
 
 void autonomous() {
-  negative_red(&chassis);
+  //negative_red(&chassis);
   //positive_red(&chassis);
   //negative_blue(&chassis);
   //positive_blue(&chassis);
-  //autonSkills(&chassis);
+  autonSkills(&chassis);
 }
 
 /**

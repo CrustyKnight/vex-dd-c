@@ -15,83 +15,48 @@ Scores 2 full mogos and puts them into corners
 */
 // TODO test and tune
 void autonSkills(lemlib::Chassis* chassis) {
-  peak::raise_to_level(1);
-  lemlib::Pose start(-60, 0, 0);
-  chassis->setPose(start);
+  //peak::raise_to_level(1);
+  //chassis->setPose(0, 0, 270);
 
-  pros::delay(1000);
+  /*
   // alliance stake
   intake::run_forward(120);
   pros::delay(2000);
-  intake::run_forward(0);
-
-  // mogo
-  chassis->turnToPoint(48, -24, 2000, {.maxSpeed = 90}, false);
-  pros::delay(100);
-  chassis->moveToPoint(-48, 24, 2000, {.forwards = false, .maxSpeed = 90}, false);
-  clamp::engage();
-
-  pros::delay(300);
-
-  // donuts are yummy
-  intake::run_forward(120);
-
-  chassis->turnToPoint(-24, 24, 3000, {.maxSpeed = 90}, false);
-  pros::delay(100);
-  chassis->moveToPoint(-24, 22, 2000, {.maxSpeed = 90, .minSpeed = 30}, false);
-  chassis->moveToPoint(-24, 24, 2000, {.maxSpeed = 90}, false);
-  pros::delay(100);
-  chassis->turnToPoint(-24, 48, 2000, {.maxSpeed = 90}, false);
-  chassis->moveToPoint(-24, 48, 7000, {.maxSpeed = 50}, false);
-
-  pros::delay(100);
-  chassis->turnToPoint(-48, 48, 2000, {.maxSpeed = 50}, false);
-  chassis->moveToPoint(-48, 48, 2000, {.maxSpeed = 50}, false);
-
   intake::off();
-  pros::delay(100);
+  */
 
-  chassis->turnToPoint(64, -64, 3000, {.maxSpeed = 50}, false);
-  chassis->moveToPoint(-64, 64, 3000, {.forwards = false, .maxSpeed = 100, .minSpeed = 30}, false);
+  /*
+  //grab mogo
+  chassis->turnToHeading(63, 2000, {}, false);
+  chassis->moveToPoint(-13, -13, 1000, {.maxSpeed = 100}, false);
+  pros::delay(100);
+  clamp::engage();
+  */
+
+  clamp::engage(); //testing
+  chassis->setPose(-13, -13, 180); //testing
+  chassis->turnToHeading(270, 1000, {}, false);
+  intake::run_forward(50);
+
+  //intake::run_forward(120);
+  chassis->moveToPoint(-36, -12, 1000, {.maxSpeed = 70}, false);
+  chassis->turnToHeading(180, 1000, {}, false);
+  chassis->moveToPoint(-36, -36, 1000, {.maxSpeed = 70}, false);
+
+  chassis->turnToHeading(90, 1000, {}, false);
+  chassis->moveToPoint(0, -36, 6000, {.maxSpeed = 50}, false);
+
+  chassis->turnToHeading(225, 1000, {}, false);
+  chassis->moveToPoint(-12, -48, 1000);
+
+  chassis->turnToHeading(60, 2000, {}, false);
+  chassis->moveToPoint(9, -55, 1000, {.minSpeed = 20}, false);
   clamp::disengage();
-  chassis->moveToPoint(-57, 62, 3000, {.forwards = true, .maxSpeed = 100}, false);
+  chassis->moveToPoint(-12, -48, 1000, {.forwards = false}, false);
 
-  pros::delay(100);
-  chassis->turnToPoint(24, 48, 3000, {.maxSpeed = 90}, false);
-  chassis->moveToPoint(24, 48, 3000, {.maxSpeed = 90}, false);
-  intake::swallow();
-
-  pros::delay(100);
-  chassis->turnToPoint(0, 60, 4000, {.maxSpeed = 50}, false);
-  chassis->moveToPoint(0, 60, 4000, {.maxSpeed = 90}, false);
-  intake::swallow();
-
-  peak::raise_to_level(3);
-  pros::delay(2500);
-  intake::run_forward(120);
-  pros::delay(2500);
   intake::off();
 
-  peak::raise_to_level(1);
-  pros::delay(2500);
 
-  chassis->turnToPoint(24, 24, 2000, {.maxSpeed = 60}, false);
-  chassis->moveToPoint(24, 24, 3000, {.maxSpeed = 90}, false);
-  intake::swallow();
-
-  chassis->turnToPoint(-48, 0, 2000, {.maxSpeed = 60}, false);
-  chassis->moveToPoint(48, 0, 3000, {.forwards = false, .maxSpeed = 60}, false);
-  pros::delay(800);
-  clamp::engage();
-
-  intake::on();
-
-  chassis->turnToPoint(24, -24, 1500, {.maxSpeed = 90}, false);
-  chassis->moveToPoint(24, -24, 1200, {.maxSpeed = 90}, false);
-  pros::delay(800);
-
-  chassis->turnToPoint(-60, 24, 1000, {.maxSpeed = 90}, false);
-  chassis->moveToPoint(60, 24, 1000, {.forwards = false, .maxSpeed = 90}, false);
 }
 
 // #TODO: Test/enhance/modify the game autons below to our needs. Currently, they are set to help us get most of the AWP.
@@ -102,11 +67,13 @@ Scores on one MOGO, then on alliance stake, then touches the ladder.
 
 // Note: for game auton: we use jerry.io standards...
 
-// degrees is like on the unit circle, but backwards. (+ is clockwise)
 void negative_red(lemlib::Chassis* chassis) {
-  /* all good, testing next step
   peak::raise_to_level(1);
+  pros::delay(1000);
+
   chassis->setPose(0, 0, 90);
+  // degrees is like on the unit circle, but backwards. (+ is clockwise)
+
   // Go to the mogo & clamp it.
   // (moving through it works better)
   chassis->moveToPoint(-32, 0, 1500, {.forwards = false, .minSpeed = 30}, false);
@@ -119,18 +86,23 @@ void negative_red(lemlib::Chassis* chassis) {
   pros::delay(1000);
 
   // Go get another donut!!
-  chassis->turnToPoint(-30, 24, 1000, {.minSpeed = 50}, false);
-  chassis->turnToPoint(-46, 24, 1000, {.minSpeed = 50}, false);
-  chassis->turnToHeading(0, 1000, {}, false);
-  chassis->moveToPoint(-38, 24, 2000, {.maxSpeed = 70}, false);
+  chassis->turnToPoint(-36, 24, 1000, {.minSpeed = 30}, false);
+  chassis->turnToPoint(-36, 10, 1000, {.minSpeed = 50}, false);
+  // chassis->turnToPoint(24, 48, 1000, {}, false);
+  chassis->turnToPoint(-38, 24, 1000, {}, false);
+  chassis->moveToPoint(-36, 24, 2000, {.maxSpeed = 70}, false);
   intake::run_forward(120);
-  */
 
-  clamp::engage();
 
-  chassis->setPose(-38, 24, 0);  // for testing
-  chassis->turnToHeading(270, 2000, {}, false);
-  chassis->moveToPoint(-50, 24, 2000, {.maxSpeed = 70}, false);
+  // (testing) chassis->setPose(-36, 24, 0);
+  chassis->turnToHeading(270, 1000, {}, false);
+  intake::run_forward(120);
+  chassis->moveToPoint(-52, 24, 2000, {.maxSpeed = 70, .minSpeed = 20}, false);
+  chassis->moveToPoint(-36, 24, 2000, {.forwards = false, .maxSpeed = 50}, false);
+  pros::delay(300);
+    //TODO idk if this is actually right so
+  chassis->turnToHeading(-60, 2000, {}, false);
+  chassis->moveToPoint(-24, -12, 3000, {.maxSpeed = 40}, false);
 
   /*
   lemlib::Pose start(60, 24, 90);
