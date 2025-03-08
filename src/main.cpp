@@ -5,7 +5,7 @@
 #include "auton.hpp"
 #include "main.h"
 #include "peak.hpp"
-#include "display.h"
+//#include "display.h"
 #include <math.h>
 #include "control.hpp"
 #include "intake.hpp"
@@ -99,7 +99,7 @@ void on_center_button() {
  */
 void initialize() {
   intake::init();
-  display_init();
+  //display_init();
   peak::init();
   chassis.calibrate();
 }
@@ -135,25 +135,11 @@ void competition_initialize() {}
  */
 
 void autonomous() {
-#ifdef _NEG_RED_
   negative_red(&chassis);
-#endif
-
-#ifdef _POS_RED_
-  positive_red(&chassis);
-#endif
-
-#ifdef _NEG_BLUE_
-  negative_blue(&chassis);
-#endif
-
-#ifdef _POS_BLUE_
-  positive_blue(&chassis);
-#endif
-
-#ifdef _SKILLS_AUTON_
-  autonSkills(&chassis);
-#endif
+  //positive_red(&chassis);
+  //negative_blue(&chassis);
+  //positive_blue(&chassis);
+  //autonSkills(&chassis);
 }
 
 /**
@@ -171,14 +157,17 @@ void autonomous() {
  */
 void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
-#ifdef _DEBUG_AUTON_
-#endif
 #ifdef _DEBUG_
-  master.set_text(1, 4, "DEBUG");
+#ifdef _DEBUG_AUTON_
   autonomous();
-  pros::delay(5000);
-  //pidTestingLateral();
 #endif
+#ifdef _DEBUG_PID_
+  pid_testing_angular();
+#endif
+#endif
+
+
+
   while (true) {
     // Arcade control scheme
     drive_arcade(master, &left_motors, &right_motors);

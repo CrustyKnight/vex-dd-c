@@ -2,17 +2,7 @@
 #define CONFIG_H
 
 /* **MID-COMP ADJUSTMENTS** */
-
-/*debug mode*/
 #define _DEBUG_
-/*game Auton*/
-#define _NEG_RED_
-// #define _POS_RED_
-//#define _NEG_BLUE_
-// #define _POS_BLUE_
-
-/*skills Auton*/
-//#define _SKILLS_AUTON_
 
 /* **CONSTANTS** */
 
