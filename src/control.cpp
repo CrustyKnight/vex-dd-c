@@ -64,12 +64,12 @@ Button clamp_down_button(CLAMP_DOWN_BUTTON);
 Button pid_run_lateral_test_button(DEBUG_LATERAL_TEST_BUTTON);
 Button pid_run_angular_test_button(DEBUG_ANGULAR_TEST_BUTTON);
 
-void pidTestingAngular() {
+void pidTestingAngular(lemlib::Chassis chassis) {
   chassis.setPose(0, 0, 0);
   chassis.turnToHeading(90, 100000);
 }
 
-void pidTestingLateral() {
+void pidTestingLateral(lemlib::Chassis chassis) {
   chassis.setPose(0, 0, 0);
   chassis.moveToPoint(0, 24, 5000, {.forwards = false, .maxSpeed = 90}, false);
   pros::delay(400);

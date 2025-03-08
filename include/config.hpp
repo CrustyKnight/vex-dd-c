@@ -3,17 +3,6 @@
 
 /* **MID-COMP ADJUSTMENTS** */
 #define _DEBUG_
-<<<<<<< HEAD
-=======
-/*game Auton*/
-#define _NEG_RED_
-// #define _POS_RED_
-// #define _NEG_BLUE_
-// #define _POS_BLUE_
-
-/*skills Auton*/
-// #define _SKILLS_AUTON_
->>>>>>> 442cae26f0de7ddfabf8fdf3ecefe4d741308df3
 
 /* **CONSTANTS** */
 
@@ -82,7 +71,7 @@
 // Stuff for the peak
 #define DEFAULT_HEIGHT 0.0
 #define ALLIANCE_STAKE_HEIGHT 5.0
-#define WALL_STAKE_HEIGHT 10. - 0
+#define WALL_STAKE_HEIGHT 10.-0
 // Ladder height
 #define ENDGAME_HEIGHT 7.5
 
