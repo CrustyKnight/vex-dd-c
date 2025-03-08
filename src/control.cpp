@@ -60,6 +60,8 @@ Button intake_reverse_button(INTAKE_REVERSE_BUTTON);
 Button clamp_up_button(CLAMP_UP_BUTTON);
 Button clamp_down_button(CLAMP_DOWN_BUTTON);
 
+Button hang_button(HANG_TOGGLE_BUTTON);
+
 #ifdef _DEBUG_
 Button pid_run_lateral_test_button(DEBUG_LATERAL_TEST_BUTTON);
 Button pid_run_angular_test_button(DEBUG_ANGULAR_TEST_BUTTON);
@@ -184,6 +186,20 @@ void drive_clamp_up_down(pros::Controller master) {
 
 void drive_clamp(pros::Controller master) {
   drive_clamp_up_down(master);
+}
+
+int state = 1;
+void drive_hang(pros::Controller master) {
+  hang_button.update(master);
+  if (hang_button.just_pressed()){
+    if (state == 1){
+     clamp::hang_on();
+    }
+    else{
+      clamp::hang_off();
+    }
+      state*=-1;
+  }
 }
 
 void drive_arcade(pros::Controller master,

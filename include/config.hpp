@@ -27,6 +27,7 @@
 #define HANG_PISTON_PORT 'F'
 #define HANG_ON 1
 #define HANG_OFF 0
+#define HANG_TOGGLE_BUTTON DIGITAL_X
 
 #define INTAKE_MOTOR_PORT 7
 #define PEAK_MOTOR_PORT 8

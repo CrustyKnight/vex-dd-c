@@ -50,7 +50,7 @@ void autonSkills(lemlib::Chassis* chassis) {
   chassis->moveToPoint(-12, -48, 1000);
 
   chassis->turnToHeading(60, 2000, {}, false);
-  chassis->moveToPoint(9, -55, 1000, {.minSpeed = 20}, false);
+  chassis->moveToPoint(11, -59, 1000, {.minSpeed = 20}, false);
   clamp::disengage();
   chassis->moveToPoint(-12, -48, 1000, {.forwards = false}, false);
 

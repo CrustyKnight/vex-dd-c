@@ -10,6 +10,9 @@ namespace clamp {
 void set_pistons(int);
 void engage();
 void disengage();
+
+void hang_on();
+void hang_off();
 }  // namespace clamp
 
 #endif  // CLAMP_H_
