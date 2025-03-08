@@ -37,11 +37,11 @@ float ki_l = 0.7;
 float kd_l = 22;
 lemlib::ControllerSettings lateral_controller_lvl0(kp_l, ki_l, kd_l, 0, 0, 0, 0, 0, 0);
 float kp_a = 4.3;
-float ki_a = 0.0;
+float ki_a = 0.005;
 float kd_a = 31;
-float windup_a = 0;
+float windup_a = 20;
 float small_error_range_a = 0.1;
-lemlib::ControllerSettings angular_controller_lvl0(kp_a, ki_a, kd_a, windup_a, small_error_range_a, 100, 0, 0, 0);
+lemlib::ControllerSettings angular_controller_lvl0(kp_a, ki_a, kd_a, windup_a, 0, 0, 0, 0, 0);
 
 // Creating lemlib chassis object for enhanced drivetrain functionality with our drivetrain.
 lemlib::Chassis chassis(drivetrain, lateral_controller_lvl0, angular_controller_lvl0, sensors);
@@ -159,7 +159,16 @@ void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
 #ifdef _DEBUG_
 #ifdef _DEBUG_AUTON_
-  autonomous();
+  master.set_text(1, 4, "DEBUG");
+  // autonomous();
+  chassis.setPose(0, 0, 0);
+  // chassis.turnToHeading(-90, 10000, {}, false);
+  chassis.turnToPoint(10, 0, 5000, {}, false);
+  pros::delay(1000);
+  chassis.turnToPoint(0, 10, 5000, {}, false);
+  // chassis.moveToPoint(-5, 0, 5000, {.forwards = false}, false);
+  // chassis.turnToHeading(90, 3000, {}, false);
+  // pidTestingLateral();
 #endif
 #ifdef _DEBUG_PID_
   pid_testing_angular();
